@@ -1,0 +1,14 @@
+<div class="input-main-container">
+  <app-label [for]="id" [ngClass]="{'input-main-container__label':true}">{{ label }}</app-label>
+  <div class="input-main-container__input-container">
+    <input [disabled]="disabled" [id]="id" [placeholder]="placeholder"
+           [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')"
+           [value]="value" class="input-main-container__input-container__input"
+          (input)="onInput($event)">
+    <app-button (clickHandler)="togglePasswordVisibility($event)"
+                [ngClass]="{'input-main-container__input-container__input__icon':true}" [ngStyle]="{'opacity': type==='password'?1:0}">
+      <span class="material-symbols-outlined">{{ passwordVisibility() ? 'visibility' : 'visibility_off' }}</span>
+    </app-button>
+  </div>
+  <p [ngStyle]="{opacity: showError ? 1 : 0}" class="input-main-container__error">{{ error }}</p>
+</div>

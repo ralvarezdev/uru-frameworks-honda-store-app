@@ -1,0 +1,76 @@
+/* Main container */
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+  height: 100vh;
+  background-image: url('/assets/images/clock--var2--1920x1278.webp');
+  background-size: cover;
+}
+
+/* Form container */
+.main-container__form-container {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  background-color: var(--grey--lightest);
+  padding: var(--padding--medium);
+  border-radius: var(--border-radius--medium);
+  box-shadow: var(--box-shadow--large);
+  min-width: 30rem;
+}
+
+/* Header container */
+.main-container__form-container__header-container {
+  margin-bottom: var(--padding--medium);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--gap--large);
+}
+
+/* Title */
+.main-container__form-container__header-container__title {
+  color: var(--grey--darkest);
+}
+
+/* Content container */
+.main-container__form-container__content-container {
+  display: grid;
+  gap: var(--gap--medium);
+}
+
+/* Logo */
+.main-container__logo {
+  position: absolute;
+  top: var(--padding--small);
+  right: var(--padding--medium);
+  object-fit: cover;
+}
+
+/* Footer container */
+.main-container__form-container__content-container__footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.6rem;
+  flex-direction: column;
+}
+
+/* Button container */
+.main-container__form-container__content-container__footer-container__buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--gap--small);
+}
+
+/* Link */
+.main-container__form-container__content-container__footer-container__link {
+  justify-self: start;
+  padding-top: var(--padding--medium);
+  color: var(--grey--medium);
+  text-decoration: none;
+}

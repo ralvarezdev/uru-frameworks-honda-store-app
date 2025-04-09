@@ -1,0 +1,22 @@
+/* Time slider container */
+.time-slider-container {
+  display: grid;
+  place-items: center;
+  gap: var(--gap--large);
+}
+
+/* Slider container */
+.time-slider-container__sliders-container {
+  grid-column: 1/-1;
+  display: grid;
+  place-items: center;
+  gap: var(--gap--medium);
+}
+
+/* Footer */
+.time-slider-container__footer {
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: row;
+  gap: var(--gap--medium);
+}
