@@ -305,6 +305,28 @@ exports.getProducts = functions.https.onCall(async (data, context) => {
   return { products, totalCount };
 });
 
+// Function to get a product by ID
+exports.getProductById = functions.https.onCall(async (data, context) => {
+  // Check if the user is authenticated
+  const userId = checkAuth(context);
+
+  // Validate input data
+  const { productId } = data;
+  if (!productId) {
+    throw new functions.https.HttpsError('invalid-argument', 'Product ID is required.');
+  }
+
+  // Get the product data
+  const [productRef, productData] = await getProductDataById(productId);
+
+  // Check if the product is active if the user is not the owner
+  if (productData.owner !== userId) {
+    await checkProductActive(productData);
+  }
+
+  return { product: { id: productRef.id, ...productData } };
+});
+
 // Function to update a product
 exports.updateProduct = functions.https.onCall(async (data, context) => {
   // Check if the user is authenticated

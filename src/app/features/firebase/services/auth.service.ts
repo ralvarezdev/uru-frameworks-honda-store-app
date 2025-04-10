@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import config from '../../../../../config';
+import config from '../../../../config';
 import {initializeApp} from "firebase/app";
-import {getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, Auth} from "firebase/auth";
+import {getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth} from "firebase/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -41,15 +41,6 @@ export class AuthService {
 
     // Log the user signed up
     console.log('User signed up: ', email)
-  }
-
-  // Sign in with Google
-  async signInWithGoogle() {
-    // Sign in the user with Google
-    await signInWithPopup(this.auth as Auth, this.provider as GoogleAuthProvider)
-
-    // Log the user signed in
-    console.log('User signed in with Google')
   }
 
   // Sign in with email/password
