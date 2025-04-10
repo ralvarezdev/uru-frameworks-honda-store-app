@@ -43,3 +43,6 @@ Thumbs.db
 
 # Configuration files
 .env
+
+# Firebase
+/**/*/uru-frameworks-honda-store-firebase-adminsdk.json
