@@ -1,32 +1,12 @@
 import {Injectable} from '@angular/core';
-import config from '../../../../config';
-import {initializeApp} from "firebase/app";
-import {getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth} from "firebase/auth";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  auth: Auth|null = null
-  provider: GoogleAuthProvider|null = null
-
-  constructor() {
-    // Initialize Firebase
-    initializeApp({
-      apiKey: config.FIREBASE_API_KEY,
-      authDomain: config.FIREBASE_AUTH_DOMAIN,
-      projectId: config.FIREBASE_PROJECT_ID,
-      storageBucket: config.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: config.FIREBASE_MESSAGING_SENDER_ID,
-      appId: config.FIREBASE_APP_ID,
-      measurementId: config.FIREBASE_MEASUREMENT_ID
-    });
-
-    // Get the Auth service
-    this.auth = getAuth();
-
-    // Google Sign-In
-    this.provider = new GoogleAuthProvider();
+  constructor(private appService: AppService) {
+    this.auth = appService.auth;
   }
 
   // Check if the user is authenticated

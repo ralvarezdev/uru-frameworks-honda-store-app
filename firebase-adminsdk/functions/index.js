@@ -1,7 +1,7 @@
-import { initializeApp, cert } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-import * as functions from 'firebase-functions/v2';
-import serviceAccount from '../uru-frameworks-honda-store-firebase-adminsdk.json'
+const { initializeApp, cert } = require('firebase-admin/app')
+const { getFirestore } = require('firebase-admin/firestore')
+const functions = require('firebase-functions/v2')
+const serviceAccount = require('../../uru-frameworks-honda-store-firebase-adminsdk.json')
 
 // Initialize the Firebase Admin SDK
 const app = initializeApp({
