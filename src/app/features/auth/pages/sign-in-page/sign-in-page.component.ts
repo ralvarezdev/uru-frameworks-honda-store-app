@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, QueryList, ViewChildren} from '@angular/core';
 import {AuthLayoutComponent} from '../../layouts/auth-layout/auth-layout.component';
 import {InputComponent} from '../../../../shared/components/input/input.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
+import {clearFormErrors, setFormControlErrors} from '../../../../../utils';
 
 @Component({
   selector: 'app-auth-sign-in-page',
@@ -16,6 +17,7 @@ import {Router} from '@angular/router';
   styleUrl: './sign-in-page.component.css'
 })
 export class SignInPageComponent {
+  @ViewChildren(InputComponent) inputs!: QueryList<InputComponent>;
   title: string = 'Sign In';
   link: string = '/sign-up';
   linkText: string = 'Don\'t have an account? Sign up';
@@ -37,7 +39,13 @@ export class SignInPageComponent {
         console.error(error)
       })
     } else {
-      console.error('Invalid form', this.authForm?.value, this.authForm?.errors)
+      console.log('Invalid form', this.authForm)
+      setFormControlErrors(this.inputs, this.authForm)
     }
+  }
+
+  // Handle Reset Click
+  resetHandler(): void {
+    clearFormErrors(this.inputs);
   }
 }

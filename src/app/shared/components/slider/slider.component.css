@@ -1,4 +1,4 @@
-/* Slider container */
+/* Slider container styles */
 .slider-container {
   display: grid;
   grid-template-columns: 2fr 4fr 1fr;
@@ -6,12 +6,12 @@
   align-items: center;
 }
 
-/* Label */
+/* Label styles */
 .slider-container__label {
   text-align: end;
 }
 
-/* Slider input */
+/* Slider input styles */
 .slider-container__input {
   -webkit-appearance: none;
   width: 100%;
@@ -45,7 +45,7 @@
   cursor: pointer;
 }
 
-/* Slider value */
+/* Slider value styles */
 .slider-container__value {
   font-size: var(--font-size--small);
   font-weight: var(--font-weight--medium);

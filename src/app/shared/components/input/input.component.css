@@ -2,7 +2,7 @@
 .input-main-container {
   display: flex;
   flex-direction: column;
-  gap: var(--gap--small);
+  gap: var(--gap--extra-small);
 }
 
 /* Label styles */
@@ -54,4 +54,6 @@
   text-align: end;
   font-size: var(--font-size--extra-small);
   color: var(--color--dark-primary);
+  min-height: calc(var(--font-size--extra-small) * var(--line-height--regular));
+  transition: opacity var(--transition--opacity--duration);
 }

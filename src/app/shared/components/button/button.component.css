@@ -1,4 +1,4 @@
-/* Button */
+/* Button styles */
 .button {
   border-radius: var(--border-radius--small);
   background-color: transparent;
@@ -13,7 +13,7 @@
   place-items: center;
 }
 
-/* Primary filled button */
+/* Primary filled button styles */
 .button--primary button {
   background-color: var(--color--dark-primary);
   color: var(--grey--lightest);
@@ -33,7 +33,7 @@
   background-color: var(--color--light-primary);
 }
 
-/* Primary circular button */
+/* Primary circular button styles */
 .button--primary--circular button {
   display: grid;
   place-items: center;
@@ -42,7 +42,7 @@
   border-radius: 50%;
 }
 
-/* Primary not filled button */
+/* Primary not filled button styles */
 .button--primary--not-filled button {
   color: var(--grey--darker);
   font-size: var(--font-size--small);
@@ -60,7 +60,7 @@
   background-color: var(--grey--medium);
 }
 
-/* Secondary button */
+/* Secondary button styles */
 .button--secondary button {
   background-color: var(--grey--light);
   color: var(--grey--darker);
@@ -76,7 +76,7 @@
   background-color: var(--grey--dark);
 }
 
-/* Disabled button */
+/* Disabled button styles */
 .button--disabled button {
   background-color: var(--grey--light);
   color: var(--grey--medium);
@@ -91,7 +91,7 @@
   background-color: var(--grey--light);
 }
 
-/* Transparent button */
+/* Transparent button styles */
 .button--transparent button {
   color: var(--grey--darkest);
   padding: var(--margin--extra-small);

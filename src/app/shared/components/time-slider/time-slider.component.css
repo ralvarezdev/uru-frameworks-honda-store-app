@@ -1,11 +1,11 @@
-/* Time slider container */
+/* Time slider container styles */
 .time-slider-container {
   display: grid;
   place-items: center;
   gap: var(--gap--large);
 }
 
-/* Slider container */
+/* Slider container styles */
 .time-slider-container__sliders-container {
   grid-column: 1/-1;
   display: grid;
@@ -13,7 +13,7 @@
   gap: var(--gap--medium);
 }
 
-/* Footer */
+/* Footer styles */
 .time-slider-container__footer {
   grid-column: 1/-1;
   display: flex;

@@ -1,0 +1,5 @@
+/* Email and password container styles */
+#email-container,
+#password-container {
+  grid-column: 1/-1;
+}

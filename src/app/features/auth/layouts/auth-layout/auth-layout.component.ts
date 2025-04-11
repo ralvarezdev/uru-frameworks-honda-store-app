@@ -1,10 +1,12 @@
-import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID, QueryList, ViewChildren} from '@angular/core';
 import {isPlatformBrowser, NgClass, NgOptimizedImage} from '@angular/common';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {LinkComponent} from '../../../../shared/components/link/link.component';
+import {InputComponent} from '../../../../shared/components/input/input.component';
+import {clearFormErrors} from '../../../../../utils';
 
 @Component({
   selector: 'app-auth-layout',
@@ -27,6 +29,7 @@ export class AuthLayoutComponent {
   @Input() linkText: string = '';
   @Input() formGroup!: FormGroup;
   @Output() submitHandler: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() resetHandler: EventEmitter<Event> = new EventEmitter<Event>();
   logoHeight: number = LOGO_HEIGHT;
   logoWidth: number = LOGO_WIDTH;
   logoLink: string = '/';
@@ -40,6 +43,14 @@ export class AuthLayoutComponent {
     if (this.isBrowser) {
       event.preventDefault()
       this.submitHandler.emit(event);
+    }
+  }
+
+  // Emit reset event
+  onReset(event: Event): void {
+    if (this.isBrowser) {
+      event.preventDefault();
+      this.resetHandler.emit(event);
     }
   }
 }

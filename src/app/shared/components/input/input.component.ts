@@ -34,7 +34,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() required: boolean = false;
   @Input() value: string = '';
   @Input() disabled: boolean = false;
-  @Input() error: string = '...';
+  @Input() error: string = '';
   @Input() showError: boolean = false;
   private onChange: any = () => {};
   private onTouched: any = () => {};
