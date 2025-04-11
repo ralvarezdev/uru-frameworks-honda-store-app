@@ -8,6 +8,7 @@
 
 # Node
 /**/*/node_modules
+/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -46,4 +47,6 @@ Thumbs.db
 
 # Firebase
 /**/*/uru-frameworks-honda-store-firebase-adminsdk.json
+/uru-frameworks-honda-store-firebase-adminsdk.json
 /**/*/firebase.json
+/firebase.json

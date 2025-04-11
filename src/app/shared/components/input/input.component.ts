@@ -11,7 +11,8 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModul
     ButtonComponent,
     LabelComponent,
     NgClass,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',

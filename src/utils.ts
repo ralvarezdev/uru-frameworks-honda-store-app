@@ -34,7 +34,6 @@ export function setFormControlErrors(inputs: QueryList<InputComponent>, form: Fo
     // Get the control and input component
     const control = form.controls[controlKey]
     const inputComponent= inputs.find(input => input.id === controlKey)
-    console.log(form, inputs)
     if (!inputComponent) {
       return
     }

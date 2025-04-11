@@ -6,7 +6,7 @@
            [value]="value" class="input-main-container__input-container__input"
           (input)="onInput($event)">
     <app-button (clickHandler)="togglePasswordVisibility($event)"
-                [ngClass]="{'input-main-container__input-container__input__icon':true}" [ngStyle]="{'opacity': type==='password'?1:0}">
+                [ngClass]="{'input-main-container__input-container__input__icon':true}" *ngIf="type==='password'">
       <span class="material-symbols-outlined">{{ passwordVisibility() ? 'visibility' : 'visibility_off' }}</span>
     </app-button>
   </div>

@@ -13,15 +13,18 @@
 /* Input container styles */
 .input-main-container__input-container {
   display: grid;
-  grid-template-columns: 1fr auto;
-  flex-direction: row;
-  gap: var(--gap--small);
+  grid-template-columns: 1fr;
   background-color: var(--grey--lighter);
   border-radius: var(--border-radius--small);
   outline: var(--outline--small) solid transparent;
   transition: background-color var(--transition--color--duration),
     color var(--transition--color--duration), outline-color
       var(--transition--color--duration);
+}
+
+.input-main-container__input-container:has(.input-main-container__input-container__input__icon) {
+  grid-template-columns: 1fr auto;
+  gap: var(--gap--small);
 }
 
 /* Input container hover styles */
@@ -56,4 +59,5 @@
   color: var(--color--dark-primary);
   min-height: calc(var(--font-size--extra-small) * var(--line-height--regular));
   transition: opacity var(--transition--opacity--duration);
+  padding-right: var(--border-radius--small);
 }
