@@ -1,12 +1,10 @@
-import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID, QueryList, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser, NgClass, NgOptimizedImage} from '@angular/common';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {LinkComponent} from '../../../../shared/components/link/link.component';
-import {InputComponent} from '../../../../shared/components/input/input.component';
-import {clearFormErrors} from '../../../../../utils';
 
 @Component({
   selector: 'app-auth-layout',

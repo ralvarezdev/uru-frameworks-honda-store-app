@@ -1,10 +1,13 @@
 <div class="time-slider-container">
   <div class="time-slider-container__sliders-container">
-    <app-slider [id]="id + '--hour'" [label]="'Hour'" [max]="23" [min]="0" [step]="1" [valueControl]="hourSliderValue"></app-slider>
-    <app-slider [id]="id + '--minute'" [label]="'Minute'" [max]="59" [min]="0" [step]="1" [valueControl]="minuteSliderValue"></app-slider>
-    <app-slider [id]="id + '--second'" [label]="'Second'" [max]="59" [min]="0" [step]="1" [valueControl]="secondSliderValue"></app-slider>
+    <app-slider [id]="id + '--hour'" [label]="'Hour'" [max]="23" [min]="0" [step]="1"
+                [valueControl]="hourSliderValue"></app-slider>
+    <app-slider [id]="id + '--minute'" [label]="'Minute'" [max]="59" [min]="0" [step]="1"
+                [valueControl]="minuteSliderValue"></app-slider>
+    <app-slider [id]="id + '--second'" [label]="'Second'" [max]="59" [min]="0" [step]="1"
+                [valueControl]="secondSliderValue"></app-slider>
   </div>
   <div class="time-slider-container__footer">
-    <app-button [ngClass]="{'button--primary--not-filled':true}" (clickHandler)="onReset($event)">Reset</app-button>
+    <app-button (clickHandler)="onReset($event)" [ngClass]="{'button--primary--not-filled':true}">Reset</app-button>
   </div>
 </div>

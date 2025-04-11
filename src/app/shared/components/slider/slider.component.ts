@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID, ViewEncapsulation,} from '@angular/core';
+import {Component, Inject, Input, PLATFORM_ID, ViewEncapsulation,} from '@angular/core';
 import {LabelComponent} from '../label/label.component';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {isPlatformBrowser, NgClass, NgIf} from '@angular/common';
-import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-slider',

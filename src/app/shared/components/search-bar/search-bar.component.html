@@ -1,7 +1,7 @@
 <div class="search-bar-container">
-  <input [disabled]="disabled" [id]="id" [placeholder]="placeholder"
-         type="text" [value]="value" class="search-bar-container__input"
-         (input)="onInput($event)">
+  <input (input)="onInput($event)" [disabled]="disabled" [id]="id"
+         [placeholder]="placeholder" [value]="value" class="search-bar-container__input"
+         type="text">
   <app-button (clickHandler)="onClick($event)" [ngClass]="{'search-bar-container__button':true}">
     <span class="material-symbols-outlined">search</span>
   </app-button>

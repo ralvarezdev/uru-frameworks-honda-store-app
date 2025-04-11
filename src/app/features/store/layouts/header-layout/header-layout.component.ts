@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {LinkComponent} from '../../../../shared/components/link/link.component';

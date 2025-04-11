@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { getFunctions, httpsCallable, HttpsCallableResult } from "firebase/functions";
+import {Injectable} from '@angular/core';
+import {getFunctions, httpsCallable, HttpsCallableResult} from "firebase/functions";
 import {AppService} from './app.service';
 
 @Injectable({
@@ -28,16 +28,16 @@ export class CartsService {
 
   // Add a product to the cart
   async addProductToCart(productId: string, quantity: number): Promise<HttpsCallableResult> {
-    return await this.fireAddProductToCart({ productId, quantity });
+    return await this.fireAddProductToCart({productId, quantity});
   }
 
   // Remove a product from the cart
   async removeProductFromCart(productId: string): Promise<HttpsCallableResult> {
-    return await this.fireRemoveProductFromCart({ productId });
+    return await this.fireRemoveProductFromCart({productId});
   }
 
   async updateProductQuantityInCart(productId: string, quantity: number): Promise<HttpsCallableResult> {
-    return await this.fireUpdateProductQuantityInCart({ productId, quantity });
+    return await this.fireUpdateProductQuantityInCart({productId, quantity});
   }
 
   async getCart(): Promise<HttpsCallableResult> {

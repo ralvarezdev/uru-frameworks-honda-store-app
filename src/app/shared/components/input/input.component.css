@@ -18,8 +18,7 @@
   border-radius: var(--border-radius--small);
   outline: var(--outline--small) solid transparent;
   transition: background-color var(--transition--color--duration),
-    color var(--transition--color--duration), outline-color
-      var(--transition--color--duration);
+  color var(--transition--color--duration), outline-color var(--transition--color--duration);
 }
 
 .input-main-container__input-container:has(.input-main-container__input-container__input__icon) {

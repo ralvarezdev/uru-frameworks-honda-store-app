@@ -21,20 +21,21 @@ export class SignInPageComponent {
   title: string = 'Sign In';
   link: string = '/sign-up';
   linkText: string = 'Don\'t have an account? Sign up';
-  authForm=new FormGroup({
+  authForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
     password: new FormControl<string>('', [Validators.required, Validators.minLength(6)])
   });
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
   // Handle Submit Click
   submitHandler(): void {
     if (this.authForm?.valid) {
-      const { email, password } = this.authForm.value;
+      const {email, password} = this.authForm.value;
       this.authService.signIn(email as string, password as string).then(
-        r=>
-        this.router.navigateByUrl('/clocks/abacus', { skipLocationChange: false, replaceUrl: true })
+        r =>
+          this.router.navigateByUrl('/clocks/abacus', {skipLocationChange: false, replaceUrl: true})
       ).catch(error => {
         console.error(error)
       })

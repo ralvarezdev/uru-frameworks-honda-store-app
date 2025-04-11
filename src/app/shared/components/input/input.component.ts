@@ -2,7 +2,7 @@ import {Component, forwardRef, Inject, Input, PLATFORM_ID, signal, ViewEncapsula
 import {isPlatformBrowser, NgClass, NgIf, NgStyle} from '@angular/common';
 import {ButtonComponent} from '../button/button.component';
 import {LabelComponent} from '../label/label.component';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -37,8 +37,6 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() error: string = '';
   @Input() showError: boolean = false;
-  private onChange: any = () => {};
-  private onTouched: any = () => {};
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId)
@@ -74,4 +72,10 @@ export class InputComponent implements ControlValueAccessor {
     this.onChange(this.value);
     this.onTouched();
   }
+
+  private onChange: any = () => {
+  };
+
+  private onTouched: any = () => {
+  };
 }

@@ -34,7 +34,7 @@ export class SignUpPageComponent {
   // Submit Handler Click
   submitHandler(): void {
     if (this.authForm?.valid) {
-      const {"first-name":firstName, "last-name": lastName, email, password} = this.authForm.value;
+      const {"first-name": firstName, "last-name": lastName, email, password} = this.authForm.value;
       this.authService.signUp(firstName as string, lastName as string, email as string, password as string).then(
         r =>
           this.router.navigateByUrl('/sign-in', {skipLocationChange: false, replaceUrl: true})

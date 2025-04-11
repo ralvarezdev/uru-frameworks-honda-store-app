@@ -9,8 +9,8 @@
   outline: var(--outline--medium) solid transparent;
   min-width: 30rem;
   transition: background-color var(--transition--color--duration),
-    color var(--transition--color--duration),
-    outline-color var(--transition--color--duration);
+  color var(--transition--color--duration),
+  outline-color var(--transition--color--duration);
 }
 
 /* Search bar container hover styles */
@@ -49,5 +49,5 @@
   font-size: var(--font-size--small);
   font-weight: var(--font-weight--regular);
   transition: background-color var(--transition--color--duration),
-    color var(--transition--color--duration);
+  color var(--transition--color--duration);
 }

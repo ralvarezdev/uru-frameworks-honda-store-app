@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HeaderLayoutComponent } from './header-layout.component';
+import {HeaderLayoutComponent} from './header-layout.component';
 
 describe('HeaderLayoutComponent', () => {
   let component: HeaderLayoutComponent;
@@ -10,7 +10,7 @@ describe('HeaderLayoutComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeaderLayoutComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(HeaderLayoutComponent);
     component = fixture.componentInstance;

@@ -27,8 +27,6 @@ export class SearchBarComponent {
   @Input() required: boolean = false;
   @Input() id: string = '';
   @Input() value: string = '';
-  private onChange: any = () => {};
-  private onTouched: any = () => {};
 
   // Click event handler
   onClick(event: Event) {
@@ -58,4 +56,10 @@ export class SearchBarComponent {
     this.onChange(this.value);
     this.onTouched();
   }
+
+  private onChange: any = () => {
+  };
+
+  private onTouched: any = () => {
+  };
 }

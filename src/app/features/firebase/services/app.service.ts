@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Auth, getAuth, GoogleAuthProvider} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
 import firebase from '../../../../../firebase.json';
@@ -7,8 +7,8 @@ import firebase from '../../../../../firebase.json';
   providedIn: 'root'
 })
 export class AppService {
-  auth: Auth|null = null
-  provider: GoogleAuthProvider|null = null
+  auth: Auth | null = null
+  provider: GoogleAuthProvider | null = null
 
   constructor() {
     // Initialize Firebase

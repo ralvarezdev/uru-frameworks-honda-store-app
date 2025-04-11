@@ -1,11 +1,11 @@
 // Parse form control errors
-import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
-import {input, QueryList} from '@angular/core';
+import {AbstractControl, FormGroup} from '@angular/forms';
+import {QueryList} from '@angular/core';
 import {InputComponent} from './app/shared/components/input/input.component';
 
-export function parseFromControlErrors(errors: {[key: string]: any}): string[] {
+export function parseFromControlErrors(errors: { [key: string]: any }): string[] {
   const parsedErrors = []
-  for (const errorKey of Object.keys(errors) ) {
+  for (const errorKey of Object.keys(errors)) {
     // Check if the field is required
     if (errorKey === 'required') {
       parsedErrors.push('Required')
@@ -21,7 +21,7 @@ export function parseFromControlErrors(errors: {[key: string]: any}): string[] {
 
 // Set form input errors
 export function setFormInputErrors(inputComponent: InputComponent, control: AbstractControl) {
-  if (control&& control?.errors) {
+  if (control && control?.errors) {
     const parsedErrors = parseFromControlErrors(control.errors)
     inputComponent.error = (parsedErrors.length ? parsedErrors[0] : '')
     inputComponent.showError = true
@@ -33,7 +33,7 @@ export function setFormControlErrors(inputs: QueryList<InputComponent>, form: Fo
   for (const controlKey of Object.keys(form?.controls)) {
     // Get the control and input component
     const control = form.controls[controlKey]
-    const inputComponent= inputs.find(input => input.id === controlKey)
+    const inputComponent = inputs.find(input => input.id === controlKey)
     if (!inputComponent) {
       return
     }

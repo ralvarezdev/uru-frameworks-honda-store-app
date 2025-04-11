@@ -18,13 +18,14 @@ import {Subscription} from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 export class TimeSliderComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = [];
   hourSliderValue: FormControl = new FormControl(0);
   minuteSliderValue: FormControl = new FormControl(0);
   secondSliderValue: FormControl = new FormControl(0);
   @Input() id = '';
+  private subscriptions: Subscription[] = [];
 
-  constructor(private timeService: TimeService) {}
+  constructor(private timeService: TimeService) {
+  }
 
   ngOnInit(): void {
     // Subscribe to FormControl value changes
@@ -46,9 +47,9 @@ export class TimeSliderComponent implements OnInit, OnDestroy {
   // Set the initial state
   setInitialState(): void {
     // Update FormControl values when signals change
-    this.hourSliderValue.setValue(0, { emitEvent: false });
-    this.minuteSliderValue.setValue(0, { emitEvent: false });
-    this.secondSliderValue.setValue(0, { emitEvent: false });
+    this.hourSliderValue.setValue(0, {emitEvent: false});
+    this.minuteSliderValue.setValue(0, {emitEvent: false});
+    this.secondSliderValue.setValue(0, {emitEvent: false});
   }
 
   // On Reset

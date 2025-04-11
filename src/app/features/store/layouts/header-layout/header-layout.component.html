@@ -9,7 +9,7 @@
       <app-link *ngIf="showSignInLink" [link]="signInLink">
         {{ signInText }}
       </app-link>
-      <app-link [ngClass]="{'link-container__link--primary': true}" *ngIf="showSignUpLink" [link]="signUpLink">
+      <app-link *ngIf="showSignUpLink" [link]="signUpLink" [ngClass]="{'link-container__link--primary': true}">
         {{ signUpText }}
       </app-link>
     </div>
