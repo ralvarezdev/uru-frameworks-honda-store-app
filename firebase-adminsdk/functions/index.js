@@ -57,6 +57,40 @@ async function checkProductStock(productData, stock) {
   }
 }
 
+// Function to create a user
+exports.createUser = functions.https.onCall(async (data, context) => {
+  // Validate input data
+  const { uid, first_name, last_name } = data;
+  if (!uid || !first_name || !last_name) {
+    throw new functions.https.HttpsError('invalid-argument', 'UID, first_name, and last_name are required.');
+  }
+
+  // Create a new user object
+  const newUser = {
+    uid: uid,
+    first_name: first_name,
+    last_name: last_name,
+  };
+
+  // Save the user to Firestore
+  await firestore.collection('users').doc(uid).set(newUser);
+
+  return { message: 'User created successfully.' };
+});
+
+// Function to get a user by ID
+exports.getUserById = functions.https.onCall(async (data, context) => {
+  // Check if the user is authenticated
+  const userId = checkAuth(context);
+
+  // Retrieve the user document
+  const userDoc = await firestore.collection('users').doc(userId).get();
+
+  // Return the user data
+  const userData = userDoc.data();
+  return { first_name: userData.first_name, last_name: userData.last_name };
+});
+
 // Function to add a product to the cart
 exports.addProductToCart = functions.https.onCall(async (data, context) => {
   // Check if the user is authenticated

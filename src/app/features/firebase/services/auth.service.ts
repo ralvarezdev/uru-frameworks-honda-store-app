@@ -1,12 +1,25 @@
 import {Injectable} from '@angular/core';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Auth} from "firebase/auth";
+import {AppService} from './app.service';
+import {getFunctions, httpsCallable} from 'firebase/functions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  auth : Auth|null = null
+  fireCreateUser: any;
+  fireGetUserById: any;
+
   constructor(private appService: AppService) {
     this.auth = appService.auth;
+
+    // Get the functions instance from Firebase
+    const functions = getFunctions();
+
+    // Define the callable functions
+    this.fireCreateUser = httpsCallable(functions, 'createUser');
+    this.fireGetUserById = httpsCallable(functions, 'getUserById');
   }
 
   // Check if the user is authenticated
@@ -15,9 +28,15 @@ export class AuthService {
   }
 
   // Sign in with email/password
-  async signUp(email: string, password: string) {
+  async signUp(firstName: string,  lastName: string,  email: string, password: string) {
     // Create the user with email and password
-    await createUserWithEmailAndPassword(this.auth as Auth, email, password)
+    const userCredential = await createUserWithEmailAndPassword(this.auth as Auth, email, password)
+
+    // Get the user ID
+    const userId = userCredential.user.uid
+
+    // Create the user in the database
+    await this.fireCreateUser({ uid: userId, first_name: firstName, last_name: lastName })
 
     // Log the user signed up
     console.log('User signed up: ', email)

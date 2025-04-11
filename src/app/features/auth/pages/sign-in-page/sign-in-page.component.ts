@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AuthLayoutComponent} from '../../layouts/auth-layout/auth-layout.component';
 import {InputComponent} from '../../../../shared/components/input/input.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth/auth.service';
+import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({

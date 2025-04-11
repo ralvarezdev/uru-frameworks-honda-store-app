@@ -19,7 +19,7 @@
 
 /* Global reset for the app */
 * {
-  font-family: 'Fira Code', sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -27,16 +27,20 @@
 
 /* Global styles */
 :root {
-  --color--darkest--primary: #822222;
-  --color--darker-primary: #be1e2d;
-  --color--dark-primary: #ff0000;
-  --color--medium-primary: #eb1c2f;
-  --color--light-primary: #f42d2d;
-  --color--lighter-primary: #e87575;
-  --color--lightest-primary: #ffaaaa;
-  --grey--dark: #000;
-  --grey--medium: #1d1f1c;
-  --grey--light: #726b6b;
+  --color--darkest-primary: #e03131;
+  --color--darker-primary: #f03e3e;
+  --color--dark-primary: #fa5252;
+  --color--medium-primary: #ff6b6b;
+  --color--light-primary: #ff8787;
+  --color--lighter-primary: #ffa8a8;
+  --color--lightest-primary: #ffc9c9;
+  --grey--darkest: #212529;
+  --grey--darker: #343a40;
+  --grey--dark: #495057;
+  --grey--medium: #adb5bd;
+  --grey--light: #ced4da;
+  --grey--lighter: #e9ecef;
+  --grey--lightest: #f8f9fa;
   --gap--small: 0.5rem;
   --gap--medium: 1rem;
   --gap--large: 2rem;
@@ -62,6 +66,12 @@
   --border-radius--small: 0.5rem;
   --border-radius--medium: 1rem;
   --border-radius--large: 2rem;
+  --border--small: 2px;
+  --border--medium: 3px;
+  --border--large: 4px;
+  --outline--small: 2px;
+  --outline--medium: 3px;
+  --outline--large: 4px;
   --box-shadow--small: 0 0 10px rgba(0, 0, 0, 0.1);
   --box-shadow--medium: 0 0 20px rgba(0, 0, 0, 0.1);
   --box-shadow--large: 0 0 30px rgba(0, 0, 0, 0.1);
@@ -94,6 +104,11 @@ h4, h5 {
 h6 {
   font-size: var(--font-size--small);
   font-weight: var(--font-weight--light);
+}
+
+/* Div styles */
+div {
+  display: inline-block;
 }
 
 /* Span */

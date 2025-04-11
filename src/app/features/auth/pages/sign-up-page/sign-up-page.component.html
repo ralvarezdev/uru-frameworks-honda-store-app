@@ -1,4 +1,8 @@
 <app-auth-layout [formGroup]="authForm" [title]="title" (submitHandler)="submitHandler()" [link]="link" [linkText]="linkText">
+  <app-input [formControl]="authForm.controls.first_name" [id]="'first-name'" [label]="'First Name'" [placeholder]="'Enter your first name'" [required]="true"
+             [type]="'text'"></app-input>
+  <app-input [formControl]="authForm.controls.last_name" [id]="'last-name'" [label]="'Last Name'" [placeholder]="'Enter your last name'" [required]="true"
+             [type]="'text'"></app-input>
   <app-input [formControl]="authForm.controls.email" [id]="'email'" [label]="'Email'" [placeholder]="'Enter your email'" [required]="true"
              [type]="'email'"></app-input>
   <app-input [formControl]="authForm.controls.password" [id]="'password'" [label]="'Password'" [placeholder]="'Enter your password'" [required]="true"

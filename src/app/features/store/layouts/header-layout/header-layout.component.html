@@ -1,0 +1,20 @@
+<div class="main-container">
+  <div class="main-container__header-container">
+    <img [height]="logoHeight" [width]="logoWidth" alt="logo"
+         class="main-container__header-container__logo" ngSrc="/assets/images/repuestos-edge--logo.svg"/>
+    <div class="main-container__header-container__search-bar-container">
+      <app-search-bar [placeholder]="searchBarPlaceholder"></app-search-bar>
+    </div>
+    <div class="main-container__header-container__link-container">
+      <app-link *ngIf="showSignInLink" [link]="signInLink">
+        {{ signInText }}
+      </app-link>
+      <app-link [ngClass]="{'link-container__link--primary': true}" *ngIf="showSignUpLink" [link]="signUpLink">
+        {{ signUpText }}
+      </app-link>
+    </div>
+  </div>
+  <div class="main-container__body-container">
+    <ng-content></ng-content>
+  </div>
+</div>

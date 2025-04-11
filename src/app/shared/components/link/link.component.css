@@ -1,0 +1,31 @@
+/* Link styles */
+.link-container__link {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--grey--lightest);
+  font-size: var(--font-size--small);
+  font-weight: var(--font-weight--medium);
+  border-radius: var(--border-radius--small);
+  transition: background-color var(--transition--color--duration),
+    color var(--transition--color--duration);
+  padding: var(--padding--extra-small) var(--padding--small);
+}
+
+/* Link hover styles */
+.link-container__link:hover {
+  background-color: var(--color--light-primary);
+}
+
+/* Primary link styles */
+.link-container__link--primary .link-container__link {
+  background-color: var(--grey--darkest);
+  color: var(--grey--lightest);
+}
+
+/* Primary link hover styles */
+.link-container__link--primary .link-container__link:hover {
+  background-color: var(--grey--darker);
+}

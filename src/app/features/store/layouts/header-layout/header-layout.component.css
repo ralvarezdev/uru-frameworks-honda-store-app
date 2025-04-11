@@ -1,0 +1,34 @@
+/* Main container styles */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header container styles */
+.main-container__header-container {
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap--medium);
+  padding: 0 var(--padding--medium);
+  background-color: var(--color--darkest-primary);
+  box-shadow: var(--box-shadow--small);
+}
+
+/* Link container styles */
+.main-container__header-container__link-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap--small);
+}
+
+/* Body container styles */
+.main-container__body-container {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding--medium);
+  background-color: blue;
+  box-shadow: var(--box-shadow--small);
+}

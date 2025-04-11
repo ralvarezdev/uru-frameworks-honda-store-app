@@ -1,6 +1,8 @@
 <div class="main-container">
-  <img [height]="logoHeight" [width]="logoWidth" alt="logo"
-       class="main-container__logo" ngSrc="/assets/images/klock--var3--logo.svg"/>
+  <app-link [link]="logoLink">
+    <img [height]="logoHeight" [width]="logoWidth" alt="logo"
+       class="main-container__logo" ngSrc="/assets/images/repuestos-edge--logo.svg"/>
+  </app-link>
   <div class="main-container__form-container">
     <div class="main-container__form-container__header-container">
       <h1 class="main-container__form-container__header-container__title">{{ title }}</h1>
