@@ -69,14 +69,61 @@ async function checkProductStock(productData, stock) {
   }
 }
 
+// Validate if the field is a string
+function validateStringField(fieldValue, fieldName) {
+  if (!fieldValue) {
+    throw new functions.https.HttpsError('invalid-argument',
+      `${fieldName} is required.`
+    );
+  }
+
+  if (typeof fieldValue !== 'string' || fieldValue.trim() === '') {
+    throw new functions.https.HttpsError('invalid-argument',
+      `${fieldName} must be a non-empty string.`
+    );
+  }
+}
+
+// Validate if the field is a boolean
+function validateBooleanField(fieldValue, fieldName) {
+  if (!fieldValue) {
+    throw new functions.https.HttpsError('invalid-argument',
+      `${fieldName} is required.`
+    );
+  }
+
+  if (typeof fieldValue !== 'boolean') {
+    throw new functions.https.HttpsError('invalid-argument',
+      `${fieldName} must be a boolean.`
+    );
+  }
+}
+
+// Validate if the field is positive
+function validatePositiveNumberField(fieldValue, fieldName) {
+  if (!fieldValue) {
+    throw new functions.https.HttpsError('invalid-argument',
+      `${fieldName} is required.`
+    );
+  }
+
+  if (typeof fieldValue !== 'number' || fieldValue <= 0) {
+    throw new functions.https.HttpsError('invalid-argument',
+      `${fieldName} must be a positive number.`
+    );
+  }
+}
+
 // Function to create a user
 exports.createUser = functions.https.onCall(async (data, context) => {
   // Validate input data
   const {uid, first_name, last_name} = data;
-  if (!uid || !first_name || !last_name) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'UID, first_name, and last_name are required.'
-    );
+  for (const fieldKey of Object.keys({
+    'UID': uid,
+    'First name': first_name,
+    'Last name': last_name,
+  })) {
+    validateStringField(data[fieldKey], fieldKey);
   }
 
   // Create a new user object
@@ -93,7 +140,7 @@ exports.createUser = functions.https.onCall(async (data, context) => {
 });
 
 // Function to get a user by ID
-exports.getUserById = functions.https.onCall(async (data, context) => {
+exports.getUserByd = functions.https.onCall(async (data, context) => {
   // Check if the user is authenticated
   const userId = checkAuth(context);
 
@@ -112,11 +159,8 @@ exports.addProductToCart = functions.https.onCall(async (data, context) => {
 
   // Validate input data
   const {productId, quantity} = data;
-  if (!productId || !quantity || typeof quantity !== 'number' || quantity <= 0) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Product ID and a positive quantity are required.'
-    );
-  }
+  validateStringField(productId, 'Product ID');
+  validatePositiveNumberField(quantity, 'Quantity');
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
@@ -176,11 +220,7 @@ exports.removeProductFromCart = functions.https.onCall(async (data, context) => 
 
   // Validate input data
   const {productId} = data;
-  if (!productId) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Product ID is required.'
-    );
-  }
+  validateStringField(productId, 'Product ID');
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
@@ -215,11 +255,8 @@ exports.updateProductQuantityInCart = functions.https.onCall(async (data, contex
 
   // Validate input data
   const {productId, quantity} = data;
-  if (!productId || !quantity || typeof quantity !== 'number' || quantity <= 0) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Product ID and a positive quantity are required.'
-    );
-  }
+  validateStringField(productId, 'Product ID');
+  validatePositiveNumberField(quantity, 'Quantity');
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
@@ -326,23 +363,34 @@ exports.createProduct = functions.https.onCall(async (data, context) => {
   const userId = checkAuth(context);
 
   // Validate input data
-  const {title, description, price, stock, active, brand, tags} = data;
-  if (!title || typeof price !== 'number' || typeof stock !== 'number' || typeof active !== 'boolean') {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Title, price, stock, and active status are required.'
-    );
+  const {title, description, price, stock, active, brand, tags, image_url} = data;
+  for (const fieldKey of Object.keys({
+    'Title': title,
+    'Description': description,
+    'Brand': brand,
+    'Image URL': image_url,
+  })) {
+    validateStringField(data[fieldKey], fieldKey);
   }
+  for (const fieldKey of Object.keys({
+    'Price': price,
+    'Stock': stock,
+  })) {
+    validateStringField(data[fieldKey], fieldKey);
+  }
+  validateBooleanField(active, 'Active');
 
   // Create a new product object
   const newProduct = {
     title: title,
-    description: description || '',
+    description: description,
     price: price,
     stock: stock,
     active: active,
-    brand: brand || '',
+    brand: brand,
     tags: Array.isArray(tags) ? tags : [],
     owner: userId,
+    image_url: image_url,
   };
   const productRef = await firestore.collection('products').add(newProduct);
 
@@ -353,10 +401,11 @@ exports.createProduct = functions.https.onCall(async (data, context) => {
 exports.getProducts = functions.https.onCall(async (data, context) => {
   // Validate input data
   const {limit = 10, offset = 0} = data;
-  if (typeof limit !== 'number' || limit <= 0 || typeof offset !== 'number' || offset < 0) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Limit and offset must be non-negative numbers.'
-    );
+  for (const fieldKey of Object.keys({
+    'Limit': limit,
+    'Offset': offset,
+  })) {
+    validatePositiveNumberField(data[fieldKey], fieldKey);
   }
 
   // Get the products
@@ -388,11 +437,7 @@ exports.getProductById = functions.https.onCall(async (data, context) => {
 
   // Validate input data
   const {productId} = data;
-  if (!productId) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Product ID is required.'
-    );
-  }
+  validateStringField(productId, 'Product ID');
 
   // Get the product data
   const [productRef, productData] = await getProductDataById(productId);
@@ -411,12 +456,24 @@ exports.updateProduct = functions.https.onCall(async (data, context) => {
   const userId = checkAuth(context);
 
   // Validate input data
-  const {productId, updates} = data;
-  if (!productId || !updates || typeof updates !== 'object' || Object.keys(
-    updates).length === 0) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Product ID and updates object are required.'
-    );
+  const {productId, title, description, price, stock, active, brand, tags, image_url} = data;
+  validateStringField(productId, 'Product ID');
+
+  // Build the updates object
+  const updates = {};
+  for (const fieldKey of Object.keys({
+    title,
+    description,
+    price,
+    stock,
+    active,
+    brand,
+    tags,
+    image_url,
+  })) {
+    if (data[fieldKey] !== undefined) {
+      updates[fieldKey] = data[fieldKey];
+    }
   }
 
   // Get the product data
@@ -439,11 +496,7 @@ exports.removeProduct = functions.https.onCall(async (data, context) => {
 
   // Validate input data
   const {productId} = data;
-  if (!productId) {
-    throw new functions.https.HttpsError('invalid-argument',
-      'Product ID is required.'
-    );
-  }
+  validateStringField(productId, 'Product ID');
 
   // Get the product data
   const [productRef, productData] = await getProductDataById(productId);

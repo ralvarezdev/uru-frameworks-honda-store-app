@@ -26,8 +26,8 @@ export class ProductsService {
   }
 
   // Create a new product
-  async createProduct(title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[]): Promise<HttpsCallableResult> {
-    return await this.fireCreateProduct({title, description, price, stock, active, brand, tags});
+  async createProduct(title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<HttpsCallableResult> {
+    return await this.fireCreateProduct({title, description, price, stock, active, brand, tags, image_url});
   }
 
   // Get products with pagination
@@ -41,8 +41,8 @@ export class ProductsService {
   }
 
   // Update a product
-  async updateProduct(productId: string, updates: any): Promise<HttpsCallableResult> {
-    return await this.fireUpdateProduct({productId, updates});
+  async updateProduct(productId: string, title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<HttpsCallableResult> {
+    return await this.fireUpdateProduct({productId, title, description, price, stock, active, brand, tags, image_url});
   }
 
   // Remove a product
