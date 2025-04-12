@@ -8,15 +8,17 @@
       <h1 class="main-container__form-container__header-container__title">{{ title }}</h1>
     </div>
     <form (ngSubmit)="onSubmit($event)" (reset)="onReset($event)"
-          [formGroup]="formGroup" class="main-container__form-container__content-container">
-      <ng-content></ng-content>
-      <div class="main-container__form-container__content-container__footer-container">
-        <div class="main-container__form-container__content-container__footer-container__buttons-container">
+          [formGroup]="formGroup" class="main-container__form-container__form">
+      <div class="main-container__form-container__form__content-container">
+        <ng-content></ng-content>
+      </div>
+      <div class="main-container__form-container__form__footer-container">
+        <div class="main-container__form-container__form__footer-container__buttons-container">
           <app-button [ngClass]="{'button--primary--not-filled':true}" [type]="'reset'">Cancel</app-button>
           <app-button [ngClass]="{'button--primary':true}" [type]="'submit'">Submit</app-button>
         </div>
         <a [routerLink]="link"
-           class="main-container__form-container__content-container__footer-container__link">{{ linkText }}</a>
+           class="main-container__form-container__form__footer-container__link">{{ linkText }}</a>
       </div>
     </form>
   </div>

@@ -26,6 +26,9 @@
 .main-container__form-container {
   grid-row: 1/-1;
   grid-column: 1/-1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap--large);
   background-color: var(--grey--lightest);
   padding: var(--padding--medium);
   border-radius: var(--border-radius--medium);
@@ -35,7 +38,6 @@
 
 /* Header container styles */
 .main-container__form-container__header-container {
-  margin-bottom: var(--padding--medium);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,10 +50,17 @@
   color: var(--grey--darkest);
 }
 
+/* Form styles */
+.main-container__form-container__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap--large);
+}
+
 /* Content container styles */
-.main-container__form-container__content-container {
+.main-container__form-container__form__content-container {
   display: grid;
-  gap: var(--gap--medium);
+  gap: 0 var(--gap--medium);
   grid-template-columns: 1fr 1fr;
 }
 
@@ -61,20 +70,22 @@
   top: var(--padding--small);
   right: var(--padding--medium);
   object-fit: cover;
+  max-height: 3rem;
+  width: auto;
 }
 
 /* Footer container styles */
-.main-container__form-container__content-container__footer-container {
+.main-container__form-container__form__footer-container {
   grid-column: 1/-1;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.6rem;
+  gap: var(--gap--medium);
   flex-direction: column;
 }
 
 /* Button container styles */
-.main-container__form-container__content-container__footer-container__buttons-container {
+.main-container__form-container__form__footer-container__buttons-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,9 +94,8 @@
 }
 
 /* Link styles */
-.main-container__form-container__content-container__footer-container__link {
+.main-container__form-container__form__footer-container__link {
   justify-self: start;
-  padding-top: var(--padding--medium);
   color: var(--grey--medium);
   text-decoration: none;
 }

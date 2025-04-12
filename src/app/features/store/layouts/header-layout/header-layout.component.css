@@ -11,9 +11,15 @@
   place-items: center;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap--medium);
-  padding: 0 var(--padding--medium);
+  padding: var(--padding--extra-small) var(--padding--medium);
   background-color: var(--color--darkest-primary);
   box-shadow: var(--box-shadow--small);
+}
+
+/* Logo styles */
+.main-container__header-container__logo{
+  max-height: 3rem;
+  width: auto;
 }
 
 /* Link container styles */
