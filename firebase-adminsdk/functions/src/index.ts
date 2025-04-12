@@ -1,8 +1,52 @@
-const {initializeApp, cert} = require('firebase-admin/app')
-const {getFirestore} = require('firebase-admin/firestore')
-const functions = require('firebase-functions/v2')
-const serviceAccount = require(
-  '../../uru-frameworks-honda-store-firebase-adminsdk.json')
+import {initializeApp, cert} from 'firebase-admin/app'
+import {getFirestore} from 'firebase-admin/firestore'
+import {onCall, HttpsError} from 'firebase-functions/v2/https'
+import {DocumentReference} from 'firebase-admin/firestore'
+import serviceAccount from '../../uru-frameworks-honda-store-firebase-adminsdk.json'
+
+// Auth data
+interface AuthData {
+  uid: string;
+  token: {
+    email?: string;
+    name?: string;
+    [key: string]: any;
+  };
+}
+
+// User data
+type UserData = {
+  first_name: string,
+  last_name: string,
+  uid: string,
+}
+
+// Product data
+type ProductData = {
+  title: string,
+  description: string,
+  price: number,
+  stock: number,
+  active: boolean,
+  brand: string,
+  tags: string[],
+  owner: string,
+  image_url: string,
+}
+
+// Cart data
+type CartData = {
+  owner: string,
+  status: string,
+  products: {
+    [key: string]: {
+      id: string,
+      price: number,
+      quantity: number,
+    }
+  }
+}
+
 
 // Initialize the Firebase Admin SDK
 const app = initializeApp({
@@ -13,18 +57,18 @@ const app = initializeApp({
 const firestore = getFirestore(app);
 
 // Check if the user is authenticated
-function checkAuth(context) {
-  if (!context?.auth || !context?.auth?.uid) {
-    throw new functions.https.HttpsError('unauthenticated',
+function checkAuth(auth?:AuthData) {
+  if (!auth || !auth?.uid) {
+    throw new HttpsError('unauthenticated',
       'User must be authenticated.'
     );
   }
 
-  return context.auth.uid;
+  return auth.uid;
 }
 
 // Get the current pending cart reference for the user
-async function getCurrentPendingCartRef(userId) {
+async function getCurrentPendingCartRef(userId:string) {
   const cartRef = firestore.collection('carts').where('owner',
     '==',
     userId
@@ -33,97 +77,78 @@ async function getCurrentPendingCartRef(userId) {
 }
 
 // Get a product data by ID
-async function getProductDataById(productId) {
+async function getProductDataById(productId:string):Promise<[DocumentReference, ProductData]> {
   const productRef = firestore.collection('products').doc(productId);
   const productSnapshot = await productRef.get();
 
   // Check if the product exists
   if (!productSnapshot.exists) {
-    throw new functions.https.HttpsError('not-found', 'Product not found.');
+    throw new HttpsError('not-found', 'Product not found.');
   }
 
-  return [productRef, productSnapshot.data()];
+  return [productRef, productSnapshot.data() as ProductData];
 }
 
 // Check if the product is active
-async function checkProductActive(productData) {
+async function checkProductActive(productData:ProductData) {
   if (!productData?.active) {
-    throw new functions.https.HttpsError('unavailable',
+    throw new HttpsError('unavailable',
       'This product is currently unavailable.'
     );
   }
 }
 
 // Check if the product has stock
-async function checkProductStock(productData, stock) {
+async function checkProductStock(productData: ProductData, quantity:number) {
   if (productData?.stock <= 0) {
-    throw new functions.https.HttpsError('unavailable',
+    throw new HttpsError('unavailable',
       'This product is out of stock.'
     );
   }
 
-  if (stock && productData?.stock < stock) {
-    throw new functions.https.HttpsError('unavailable',
+  if (quantity && productData?.stock < quantity) {
+    throw new HttpsError('unavailable',
       'Not enough stock available.'
     );
   }
 }
 
-// Validate if the field is a string
-function validateStringField(fieldValue, fieldName) {
-  if (!fieldValue) {
-    throw new functions.https.HttpsError('invalid-argument',
-      `${fieldName} is required.`
-    );
-  }
-
-  if (typeof fieldValue !== 'string' || fieldValue.trim() === '') {
-    throw new functions.https.HttpsError('invalid-argument',
+// Validate if the field is a non-empty string
+function validateEmptyStringField(fieldValue:string, fieldName:string) {
+  if (fieldValue.trim() === '') {
+    throw new HttpsError('invalid-argument',
       `${fieldName} must be a non-empty string.`
     );
   }
 }
 
-// Validate if the field is a boolean
-function validateBooleanField(fieldValue, fieldName) {
-  if (!fieldValue) {
-    throw new functions.https.HttpsError('invalid-argument',
-      `${fieldName} is required.`
-    );
-  }
-
-  if (typeof fieldValue !== 'boolean') {
-    throw new functions.https.HttpsError('invalid-argument',
-      `${fieldName} must be a boolean.`
-    );
-  }
-}
-
-// Validate if the field is positive
-function validatePositiveNumberField(fieldValue, fieldName) {
-  if (!fieldValue) {
-    throw new functions.https.HttpsError('invalid-argument',
-      `${fieldName} is required.`
-    );
-  }
-
-  if (typeof fieldValue !== 'number' || fieldValue <= 0) {
-    throw new functions.https.HttpsError('invalid-argument',
+// Validate if the field is a positive number
+function validatePositiveNumberField(fieldValue:number, fieldName:string) {
+  if (fieldValue <= 0) {
+    throw new HttpsError('invalid-argument',
       `${fieldName} must be a positive number.`
     );
   }
 }
 
+// Create user data
+type CreateUserData = {
+  uid: string,
+  first_name: string,
+  last_name: string,
+}
+
 // Function to create a user
-exports.createUser = functions.https.onCall(async (data, context) => {
+exports.createUser = onCall(async ({data}:{data:CreateUserData}) => {
   // Validate input data
   const {uid, first_name, last_name} = data;
-  for (const fieldKey of Object.keys({
+  const mappedFields: Record<string, any> = {
     'UID': uid,
     'First name': first_name,
     'Last name': last_name,
-  })) {
-    validateStringField(data[fieldKey], fieldKey);
+  }
+  for (const mappedFieldKey in mappedFields) {
+    validateEmptyStringField(mappedFields[mappedFieldKey], mappedFieldKey);
   }
 
   // Create a new user object
@@ -140,33 +165,39 @@ exports.createUser = functions.https.onCall(async (data, context) => {
 });
 
 // Function to get a user by ID
-exports.getUserByd = functions.https.onCall(async (data, context) => {
+exports.getUserById = onCall(async ({auth}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Retrieve the user document
   const userDoc = await firestore.collection('users').doc(userId).get();
 
   // Return the user data
-  const userData = userDoc.data();
-  return {first_name: userData.first_name, last_name: userData.last_name};
+  const userData = userDoc.data() as UserData;
+  return {user: userData};
 });
 
+// Add product to cart data
+type AddProductToCartData = {
+  productId: string,
+  quantity: number,
+}
+
 // Function to add a product to the cart
-exports.addProductToCart = functions.https.onCall(async (data, context) => {
+exports.addProductToCart = onCall(async ({data, auth}:{data:AddProductToCartData, auth?:AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {productId, quantity} = data;
-  validateStringField(productId, 'Product ID');
+  validateEmptyStringField(productId, 'Product ID');
   validatePositiveNumberField(quantity, 'Quantity');
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
 
   // Get the product data
-  const productData = await getProductDataById(productId);
+  const [,productData] = await getProductDataById(productId);
 
   // Check if the product is active
   await checkProductActive(productData);
@@ -213,19 +244,24 @@ exports.addProductToCart = functions.https.onCall(async (data, context) => {
   return {message: 'Product added to cart successfully.'};
 });
 
+// Remove product from cart data
+type RemoveProductFromCartData = {
+  productId: string,
+}
+
 // Function to remove a product from the cart
-exports.removeProductFromCart = functions.https.onCall(async (data, context) => {
+exports.removeProductFromCart = onCall(async ({data, auth}:{data:RemoveProductFromCartData, auth?:AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {productId} = data;
-  validateStringField(productId, 'Product ID');
+  validateEmptyStringField(productId, 'Product ID');
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
   if (cartSnapshot.empty) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'No pending cart found for this user.'
     );
   }
@@ -234,7 +270,7 @@ exports.removeProductFromCart = functions.https.onCall(async (data, context) => 
   const cartDocument = cartSnapshot.docs[0];
   const cartData = cartDocument.data();
   if (!cartData?.products[productId]) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'Product not found in the cart.'
     );
   }
@@ -248,20 +284,24 @@ exports.removeProductFromCart = functions.https.onCall(async (data, context) => 
   return {message: 'Product removed from cart successfully.'};
 });
 
+// Update product quantity in cart data
+type UpdateProductQuantityInCartData = {
+  productId: string,
+  quantity: number,
+}
+
 // Function to update the quantity of a product in the cart
-exports.updateProductQuantityInCart = functions.https.onCall(async (data, context) => {
+exports.updateProductQuantityInCart = onCall(async ({data, auth}:{data:UpdateProductQuantityInCartData, auth?:AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {productId, quantity} = data;
-  validateStringField(productId, 'Product ID');
-  validatePositiveNumberField(quantity, 'Quantity');
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
   if (cartSnapshot.empty) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'No pending cart found for this user.'
     );
   }
@@ -270,7 +310,7 @@ exports.updateProductQuantityInCart = functions.https.onCall(async (data, contex
   const cartDocument = cartSnapshot.docs[0];
   const cartData = cartDocument.data();
   if (!cartData?.products[productId]) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'Product not found in the cart.'
     );
   }
@@ -293,34 +333,34 @@ exports.updateProductQuantityInCart = functions.https.onCall(async (data, contex
 });
 
 // Function to get the cart
-exports.getCart = functions.https.onCall(async (data, context) => {
+exports.getCart = onCall(async ({auth}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
   if (cartSnapshot.empty) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'No pending cart found for this user.'
     );
   }
 
   // Get the cart document
   const cartDocument = cartSnapshot.docs[0];
-  const cartData = cartDocument.data();
+  const cartData = cartDocument.data() as CartData;
 
   return {cart: cartData};
 });
 
 // Function to clear the cart
-exports.clearCart = functions.https.onCall(async (data, context) => {
+exports.clearCart = onCall(async ({auth}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
   if (cartSnapshot.empty) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'No pending cart found for this user.'
     );
   }
@@ -334,14 +374,14 @@ exports.clearCart = functions.https.onCall(async (data, context) => {
 });
 
 // Function to check out the cart
-exports.checkoutCart = functions.https.onCall(async (data, context) => {
+exports.checkoutCart = onCall(async ({auth}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Get the current pending cart
   const cartSnapshot = await getCurrentPendingCartRef(userId);
   if (cartSnapshot.empty) {
-    throw new functions.https.HttpsError('not-found',
+    throw new HttpsError('not-found',
       'No pending cart found for this user.'
     );
   }
@@ -357,28 +397,41 @@ exports.checkoutCart = functions.https.onCall(async (data, context) => {
   return {message: 'Checkout completed successfully.'};
 });
 
+// Create product data
+type CreateProductData = {
+  title: string,
+  description: string,
+  price: number,
+  stock: number,
+  active: boolean,
+  brand: string,
+  tags: string[],
+  image_url: string,
+}
+
 // Function to create a new product
-exports.createProduct = functions.https.onCall(async (data, context) => {
+exports.createProduct = onCall(async ({data, auth}:{data:CreateProductData, auth?:AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {title, description, price, stock, active, brand, tags, image_url} = data;
-  for (const fieldKey of Object.keys({
+  const mappedStringFields: Record<string, any> = {
     'Title': title,
     'Description': description,
     'Brand': brand,
     'Image URL': image_url,
-  })) {
-    validateStringField(data[fieldKey], fieldKey);
   }
-  for (const fieldKey of Object.keys({
+  const mappedPositiveNumberFields: Record<string, any> = {
     'Price': price,
     'Stock': stock,
-  })) {
-    validateStringField(data[fieldKey], fieldKey);
   }
-  validateBooleanField(active, 'Active');
+  for (const mappedFieldKey in mappedStringFields) {
+    validateEmptyStringField(mappedStringFields[mappedFieldKey], mappedFieldKey);
+  }
+  for (const mappedFieldKey in mappedPositiveNumberFields) {
+    validatePositiveNumberField(mappedPositiveNumberFields[mappedFieldKey], mappedFieldKey);
+  }
 
   // Create a new product object
   const newProduct = {
@@ -397,15 +450,22 @@ exports.createProduct = functions.https.onCall(async (data, context) => {
   return {message: 'Product created successfully.', productId: productRef.id};
 });
 
-// Function to update a product
-exports.getProducts = functions.https.onCall(async (data, context) => {
+// Get products data
+type GetProductsData = {
+  limit: number,
+  offset: number,
+}
+
+// Function to get products
+exports.getProducts = onCall(async ({data}:{data:GetProductsData}) => {
   // Validate input data
   const {limit = 10, offset = 0} = data;
-  for (const fieldKey of Object.keys({
+  const mappedFields: Record<string, any> = {
     'Limit': limit,
     'Offset': offset,
-  })) {
-    validatePositiveNumberField(data[fieldKey], fieldKey);
+  }
+  for (const mappedFieldKey in mappedFields) {
+    validatePositiveNumberField(mappedFields[mappedFieldKey], mappedFieldKey);
   }
 
   // Get the products
@@ -414,9 +474,9 @@ exports.getProducts = functions.https.onCall(async (data, context) => {
     .limit(limit)
     .offset(offset);
   const productSnapshot = await productsRef.get();
-  const products = [];
+  const products: Record<string,  ProductData> = {};
   productSnapshot.forEach(doc => {
-    products.push({id: doc.id, ...doc.data()});
+    products[doc.id] = doc.data() as ProductData;
   });
 
   // Get the total count of active products
@@ -430,14 +490,19 @@ exports.getProducts = functions.https.onCall(async (data, context) => {
   return {products, totalCount};
 });
 
+// Get product by ID data
+type GetProductByIdData = {
+  productId: string,
+}
+
 // Function to get a product by ID
-exports.getProductById = functions.https.onCall(async (data, context) => {
+exports.getProductById = onCall(async ({data, auth}:{data:GetProductByIdData, auth?:AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {productId} = data;
-  validateStringField(productId, 'Product ID');
+  validateEmptyStringField(productId, 'Product ID');
 
   // Get the product data
   const [productRef, productData] = await getProductDataById(productId);
@@ -450,18 +515,31 @@ exports.getProductById = functions.https.onCall(async (data, context) => {
   return {product: {id: productRef.id, ...productData}};
 });
 
+// Update product data
+type UpdateProductData = {
+  productId: string,
+  title?: string,
+  description?: string,
+  price?: number,
+  stock?: number,
+  active?: boolean,
+  brand?: string,
+  tags?: string[],
+  image_url?: string,
+}
+
 // Function to update a product
-exports.updateProduct = functions.https.onCall(async (data, context) => {
+exports.updateProduct = onCall(async ({data, auth}:{data:UpdateProductData, auth?:AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {productId, title, description, price, stock, active, brand, tags, image_url} = data;
-  validateStringField(productId, 'Product ID');
+  validateEmptyStringField(productId, 'Product ID');
 
   // Build the updates object
-  const updates = {};
-  for (const fieldKey of Object.keys({
+  const updates: Record<string, any> = {};
+  const mappedFields: Record<string, any> = {
     title,
     description,
     price,
@@ -470,16 +548,17 @@ exports.updateProduct = functions.https.onCall(async (data, context) => {
     brand,
     tags,
     image_url,
-  })) {
-    if (data[fieldKey] !== undefined) {
-      updates[fieldKey] = data[fieldKey];
+  }
+  for (const fieldKey in mappedFields) {
+    if (mappedFields?.[fieldKey] !== undefined) {
+      updates[fieldKey] = mappedFields[fieldKey];
     }
   }
 
   // Get the product data
   const [productRef, productData] = await getProductDataById(productId);
   if (productData.owner !== userId) {
-    throw new functions.https.HttpsError('permission-denied',
+    throw new HttpsError('permission-denied',
       'You are not the owner of this product.'
     );
   }
@@ -489,19 +568,24 @@ exports.updateProduct = functions.https.onCall(async (data, context) => {
   return {message: 'Product updated successfully.'};
 });
 
+// Remove product data
+type RemoveProductData = {
+  productId: string,
+}
+
 // Function to remove a product
-exports.removeProduct = functions.https.onCall(async (data, context) => {
+exports.removeProduct = onCall(async ({data, auth}:{data:RemoveProductData, auth?: AuthData}) => {
   // Check if the user is authenticated
-  const userId = checkAuth(context);
+  const userId = checkAuth(auth);
 
   // Validate input data
   const {productId} = data;
-  validateStringField(productId, 'Product ID');
+  validateEmptyStringField(productId, 'Product ID');
 
   // Get the product data
   const [productRef, productData] = await getProductDataById(productId);
   if (productData.owner !== userId) {
-    throw new functions.https.HttpsError('permission-denied',
+    throw new HttpsError('permission-denied',
       'You are not the owner of this product.'
     );
   }
@@ -509,3 +593,4 @@ exports.removeProduct = functions.https.onCall(async (data, context) => {
 
   return {message: 'Product removed successfully.'};
 });
+

@@ -27,7 +27,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@ang
 })
 export class InputComponent implements ControlValueAccessor {
   isBrowser: boolean = false;
-  passwordVisibility = signal<boolean>(true)
+  passwordVisibility = signal<boolean>(false)
   @Input() id: string = '';
   @Input() label: string = '';
   @Input() type: string = 'text';

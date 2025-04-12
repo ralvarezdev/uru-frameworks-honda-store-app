@@ -24,6 +24,7 @@ export class SignUpPageComponent {
   authForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
     password: new FormControl<string>('', [Validators.required, Validators.minLength(6)]),
+    "confirm-password": new FormControl<string>('', [Validators.required, Validators.minLength(6)]),
     "first-name": new FormControl<string>('', [Validators.required]),
     "last-name": new FormControl<string>('', [Validators.required])
   });
@@ -34,11 +35,37 @@ export class SignUpPageComponent {
   // Submit Handler Click
   submitHandler(): void {
     if (this.authForm?.valid) {
-      const {"first-name": firstName, "last-name": lastName, email, password} = this.authForm.value;
+      // Clear previous errors
+      clearFormErrors(this.inputs);
+
+      // Get the form values
+      const {"first-name": firstName, "last-name": lastName, email, "confirm-password":confirmPassword,password} = this.authForm.value;
+
+      // Check if password and confirm password match
+      if (password !== confirmPassword) {
+        this.inputs.forEach(input => {
+          if (input.id === 'confirm-password' || input.id === 'password') {
+            input.error = 'Passwords do not match';
+            input.showError = true;
+          }
+        })
+        return
+      }
+
       this.authService.signUp(firstName as string, lastName as string, email as string, password as string).then(
         r =>
           this.router.navigateByUrl('/sign-in', {skipLocationChange: false, replaceUrl: true})
       ).catch(error => {
+        // Check if the error is about the email already in use
+        if (error.code === 'auth/email-already-in-use') {
+          this.inputs.forEach(input => {
+            if (input.id === 'email') {
+              input.error = 'Email already in use';
+              input.showError = true;
+            }
+          })
+          return
+        }
         console.error(error)
       })
     } else {

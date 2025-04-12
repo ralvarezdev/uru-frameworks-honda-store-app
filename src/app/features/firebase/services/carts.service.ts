@@ -14,8 +14,7 @@ export class CartsService {
   fireCheckoutCart: any;
 
   constructor(private appService: AppService) {
-    // Get the functions instance from Firebase
-    const functions = getFunctions();
+    const functions = appService.functions;
 
     // Define the callable functions
     this.fireAddProductToCart = httpsCallable(functions, 'addProductToCart');

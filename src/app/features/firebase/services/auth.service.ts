@@ -13,9 +13,7 @@ export class AuthService {
 
   constructor(private appService: AppService) {
     this.auth = appService.auth;
-
-    // Get the functions instance from Firebase
-    const functions = getFunctions();
+    const functions = appService.functions
 
     // Define the callable functions
     this.fireCreateUser = httpsCallable(functions, 'createUser');

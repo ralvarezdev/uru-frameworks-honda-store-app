@@ -9,4 +9,6 @@
              [required]="true" [type]="'email'" id="email-container"></app-input>
   <app-input [formControl]="authForm.controls.password" [id]="'password'" [label]="'Password'" [placeholder]="'Enter your password'"
              [required]="true" [type]="'password'" id="password-container"></app-input>
+  <app-input [formControl]="authForm.controls['confirm-password']" [id]="'confirm-password'" [label]="'Confirm password'" [placeholder]="'Confirm your password'"
+             [required]="true" [type]="'password'" id="confirm-password-container"></app-input>
 </app-auth-layout>

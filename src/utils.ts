@@ -50,9 +50,7 @@ export function setFormControlErrors(inputs: QueryList<InputComponent>, form: Fo
 
 // Clear form errors
 export function clearFormErrors(inputs: QueryList<InputComponent>) {
-  console.log(1111)
   inputs.forEach(input => {
-    console.log(input)
     input.error = ''
     input.showError = false
   })

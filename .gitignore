@@ -47,7 +47,5 @@ Thumbs.db
 .env
 
 # Firebase
-/**/*/uru-frameworks-honda-store-firebase-adminsdk.json
-/uru-frameworks-honda-store-firebase-adminsdk.json
-/**/*/firebase.json
+/elpepe/uru-frameworks-honda-store-firebase-adminsdk.json
 /firebase.json

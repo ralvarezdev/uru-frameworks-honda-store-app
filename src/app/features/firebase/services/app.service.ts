@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Auth, getAuth, GoogleAuthProvider} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
-import firebase from '../../../../../firebase.json';
+import firebaseConfig from '../../../../../firebase.json';
+import {getFunctions} from 'firebase/functions';
+import {GCLOUD_REGION} from '../../../../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -9,17 +11,18 @@ import firebase from '../../../../../firebase.json';
 export class AppService {
   auth: Auth | null = null
   provider: GoogleAuthProvider | null = null
+  functions: any | null = null
 
   constructor() {
     // Initialize Firebase
     initializeApp({
-      apiKey: firebase.apiKey,
-      authDomain: firebase.authDomain,
-      projectId: firebase.projectId,
-      storageBucket: firebase.storageBucket,
-      messagingSenderId: firebase.messagingSenderId,
-      appId: firebase.appId,
-      measurementId: firebase.measurementId,
+      apiKey: firebaseConfig.apiKey,
+      authDomain: firebaseConfig.authDomain,
+      projectId: firebaseConfig.projectId,
+      storageBucket: firebaseConfig.storageBucket,
+      messagingSenderId: firebaseConfig.messagingSenderId,
+      appId: firebaseConfig.appId,
+      measurementId: firebaseConfig.measurementId,
     })
 
     // Get the Auth service
@@ -27,5 +30,8 @@ export class AppService {
 
     // Google Sign-In
     this.provider = new GoogleAuthProvider();
+
+    // Get the functions
+    this.functions = getFunctions(undefined, GCLOUD_REGION)
   }
 }

@@ -32,7 +32,13 @@ export class SignInPageComponent {
   // Handle Submit Click
   submitHandler(): void {
     if (this.authForm?.valid) {
+      // Clear previous errors
+      clearFormErrors(this.inputs);
+
+      // Get the form values
       const {email, password} = this.authForm.value;
+
+
       this.authService.signIn(email as string, password as string).then(
         r =>
           this.router.navigateByUrl('/clocks/abacus', {skipLocationChange: false, replaceUrl: true})

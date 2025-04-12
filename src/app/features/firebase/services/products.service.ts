@@ -14,8 +14,7 @@ export class ProductsService {
   fireRemoveProduct: any;
 
   constructor(private appService: AppService) {
-    // Get the functions instance from Firebase
-    const functions = getFunctions();
+    const functions = appService.functions;
 
     // Define the callable functions
     this.fireCreateProduct = httpsCallable(functions, 'createProduct');
