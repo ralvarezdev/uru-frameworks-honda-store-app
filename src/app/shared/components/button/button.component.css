@@ -11,6 +11,8 @@
   color var(--transition--color--duration);
   display: grid;
   place-items: center;
+  font-size: var(--font-size--small);
+  font-weight: var(--font-weight--medium);
 }
 
 /* Primary filled button styles */

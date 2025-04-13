@@ -12,6 +12,9 @@
       <app-link *ngIf="showSignUpLink" [link]="signUpLink" [ngClass]="{'link-container__link--primary': true}">
         {{ signUpText }}
       </app-link>
+      <app-button *ngIf="showSignOutButton" [type]="'button'" (click)="signOutHandler()">
+        <span class="main-container__header-container__link-container__sign-out-button__span">{{ signOutText }}</span>
+      </app-button>
     </div>
   </div>
   <div class="main-container__body-container">

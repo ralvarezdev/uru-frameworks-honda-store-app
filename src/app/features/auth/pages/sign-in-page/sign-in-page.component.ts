@@ -30,7 +30,7 @@ export class SignInPageComponent {
   }
 
   // Handle Submit Click
-  submitHandler(): void {
+  async submitHandler(): Promise<void> {
     if (this.authForm?.valid) {
       // Clear previous errors
       clearFormErrors(this.inputs);
@@ -38,13 +38,34 @@ export class SignInPageComponent {
       // Get the form values
       const {email, password} = this.authForm.value;
 
+      try{
+        await this.authService.signIn(email as string, password as string)
+        this.router.navigateByUrl('/', {skipLocationChange: false, replaceUrl: true})
+      }catch(error: any) {
+        // Check if the error is about the user not found
+        if (error?.code === 'auth/user-not-found') {
+          this.inputs.forEach(input => {
+            if (input.id === 'email') {
+              input.error = 'User not found';
+              input.showError = true;
+            }
+          })
+          return
+        }
 
-      this.authService.signIn(email as string, password as string).then(
-        r =>
-          this.router.navigateByUrl('/clocks/abacus', {skipLocationChange: false, replaceUrl: true})
-      ).catch(error => {
+        // Check if the error is about the wrong password
+        if (error?.code === 'auth/wrong-password') {
+          this.inputs.forEach(input => {
+            if (input.id === 'password') {
+              input.error = 'Wrong password';
+              input.showError = true;
+            }
+          })
+          return
+        }
+
         console.error(error)
-      })
+      }
     } else {
       console.log('Invalid form', this.authForm)
       setFormControlErrors(this.inputs, this.authForm)

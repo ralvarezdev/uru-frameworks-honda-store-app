@@ -11,6 +11,11 @@ export function parseFromControlErrors(errors: { [key: string]: any }): string[]
       parsedErrors.push('Required')
     }
 
+    // Check if the field is about the email
+    if (errorKey === 'email') {
+      parsedErrors.push('Invalid email')
+    }
+
     // Check if the field is about the length
     if (errorKey === 'minlength') {
       parsedErrors.push(`Minimum length is ${errors[errorKey]?.requiredLength}`)

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {getFunctions, httpsCallable, HttpsCallableResult} from "firebase/functions";
+import {httpsCallable, HttpsCallableResult} from "firebase/functions";
 import {AppService} from './app.service';
 
 @Injectable({
@@ -17,12 +17,12 @@ export class CartsService {
     const functions = appService.functions;
 
     // Define the callable functions
-    this.fireAddProductToCart = httpsCallable(functions, 'addProductToCart');
-    this.fireRemoveProductFromCart = httpsCallable(functions, 'removeProductFromCart');
-    this.fireUpdateProductQuantityInCart = httpsCallable(functions, 'updateProductQuantityInCart');
-    this.fireGetCart = httpsCallable(functions, 'getCart');
-    this.fireClearCart = httpsCallable(functions, 'clearCart');
-    this.fireCheckoutCart = httpsCallable(functions, 'checkoutCart');
+    this.fireAddProductToCart = httpsCallable(functions, 'add_product_to_cart');
+    this.fireRemoveProductFromCart = httpsCallable(functions, 'remove_product_from_cart');
+    this.fireUpdateProductQuantityInCart = httpsCallable(functions, 'update_product_quantity_in_cart');
+    this.fireGetCart = httpsCallable(functions, 'get_cart');
+    this.fireClearCart = httpsCallable(functions, 'clear_cart');
+    this.fireCheckoutCart = httpsCallable(functions, 'checkout_cart');
   }
 
   // Add a product to the cart

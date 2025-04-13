@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth";
 import {AppService} from './app.service';
-import {getFunctions, httpsCallable} from 'firebase/functions';
+import {httpsCallable} from 'firebase/functions';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,31 +11,38 @@ export class AuthService {
   auth: Auth | null = null
   fireCreateUser: any;
   fireGetUserById: any;
+  private _isAuthenticated = new BehaviorSubject<boolean>(false);
+  authStateChange = this._isAuthenticated.asObservable();
 
   constructor(private appService: AppService) {
     this.auth = appService.auth;
     const functions = appService.functions
 
+    // Check authentication state after Firebase is loaded
+    onAuthStateChanged(this.auth as Auth, (user: any) => {
+      this._isAuthenticated.next(!!user);
+    });
+
     // Define the callable functions
-    this.fireCreateUser = httpsCallable(functions, 'createUser');
-    this.fireGetUserById = httpsCallable(functions, 'getUserById');
+    this.fireCreateUser = httpsCallable(functions, 'create_user');
+    this.fireGetUserById = httpsCallable(functions, 'get_user_by_id');
   }
 
   // Check if the user is authenticated
   get isAuthenticated(): boolean {
-    return this.auth?.currentUser !== null
+    return this._isAuthenticated.value;
   }
 
   // Sign in with email/password
   async signUp(firstName: string, lastName: string, email: string, password: string) {
     // Create the user with email and password
-    const userCredential = await createUserWithEmailAndPassword(this.auth as Auth, email, password)
+    await createUserWithEmailAndPassword(this.auth as Auth, email, password)
 
-    // Get the user ID
-    const userId = userCredential.user.uid
+    // Log the user in
+    await this.signIn(email, password)
 
     // Create the user in the database
-    await this.fireCreateUser({uid: userId, first_name: firstName, last_name: lastName})
+    await this.fireCreateUser({first_name: firstName, last_name: lastName})
 
     // Log the user signed up
     console.log('User signed up: ', email)

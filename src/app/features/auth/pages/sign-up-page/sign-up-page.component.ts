@@ -33,7 +33,7 @@ export class SignUpPageComponent {
   }
 
   // Submit Handler Click
-  submitHandler(): void {
+  async submitHandler(): Promise<void> {
     if (this.authForm?.valid) {
       // Clear previous errors
       clearFormErrors(this.inputs);
@@ -52,12 +52,12 @@ export class SignUpPageComponent {
         return
       }
 
-      this.authService.signUp(firstName as string, lastName as string, email as string, password as string).then(
-        r =>
-          this.router.navigateByUrl('/sign-in', {skipLocationChange: false, replaceUrl: true})
-      ).catch(error => {
+      try {
+        await this.authService.signUp(firstName as string, lastName as string, email as string, password as string)
+        this.router.navigateByUrl('/', {skipLocationChange: false, replaceUrl: true})
+      } catch(error: any) {
         // Check if the error is about the email already in use
-        if (error.code === 'auth/email-already-in-use') {
+        if (error?.code === 'auth/email-already-in-use') {
           this.inputs.forEach(input => {
             if (input.id === 'email') {
               input.error = 'Email already in use';
@@ -67,7 +67,7 @@ export class SignUpPageComponent {
           return
         }
         console.error(error)
-      })
+      }
     } else {
       console.log('Invalid form', this.authForm)
       setFormControlErrors(this.inputs, this.authForm)

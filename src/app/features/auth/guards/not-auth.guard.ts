@@ -15,7 +15,7 @@ export class NotAuthGuard implements CanActivate {
       return true; // Allow navigation
     } else {
       console.log('User is authenticated');
-      await this.router.navigate(['/clocks/abacus'], {skipLocationChange: false, replaceUrl: true});
+      await this.router.navigate(['/'], {skipLocationChange: false, replaceUrl: true});
       return false; // Block navigation
     }
   }

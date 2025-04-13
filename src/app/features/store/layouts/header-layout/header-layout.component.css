@@ -30,6 +30,11 @@
   gap: var(--gap--small);
 }
 
+/* Sign out button span styles */
+.main-container__header-container__link-container__sign-out-button__span{
+  color: var(--grey--lightest);
+}
+
 /* Body container styles */
 .main-container__body-container {
   display: flex;

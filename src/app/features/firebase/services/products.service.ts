@@ -1,6 +1,5 @@
-// File: src/app/features/firebase/services/products.service.ts
 import {Injectable} from '@angular/core';
-import {getFunctions, httpsCallable, HttpsCallableResult} from "firebase/functions";
+import {httpsCallable, HttpsCallableResult} from "firebase/functions";
 import {AppService} from './app.service';
 
 @Injectable({
@@ -17,11 +16,11 @@ export class ProductsService {
     const functions = appService.functions;
 
     // Define the callable functions
-    this.fireCreateProduct = httpsCallable(functions, 'createProduct');
-    this.fireGetProducts = httpsCallable(functions, 'getProducts');
-    this.fireGetProductById = httpsCallable(functions, 'getProductById');
-    this.fireUpdateProduct = httpsCallable(functions, 'updateProduct');
-    this.fireRemoveProduct = httpsCallable(functions, 'removeProduct');
+    this.fireCreateProduct = httpsCallable(functions, 'create_product');
+    this.fireGetProducts = httpsCallable(functions, 'get_products');
+    this.fireGetProductById = httpsCallable(functions, 'get_product_by_id');
+    this.fireUpdateProduct = httpsCallable(functions, 'update_product');
+    this.fireRemoveProduct = httpsCallable(functions, 'remove_product');
   }
 
   // Create a new product
