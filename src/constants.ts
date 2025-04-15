@@ -9,4 +9,4 @@ export const GCLOUD_REGION = 'us-central1';
 export const EMULATOR_AUTHENTICATION_URL = 'http://localhost:9099';
 export const EMULATOR_FUNCTIONS_HOST = 'localhost';
 export const EMULATOR_FUNCTIONS_PORT = 5001;
-export const EMULATOR_ACTIVE = true;
+export const EMULATOR_ACTIVE = false;

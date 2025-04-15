@@ -23,7 +23,7 @@ export class SignInPageComponent {
   linkText: string = 'Don\'t have an account? Sign up';
   authForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
-    password: new FormControl<string>('', [Validators.required, Validators.minLength(6)])
+    password: new FormControl<string>('', [Validators.required])
   });
 
   constructor(private router: Router, private authService: AuthService) {

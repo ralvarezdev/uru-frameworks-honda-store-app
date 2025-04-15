@@ -1,10 +1,10 @@
-import {Component, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {AuthLayoutComponent} from '../../layouts/auth-layout/auth-layout.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../../../shared/components/input/input.component';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
-import {clearFormErrors, setFormControlErrors} from '../../../../../utils';
+import {clearFormErrors, passwordValidator, setFormControlErrors} from '../../../../../utils';
 
 @Component({
   selector: 'app-auth-sign-up-page',
@@ -23,14 +23,13 @@ export class SignUpPageComponent {
   linkText: string = 'Already have an account? Sign in';
   authForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
-    password: new FormControl<string>('', [Validators.required, Validators.minLength(6)]),
-    "confirm-password": new FormControl<string>('', [Validators.required, Validators.minLength(6)]),
-    "first-name": new FormControl<string>('', [Validators.required]),
-    "last-name": new FormControl<string>('', [Validators.required])
+    'first-name': new FormControl<string>('', [Validators.required]),
+    'last-name': new FormControl<string>('', [Validators.required]),
+    password:  new FormControl<string>('', [Validators.required, passwordValidator]),
+    'confirm-password':  new FormControl<string>('', [Validators.required])
   });
 
-  constructor(private router: Router, private authService: AuthService) {
-  }
+  constructor(private router: Router, private authService: AuthService) { }
 
   // Submit Handler Click
   async submitHandler(): Promise<void> {
@@ -41,14 +40,16 @@ export class SignUpPageComponent {
       // Get the form values
       const {"first-name": firstName, "last-name": lastName, email, "confirm-password":confirmPassword,password} = this.authForm.value;
 
+      // Get the password and confirm password values
+      const passwordInput = this.inputs.find(input=>input.id ==='password') as InputComponent;
+      const confirmPasswordInput = this.inputs.find(input=>input.id ==='confirm-password') as InputComponent;
+
       // Check if password and confirm password match
       if (password !== confirmPassword) {
-        this.inputs.forEach(input => {
-          if (input.id === 'confirm-password' || input.id === 'password') {
-            input.error = 'Passwords do not match';
-            input.showError = true;
-          }
-        })
+        for (let input of [passwordInput, confirmPasswordInput]) {
+          input.error = 'Passwords do not match';
+          input.showError = true;
+        }
         return
       }
 
