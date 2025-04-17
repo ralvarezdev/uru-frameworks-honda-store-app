@@ -4,13 +4,17 @@ import {ProductsService} from '../../../firebase/services/products.service';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';
 import {Router} from '@angular/router';
+import {ProductCardComponent} from '../../../../shared/components/product-card/product-card.component';
+import {KeyValuePipe, NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-my-products-page',
   imports: [
     HeaderLayoutComponent,
     ButtonComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ProductCardComponent,
+    KeyValuePipe
   ],
   templateUrl: './my-products-page.component.html',
   styleUrl: './my-products-page.component.css'

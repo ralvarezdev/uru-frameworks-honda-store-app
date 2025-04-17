@@ -1,0 +1,21 @@
+<div class="product-card-container" [id]="productId">
+  <div class="product-card-container__product-card">
+    <p class="product-card-container__product-card__sku">{{ sku }}</p>
+    <p class="product-card-container__product-card__title">{{ title }}</p>
+    <img [src]="image_url" alt="Product Image" class="product-card-container__product-card__image" />
+    <div class="product-card-container__product-card__details">
+      <p class="product-card-container__product-card__details__description">{{ description }}</p>
+      <p class="product-card-container__product-card__details__price">Price: ${{ price }}</p>
+      <p class="product-card-container__product-card__details__stock">Stock: {{ stock }}</p>
+      <p class="product-card-container__product-card__details__brand">Brand: {{ brand }}</p>
+      <p *ngIf="tags.length>0" class="product-card-container__product-card__details__tags">Tags: {{ tags.join(', ') }}</p>
+    </div>
+    <div class="product-card-container__product-card__actions">
+      <app-button (clickHandler)="editProductHandler()" class="button--secondary button--small product-card-container__product-card__actions__button">Edit</app-button>
+      <app-button (clickHandler)="deleteProductHandler()" class="button--secondary button--small product-card-container__product-card__actions__button">Delete</app-button>
+      <app-button (clickHandler)="toggleActiveHandler()" class="button--secondary button--small product-card-container__product-card__actions__button">
+        {{ active ? 'Deactivate' : 'Activate' }}
+      </app-button>
+    </div>
+  </div>
+</div>

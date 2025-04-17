@@ -13,6 +13,12 @@
       </div>
     </div>
     <div class="main-container__products-container">
+      @for (entry of myProducts | keyvalue; track entry.key) {
+        <app-product-card [productId]="entry.key" [title]="entry.value.title" [description]="entry.value.description" [price]="entry.value.price" [stock]="entry.value.stock" [brand]="entry.value.brand" [tags]="entry.value.tags" [sku]="entry.value.sku" [active]="entry.value.active" [image_url]="entry.value.image_url" [class]="'main-container__products-container__product-card'"></app-product-card>
+      }
+      @if (myProductsTotalCount === 0) {
+        <p class="main-container__products-container__no-products">No products found</p>
+      }
     </div>
   </div>
 </app-header-layout>

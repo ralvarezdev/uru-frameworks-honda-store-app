@@ -38,8 +38,8 @@ export class ProductsService {
   }
 
   // Update a product
-  async updateProduct(productId: string, title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string, sku:string): Promise<any> {
-    return await this.updateProductCloudFn({productId, title, description, price, stock, active, brand, tags, image_url, sku});
+  async updateProduct(product:{productId: string, title?: string, description?: string, price?: number, stock?: number, active?: boolean, brand?: string, tags?: string[], image_url?: string, sku?:string}): Promise<any> {
+    return await this.updateProductCloudFn(product);
   }
 
   // Remove a product
