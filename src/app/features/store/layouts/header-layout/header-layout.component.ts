@@ -17,6 +17,7 @@ import {Router} from '@angular/router';
     ButtonComponent
   ],
   templateUrl: './header-layout.component.html',
+  standalone: true,
   styleUrl: './header-layout.component.css'
 })
 export class HeaderLayoutComponent implements OnInit {

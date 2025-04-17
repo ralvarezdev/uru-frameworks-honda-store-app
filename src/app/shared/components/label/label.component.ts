@@ -5,6 +5,7 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
   imports: [],
   templateUrl: './label.component.html',
   styleUrl: './label.component.css',
+  standalone: true,
   encapsulation: ViewEncapsulation.None
 })
 export class LabelComponent {

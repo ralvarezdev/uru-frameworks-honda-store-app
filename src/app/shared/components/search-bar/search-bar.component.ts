@@ -11,6 +11,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

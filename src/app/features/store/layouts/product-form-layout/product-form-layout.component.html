@@ -4,7 +4,7 @@
       <h1 class="main-container__header-container__title">{{ title }}</h1>
     </div>
     <div class="main-container__form-container">
-      <form (ngSubmit)="submitHandler()" (reset)="resetHandler()" [formGroup]="productForm" class="main-container__form-container__form">
+      <form (ngSubmit)="onSubmit($event)" (reset)="resetHandler($event)" [formGroup]="productForm" class="main-container__form-container__form">
         <app-input [id]="'image'" [label]="'Image'" [placeholder]="'Select product image'" [required]="true" [type]="'file'" id="image-container"></app-input>
          <app-input [formControl]="productForm.controls['title']" [id]="'title'" [label]="'Title'" [placeholder]="'Enter product title'" [required]="true" [type]="'text'" id="title-container"></app-input>
         <app-input [formControl]="productForm.controls['description']" [id]="'description'" [label]="'Description'" [placeholder]="'Enter product description'" [required]="true" [type]="'text'" id="description-container"></app-input>

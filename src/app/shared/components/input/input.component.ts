@@ -40,6 +40,9 @@ export class InputComponent implements ControlValueAccessor {
   @Input() showError: boolean = false;
   @Input() files: FileList|null = null;
 
+  private onChange: (value: any) => void = () => {};
+  private onTouched: () => void = () => {};
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId)
   }
@@ -72,11 +75,10 @@ export class InputComponent implements ControlValueAccessor {
     if (this.type!== 'file') {
       const input = event.target as HTMLInputElement;
       this.value = input.value;
-    }
-  }
-
-  onChange(event: Event):void {
-    if (this.type === 'file') {
+      this.onChange(this.value);
+      this.onTouched();
+      // console.log('Input of ID', this.id, 'changed to:', this.value);
+    } else {
       // Handle file input
       const input = event.target as HTMLInputElement;
       if (input.files && input.files[0]) {
@@ -93,10 +95,7 @@ export class InputComponent implements ControlValueAccessor {
         this.files = input.files;
       }
     }
-  };
-
-  onTouched(event: Event):void {
-  };
+  }
 
   // Handle file input click
   triggerFileInput(): void {

@@ -23,8 +23,8 @@ export class ProductsService {
   }
 
   // Create a new product
-  async createProduct(title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<any> {
-    return await this.createProductCloudFn({title, description, price, stock, active, brand, tags, image_url});
+  async createProduct(title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string, sku: string): Promise<any> {
+    return await this.createProductCloudFn({title, description, price, stock, active, brand, tags, image_url, sku});
   }
 
   // Get products with pagination
@@ -38,8 +38,8 @@ export class ProductsService {
   }
 
   // Update a product
-  async updateProduct(productId: string, title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<any> {
-    return await this.updateProductCloudFn({productId, title, description, price, stock, active, brand, tags, image_url});
+  async updateProduct(productId: string, title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string, sku:string): Promise<any> {
+    return await this.updateProductCloudFn({productId, title, description, price, stock, active, brand, tags, image_url, sku});
   }
 
   // Remove a product

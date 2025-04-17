@@ -1,4 +1,4 @@
-import {Component, input, Input, QueryList, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, input, Input, Output, QueryList, ViewChildren} from '@angular/core';
 import {InputComponent} from "../../../../shared/components/input/input.component";
 import {HeaderLayoutComponent} from '../header-layout/header-layout.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -14,6 +14,7 @@ import {clearFormErrors, fileValidator, setFormControlErrors} from '../../../../
     ButtonComponent
   ],
   templateUrl: './product-form-layout.component.html',
+  standalone: true,
   styleUrl: './product-form-layout.component.css'
 })
 export class ProductFormLayoutComponent {
@@ -37,12 +38,12 @@ export class ProductFormLayoutComponent {
     image: new FormControl<string>(this.initialImage),
     sku: new FormControl<string>(this.initialSKU, [Validators.required]),
   });
-  @Input() onSubmit: (formValues:any) => Promise<void> = async () => {
-    console.log('onSubmit not implemented');
-  };
+  @Output() submitHandler: EventEmitter<any> = new EventEmitter<any>();
 
-  // Handle Submit Click
-  async submitHandler(): Promise<void> {
+  // On submit click
+  async onSubmit(event: Event): Promise<void> {
+    event.preventDefault()
+
     // Validate the image
     fileValidator(['image/png', 'image/jpeg'], 10, true)(this.productForm, this.inputs,'image');
 
@@ -51,7 +52,7 @@ export class ProductFormLayoutComponent {
       clearFormErrors(this.inputs);
 
       // On submit
-      await this.onSubmit(this.productForm.value);
+      this.submitHandler.emit(this.productForm.value);
     } else {
       console.log('Invalid form', this.productForm)
       setFormControlErrors(this.inputs, this.productForm)
@@ -59,7 +60,8 @@ export class ProductFormLayoutComponent {
   }
 
   // Handle Reset Click
-  resetHandler(): void {
+  resetHandler(event: Event): void {
+    event.preventDefault()
     clearFormErrors(this.inputs);
   }
 }
