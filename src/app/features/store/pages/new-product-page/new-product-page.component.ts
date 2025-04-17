@@ -19,25 +19,24 @@ export class NewProductPageComponent {
   }
 
   // Submit handler
-  submitHandler = async (formValues: any) => {
+  async submitHandler(formValues: any) {
     // Get the form values
-    console.log('Form Values', formValues)
-    const {title, description, price, stock, brand, tags, image, sku} = formValues;
+    const {title, description, price, stock, brand, tags, image_url, sku} = JSON.parse(formValues);
 
     // Create the product
     await this.productsService.createProduct(
       title,
       description,
-      price,
-      stock,
+      parseFloat(price),
+      parseInt(stock),
       true,
       brand,
-      tags,
-      image,
+      tags ?? [],
+      image_url,
       sku
     );
 
     // Redirect to the products page
-    this.router.navigateByUrl('/products', {skipLocationChange: false, replaceUrl: true});
+    this.router.navigateByUrl('/my-products', {skipLocationChange: false, replaceUrl: true});
   }
 }

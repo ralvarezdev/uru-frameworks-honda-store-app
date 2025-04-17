@@ -11,6 +11,8 @@ import {
 } from '../../../../constants';
 import {getApp} from 'firebase/app';
 import { sprintf } from "sprintf-js";
+import {FirebaseStorage, getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {v4 as uuid} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,7 @@ import { sprintf } from "sprintf-js";
 export class AppService {
   app: any = null
   auth: Auth | null = null
+  storage: FirebaseStorage | null = null
   provider: GoogleAuthProvider | null = null
   functions: any | null = null
 
@@ -36,6 +39,9 @@ export class AppService {
 
     // Get the Auth service
     this.auth = getAuth(this.app);
+
+    // Get the Storage service
+    this.storage = getStorage(this.app);
 
     // Google Sign-In
     this.provider = new GoogleAuthProvider();
@@ -73,6 +79,28 @@ export class AppService {
         },
         body: JSON.stringify(body)
       })
+    }
+  }
+
+  // Upload image
+  async uploadImage(selectedFile: Blob): Promise<string | void> {
+    if (!selectedFile) {
+      console.error('No file selected');
+      return
+    }
+
+    // Create a unique file path
+    const filePath = `images/${uuid()}`;
+    const storageRef = ref(this.storage as FirebaseStorage, filePath);
+
+    try {
+      // Upload the file
+      const snapshot = await uploadBytes(storageRef, selectedFile);
+
+      // Get the download URL
+      return await getDownloadURL(snapshot.ref);
+    } catch (error) {
+      console.error('Error uploading file:', error);
     }
   }
 }

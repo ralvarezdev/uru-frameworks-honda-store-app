@@ -4,6 +4,7 @@ import {HeaderLayoutComponent} from '../header-layout/header-layout.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {clearFormErrors, fileValidator, setFormControlErrors} from '../../../../../utils';
+import {AppService} from '../../../firebase/services/app.service';
 
 @Component({
   selector: 'app-product-form-layout',
@@ -34,11 +35,14 @@ export class ProductFormLayoutComponent {
     price: new FormControl<number|null>(this.initialPrice, [Validators.required]),
     stock: new FormControl<number|null>(this.initialStock, [Validators.required]),
     brand: new FormControl<string>(this.initialBrand, [Validators.required]),
-    tags: new FormControl<string[]>(this.initialTags, [Validators.required]),
+    // tags: new FormControl<string[]>(this.initialTags, [Validators.required]),
     image: new FormControl<string>(this.initialImage),
     sku: new FormControl<string>(this.initialSKU, [Validators.required]),
   });
-  @Output() submitHandler: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submitHandler: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(private appService: AppService ) {
+  }
 
   // On submit click
   async onSubmit(event: Event): Promise<void> {
@@ -51,8 +55,18 @@ export class ProductFormLayoutComponent {
       // Clear previous errors
       clearFormErrors(this.inputs);
 
+      // Upload the image
+      const imageInput = this.inputs.find(input => input.id === 'image') as InputComponent;
+      const imageFiles = imageInput.files as FileList;
+      const imageFile = imageFiles[0];
+      const imageUrl= await this.appService.uploadImage(imageFile)
+
       // On submit
-      this.submitHandler.emit(this.productForm.value);
+      this.submitHandler.emit(JSON.stringify({
+        ...this.productForm.value,
+        image: undefined,
+        image_url: imageUrl
+      }));
     } else {
       console.log('Invalid form', this.productForm)
       setFormControlErrors(this.inputs, this.productForm)
