@@ -10,7 +10,7 @@ export class NotAuthGuard implements CanActivate {
   }
 
   async canActivate(): Promise<boolean> {
-    if (!this.authService.isAuthenticated) {
+    if (!await this.authService.isAuthenticated()) {
       console.log('User is not authenticated');
       return true; // Allow navigation
     } else {

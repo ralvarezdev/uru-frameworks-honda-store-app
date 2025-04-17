@@ -27,37 +27,40 @@ export class HeaderLayoutComponent implements OnInit {
   signInText: string = 'Sign In';
   signUpText: string = 'Sign Up';
   signOutText: string = 'Sign Out';
-  myProductsText: string = 'My Products';
+  productsText: string = 'Products';
+  cartText: string = 'Cart';
   logoHeight: number = LOGO_HEIGHT;
-  logoWidth: number = LOGO_WIDTH
+  logoWidth: number = LOGO_WIDTH;
+  logoLink: string = '/';
   searchBarPlaceholder: string = 'Aceite Honda ATF DW-1...';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   // On init handler
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // Subscribe to the auth state changes
-    this.authService.authStateChange.subscribe(() => {
-      this.updateAuthLinks();
+    this.authService.authStateChange.subscribe(async (value) => {
+      await this.updateAuthLinks(value as boolean);
     });
-
-    // Initial update of auth links
-    this.updateAuthLinks();
   }
 
   // Update the visibility of the auth links and sign out button
-  updateAuthLinks(): void {
-    this.isAuthenticated = this.authService.isAuthenticated;
+  async updateAuthLinks(isAuthenticated: boolean): Promise<void> {
+    this.isAuthenticated = isAuthenticated;
   }
 
   // Sign out handler
   async signOutHandler(): Promise<void> {
     await this.authService.signOut();
-    this.updateAuthLinks();
   }
 
   // Products handler
-  async myProductsHandler(): Promise<void> {
+  async productsHandler(): Promise<void> {
     this.router.navigate(['/my-products'], {skipLocationChange: false, replaceUrl: true});
+  }
+
+  // Cart handler
+  async cartHandler(): Promise<void> {
+    this.router.navigate(['/my-cart'], {skipLocationChange: false, replaceUrl: true});
   }
 }

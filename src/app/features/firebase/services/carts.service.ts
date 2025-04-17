@@ -1,51 +1,50 @@
 import {Injectable} from '@angular/core';
-import {httpsCallable, HttpsCallableResult} from "firebase/functions";
 import {AppService} from './app.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartsService {
-  fireAddProductToCart: any;
-  fireRemoveProductFromCart: any;
-  fireUpdateProductQuantityInCart: any;
-  fireGetCart: any;
-  fireClearCart: any;
-  fireCheckoutCart: any;
+  addProductToCartCloudFn: any;
+  removeProductFromCartCloudFn: any;
+  pdateuProductQuantityInCartCloudFn: any;
+  getCartCloudFn: any;
+  clearCartCloudFn: any;
+  checkoutCartCloudFn: any;
 
   constructor(private appService: AppService) {
     // Define the callable functions
-    this.fireAddProductToCart = this.appService.getFunction('add_product_to_cart');
-    this.fireRemoveProductFromCart = this.appService.getFunction('remove_product_from_cart');
-    this.fireUpdateProductQuantityInCart = this.appService.getFunction('update_product_quantity_in_cart');
-    this.fireGetCart = this.appService.getFunction('get_cart');
-    this.fireClearCart = this.appService.getFunction('clear_cart');
-    this.fireCheckoutCart = this.appService.getFunction('checkout_cart');
+    this.addProductToCartCloudFn = this.appService.getFunction('add_product_to_cart');
+    this.removeProductFromCartCloudFn = this.appService.getFunction('remove_product_from_cart');
+    this.pdateuProductQuantityInCartCloudFn = this.appService.getFunction('update_product_quantity_in_cart');
+    this.getCartCloudFn = this.appService.getFunction('get_cart');
+    this.clearCartCloudFn = this.appService.getFunction('clear_cart');
+    this.checkoutCartCloudFn = this.appService.getFunction('checkout_cart');
   }
 
   // Add a product to the cart
-  async addProductToCart(productId: string, quantity: number): Promise<HttpsCallableResult> {
-    return await this.fireAddProductToCart({productId, quantity});
+  async addProductToCart(productId: string, quantity: number): Promise<any>{
+    return await this.addProductToCartCloudFn({productId, quantity});
   }
 
   // Remove a product from the cart
-  async removeProductFromCart(productId: string): Promise<HttpsCallableResult> {
-    return await this.fireRemoveProductFromCart({productId});
+  async removeProductFromCart(productId: string): Promise<any> {
+    return await this.removeProductFromCartCloudFn({productId});
   }
 
-  async updateProductQuantityInCart(productId: string, quantity: number): Promise<HttpsCallableResult> {
-    return await this.fireUpdateProductQuantityInCart({productId, quantity});
+  async updateProductQuantityInCart(productId: string, quantity: number): Promise<any> {
+    return await this.pdateuProductQuantityInCartCloudFn({productId, quantity});
   }
 
-  async getCart(): Promise<HttpsCallableResult> {
-    return await this.fireGetCart({});
+  async getCart(): Promise<any> {
+    return await this.getCartCloudFn({});
   }
 
-  async clearCart(): Promise<HttpsCallableResult> {
-    return await this.fireClearCart({});
+  async clearCart(): Promise<any> {
+    return await this.clearCartCloudFn({});
   }
 
-  async checkoutCart(): Promise<HttpsCallableResult> {
-    return await this.fireCheckoutCart({});
+  async checkoutCart(): Promise<any> {
+    return await this.checkoutCartCloudFn({});
   }
 }

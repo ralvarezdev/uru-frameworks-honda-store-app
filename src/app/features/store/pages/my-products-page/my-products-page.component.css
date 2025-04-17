@@ -1,0 +1,67 @@
+/* Main container styles */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--large);
+  width: 100%;
+  max-width: 50rem;
+}
+
+/* Header container styles */
+.main-container__header-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto 1fr;
+  gap: var(--gap--small) 0;
+  place-items: center;
+  width: 100%;
+}
+
+/* Title styles */
+.main-container__header-container__title {
+  grid-column: 1/-1;
+  grid-row: 1/2;
+  justify-self: start;
+}
+
+/* Search products bar styles */
+.main-container__header-container__search-products-bar {
+  grid-column:1/2;
+  grid-row: 3/4;
+}
+
+/* Add product container styles */
+.main-container__header-container__add-product-container {
+  grid-column: 2/3;
+  grid-row: 2/-1;
+  justify-self: end;
+  display: grid;
+  grid-template-rows: subgrid;
+  place-items: center;
+}
+
+/* Add product styles */
+.main-container__header-container__add-product-container__add-button{
+  justify-self: end;
+  grid-column:1/-1;
+  grid-row: 2/3;
+}
+
+/* Total count styles */
+.main-container__header-container__add-product-container__total-count {
+  color: var(--grey--dark);
+  grid-column: 1/-1;
+  grid-row: 1/2;
+}
+
+/* Products container styles */
+.main-container__products-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--large);
+  width: 100%;
+}

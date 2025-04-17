@@ -1,7 +1,9 @@
 <div class="main-container">
   <div class="main-container__header-container">
-    <img [height]="logoHeight" [width]="logoWidth" alt="logo"
+    <app-link [link]="logoLink">
+      <img [height]="logoHeight" [width]="logoWidth" alt="logo"
          class="main-container__header-container__logo" ngSrc="/assets/images/repuestos-edge--logo.svg"/>
+    </app-link>
     <div class="main-container__header-container__search-bar-container">
       <app-search-bar [placeholder]="searchBarPlaceholder"></app-search-bar>
     </div>
@@ -14,11 +16,14 @@
       </app-link>
     </div>
     <div *ngIf="isAuthenticated" class="main-container__header-container__button-container">
-      <app-button *ngIf="isAuthenticated" [class]="'button--primary button--small'" (click)="signOutHandler()">
+      <app-button [class]="'button--primary button--small'" (click)="signOutHandler()">
         {{ signOutText }}
       </app-button>
-      <app-button *ngIf="isAuthenticated" [class]="'button--secondary button--small'" (click)="myProductsHandler()">
-        {{ myProductsText }}
+      <app-button [class]="'button--secondary button--small'" (click)="productsHandler()">
+        {{ productsText }}
+      </app-button>
+      <app-button [class]="'button--secondary button--small'" (click)="cartHandler()">
+        {{ cartText }}
       </app-button>
     </div>
   </div>

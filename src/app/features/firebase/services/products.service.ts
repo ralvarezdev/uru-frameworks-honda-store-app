@@ -1,48 +1,54 @@
 import {Injectable} from '@angular/core';
-import {httpsCallable, HttpsCallableResult} from "firebase/functions";
 import {AppService} from './app.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  fireCreateProduct: any;
-  fireGetProducts: any;
-  fireGetProductById: any;
-  fireUpdateProduct: any;
-  fireRemoveProduct: any;
+  createProductCloudFn: any;
+  getProductsCloudFn: any;
+  getProductByIdCloudFn: any;
+  updateProductCloudFn: any;
+  removeProductCloudFn: any;
+  getMyProductsCloudFn: any;
 
   constructor(private appService: AppService) {
     // Define the callable functions
-    this.fireCreateProduct = this.appService.getFunction('create_product');
-    this.fireGetProducts = this.appService.getFunction('get_products');
-    this.fireGetProductById = this.appService.getFunction('get_product_by_id');
-    this.fireUpdateProduct = this.appService.getFunction('update_product');
-    this.fireRemoveProduct = this.appService.getFunction('remove_product');
+    this.createProductCloudFn = this.appService.getFunction('create_product');
+    this.getProductsCloudFn = this.appService.getFunction('get_products');
+    this.getProductByIdCloudFn = this.appService.getFunction('get_product_by_id');
+    this.updateProductCloudFn = this.appService.getFunction('update_product');
+    this.removeProductCloudFn = this.appService.getFunction('remove_product');
+    this.getMyProductsCloudFn = this.appService.getFunction('get_my_products');
   }
 
   // Create a new product
-  async createProduct(title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<HttpsCallableResult> {
-    return await this.fireCreateProduct({title, description, price, stock, active, brand, tags, image_url});
+  async createProduct(title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<any> {
+    return await this.createProductCloudFn({title, description, price, stock, active, brand, tags, image_url});
   }
 
   // Get products with pagination
-  async getProducts(limit: number, offset: number): Promise<HttpsCallableResult> {
-    return await this.fireGetProducts({limit, offset});
+  async getProducts(limit: number, offset: number): Promise<any> {
+    return await this.getProductsCloudFn({limit, offset});
   }
 
   // Get a product by ID
-  async getProductById(productId: string): Promise<HttpsCallableResult> {
-    return await this.fireGetProductById({productId});
+  async getProductById(productId: string): Promise<any> {
+    return await this.getProductByIdCloudFn({productId});
   }
 
   // Update a product
-  async updateProduct(productId: string, title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<HttpsCallableResult> {
-    return await this.fireUpdateProduct({productId, title, description, price, stock, active, brand, tags, image_url});
+  async updateProduct(productId: string, title: string, description: string, price: number, stock: number, active: boolean, brand: string, tags: string[], image_url: string): Promise<any> {
+    return await this.updateProductCloudFn({productId, title, description, price, stock, active, brand, tags, image_url});
   }
 
   // Remove a product
-  async removeProduct(productId: string): Promise<HttpsCallableResult> {
-    return await this.fireRemoveProduct({productId});
+  async removeProduct(productId: string): Promise<any> {
+    return await this.removeProductCloudFn({productId});
+  }
+
+  // Get my products
+  async getMyProducts(limit: number, offset: number): Promise<any> {
+    return await this.getMyProductsCloudFn({limit, offset});
   }
 }

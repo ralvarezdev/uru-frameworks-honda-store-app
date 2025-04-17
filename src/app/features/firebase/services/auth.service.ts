@@ -9,9 +9,9 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class AuthService {
   auth: Auth | null = null
-  fireCreateUser: any;
-  fireGetUserById: any;
-  private _isAuthenticated = new BehaviorSubject<boolean>(false);
+  createUserCloudFn: any;
+  getUserByIdCloudFn: any;
+  private _isAuthenticated = new BehaviorSubject<boolean|null>(null);
   authStateChange = this._isAuthenticated.asObservable();
 
   constructor(private appService: AppService) {
@@ -23,13 +23,20 @@ export class AuthService {
     });
 
     // Define the callable functions
-    this.fireCreateUser = this.appService.getFunction('create_user');
-    this.fireGetUserById = this.appService.getFunction('get_user_by_id');
+    this.createUserCloudFn = this.appService.getFunction('create_user');
+    this.getUserByIdCloudFn = this.appService.getFunction('get_user_by_id');
   }
 
   // Check if the user is authenticated
-  get isAuthenticated(): boolean {
-    return this._isAuthenticated.value;
+  async isAuthenticated(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.authStateChange.subscribe((isAuthenticated) => {
+        if (isAuthenticated === null)
+          return
+
+        resolve(isAuthenticated);
+      });
+    });
   }
 
   // Sign in with email/password
@@ -41,7 +48,7 @@ export class AuthService {
     await this.signIn(email, password)
 
     // Create the user in the database
-    await this.fireCreateUser({first_name: firstName, last_name: lastName})
+    await this.createUserCloudFn({first_name: firstName, last_name: lastName})
 
     // Log the user signed up
     console.log('User signed up: ', email)

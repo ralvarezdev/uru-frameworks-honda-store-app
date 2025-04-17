@@ -1,0 +1,18 @@
+<app-header-layout>
+  <div class="main-container">
+    <div class="main-container__header-container">
+      <h1 class="main-container__header-container__title">My Products</h1>
+      <app-search-bar [class]="'main-container__header-container__search-products-bar'" [placeholder]="'Search Products'" [disabled]="false" (input)="inputHandler($event)"></app-search-bar>
+      <div [class]="'main-container__header-container__add-product-container'">
+        <app-button [class]="'main-container__header-container__add-product-container__add-button button--primary button--medium'" [type]="'button'" (click)="addProductHandler()">
+          New Product
+        </app-button>
+        <p class="main-container__header-container__add-product-container__total-count">
+          Total Products: {{myProductsTotalCount}}
+        </p>
+      </div>
+    </div>
+    <div class="main-container__products-container">
+    </div>
+  </div>
+</app-header-layout>

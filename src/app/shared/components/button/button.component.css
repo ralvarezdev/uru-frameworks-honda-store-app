@@ -13,6 +13,7 @@
   place-items: center;
   font-size: var(--font-size--small);
   font-weight: var(--font-weight--medium);
+  width: 100%;
 }
 
 /* Primary filled button styles */
@@ -96,6 +97,11 @@
 /* Large button styles */
 .button--large button {
   padding: var(--padding--extra-small) var(--padding--large);
+}
+
+/* Medium button styles */
+.button--medium button {
+  padding: var(--padding--extra-small) var(--padding--medium);
 }
 
 /* Small button styles */
