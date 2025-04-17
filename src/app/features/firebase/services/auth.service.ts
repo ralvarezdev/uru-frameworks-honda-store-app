@@ -16,7 +16,6 @@ export class AuthService {
 
   constructor(private appService: AppService) {
     this.auth = appService.auth;
-    const functions = appService.functions
 
     // Check authentication state after Firebase is loaded
     onAuthStateChanged(this.auth as Auth, (user: any) => {
@@ -24,8 +23,8 @@ export class AuthService {
     });
 
     // Define the callable functions
-    this.fireCreateUser = httpsCallable(functions, 'create_user');
-    this.fireGetUserById = httpsCallable(functions, 'get_user_by_id');
+    this.fireCreateUser = this.appService.getFunction('create_user');
+    this.fireGetUserById = this.appService.getFunction('get_user_by_id');
   }
 
   // Check if the user is authenticated

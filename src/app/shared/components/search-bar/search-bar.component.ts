@@ -1,6 +1,5 @@
 import {Component, forwardRef, Input, ViewEncapsulation} from '@angular/core';
 import {ButtonComponent} from '../button/button.component';
-import {NgClass} from '@angular/common';
 import {InputComponent} from '../input/input.component';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
@@ -8,7 +7,6 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
   selector: 'app-search-bar',
   imports: [
     ButtonComponent,
-    NgClass
   ],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',

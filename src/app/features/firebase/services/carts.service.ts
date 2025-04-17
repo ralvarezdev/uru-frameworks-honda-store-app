@@ -14,15 +14,13 @@ export class CartsService {
   fireCheckoutCart: any;
 
   constructor(private appService: AppService) {
-    const functions = appService.functions;
-
     // Define the callable functions
-    this.fireAddProductToCart = httpsCallable(functions, 'add_product_to_cart');
-    this.fireRemoveProductFromCart = httpsCallable(functions, 'remove_product_from_cart');
-    this.fireUpdateProductQuantityInCart = httpsCallable(functions, 'update_product_quantity_in_cart');
-    this.fireGetCart = httpsCallable(functions, 'get_cart');
-    this.fireClearCart = httpsCallable(functions, 'clear_cart');
-    this.fireCheckoutCart = httpsCallable(functions, 'checkout_cart');
+    this.fireAddProductToCart = this.appService.getFunction('add_product_to_cart');
+    this.fireRemoveProductFromCart = this.appService.getFunction('remove_product_from_cart');
+    this.fireUpdateProductQuantityInCart = this.appService.getFunction('update_product_quantity_in_cart');
+    this.fireGetCart = this.appService.getFunction('get_cart');
+    this.fireClearCart = this.appService.getFunction('clear_cart');
+    this.fireCheckoutCart = this.appService.getFunction('checkout_cart');
   }
 
   // Add a product to the cart

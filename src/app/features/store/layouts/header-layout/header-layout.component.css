@@ -22,17 +22,13 @@
   width: auto;
 }
 
-/* Link container styles */
-.main-container__header-container__link-container {
+/* Link container and button container styles */
+.main-container__header-container__link-container,
+.main-container__header-container__button-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--gap--small);
-}
-
-/* Sign out button span styles */
-.main-container__header-container__link-container__sign-out-button__span{
-  color: var(--grey--lightest);
 }
 
 /* Body container styles */
@@ -43,3 +39,5 @@
   background-color: blue;
   box-shadow: var(--box-shadow--small);
 }
+
+

@@ -45,3 +45,7 @@ Thumbs.db
 
 # Configuration files
 .env
+
+# Firebase configuration
+/firebase.json
+/cloudFunctions.json

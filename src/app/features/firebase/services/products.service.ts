@@ -13,14 +13,12 @@ export class ProductsService {
   fireRemoveProduct: any;
 
   constructor(private appService: AppService) {
-    const functions = appService.functions;
-
     // Define the callable functions
-    this.fireCreateProduct = httpsCallable(functions, 'create_product');
-    this.fireGetProducts = httpsCallable(functions, 'get_products');
-    this.fireGetProductById = httpsCallable(functions, 'get_product_by_id');
-    this.fireUpdateProduct = httpsCallable(functions, 'update_product');
-    this.fireRemoveProduct = httpsCallable(functions, 'remove_product');
+    this.fireCreateProduct = this.appService.getFunction('create_product');
+    this.fireGetProducts = this.appService.getFunction('get_products');
+    this.fireGetProductById = this.appService.getFunction('get_product_by_id');
+    this.fireUpdateProduct = this.appService.getFunction('update_product');
+    this.fireRemoveProduct = this.appService.getFunction('remove_product');
   }
 
   // Create a new product

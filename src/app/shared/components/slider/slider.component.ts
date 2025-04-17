@@ -1,7 +1,7 @@
 import {Component, Inject, Input, PLATFORM_ID, ViewEncapsulation,} from '@angular/core';
 import {LabelComponent} from '../label/label.component';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {isPlatformBrowser, NgClass, NgIf} from '@angular/common';
+import {isPlatformBrowser, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-slider',
@@ -10,7 +10,6 @@ import {isPlatformBrowser, NgClass, NgIf} from '@angular/common';
     LabelComponent,
     ReactiveFormsModule,
     NgIf,
-    NgClass,
   ],
   styleUrl: './slider.component.css',
   encapsulation: ViewEncapsulation.None

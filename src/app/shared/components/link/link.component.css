@@ -10,7 +10,6 @@
   border-radius: var(--border-radius--small);
   transition: background-color var(--transition--color--duration),
     color var(--transition--color--duration);
-  padding: var(--padding--extra-small) var(--padding--small);
 }
 
 /* Link hover styles */
@@ -27,4 +26,9 @@
 /* Primary link hover styles */
 .link-container__link--primary .link-container__link:hover {
   background-color: var(--grey--darker);
+}
+
+/* Large styles */
+.link-container__link--large .link-container__link {
+  padding: var(--padding--extra-small) var(--padding--small);
 }

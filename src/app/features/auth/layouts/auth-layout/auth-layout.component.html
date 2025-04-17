@@ -14,8 +14,8 @@
       </div>
       <div class="main-container__form-container__form__footer-container">
         <div class="main-container__form-container__form__footer-container__buttons-container">
-          <app-button [ngClass]="{'button--primary--not-filled':true}" [type]="'reset'">Cancel</app-button>
-          <app-button [ngClass]="{'button--primary':true}" [type]="'submit'">Submit</app-button>
+          <app-button [class]="'button--primary--not-filled button--large'" [type]="'reset'">Cancel</app-button>
+          <app-button [class]="'button--primary button--large'" [type]="'submit'">Submit</app-button>
         </div>
         <a [routerLink]="link"
            class="main-container__form-container__form__footer-container__link">{{ linkText }}</a>

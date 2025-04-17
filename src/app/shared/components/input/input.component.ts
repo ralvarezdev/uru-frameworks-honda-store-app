@@ -1,5 +1,5 @@
 import {Component, forwardRef, Inject, Input, PLATFORM_ID, signal, ViewEncapsulation} from '@angular/core';
-import {isPlatformBrowser, NgClass, NgIf, NgStyle} from '@angular/common';
+import {isPlatformBrowser, NgIf, NgStyle} from '@angular/common';
 import {ButtonComponent} from '../button/button.component';
 import {LabelComponent} from '../label/label.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
@@ -10,13 +10,13 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@ang
     NgStyle,
     ButtonComponent,
     LabelComponent,
-    NgClass,
     ReactiveFormsModule,
     NgIf
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

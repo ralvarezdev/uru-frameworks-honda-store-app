@@ -5,15 +5,20 @@
     <div class="main-container__header-container__search-bar-container">
       <app-search-bar [placeholder]="searchBarPlaceholder"></app-search-bar>
     </div>
-    <div class="main-container__header-container__link-container">
-      <app-link *ngIf="showSignInLink" [link]="signInLink">
+    <div *ngIf="!isAuthenticated" class="main-container__header-container__link-container">
+      <app-link [link]="signInLink" [class]="'link-container__link--large'">
         {{ signInText }}
       </app-link>
-      <app-link *ngIf="showSignUpLink" [link]="signUpLink" [ngClass]="{'link-container__link--primary': true}">
+      <app-link [link]="signUpLink" [class]="'link-container__link--primary link-container__link--large'">
         {{ signUpText }}
       </app-link>
-      <app-button *ngIf="showSignOutButton" [type]="'button'" (click)="signOutHandler()">
-        <span class="main-container__header-container__link-container__sign-out-button__span">{{ signOutText }}</span>
+    </div>
+    <div *ngIf="isAuthenticated" class="main-container__header-container__button-container">
+      <app-button *ngIf="isAuthenticated" [class]="'button--primary button--small'" (click)="signOutHandler()">
+        {{ signOutText }}
+      </app-button>
+      <app-button *ngIf="isAuthenticated" [class]="'button--secondary button--small'" (click)="myProductsHandler()">
+        {{ myProductsText }}
       </app-button>
     </div>
   </div>

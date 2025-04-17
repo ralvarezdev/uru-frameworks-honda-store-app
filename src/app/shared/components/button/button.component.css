@@ -16,18 +16,15 @@
 }
 
 /* Primary filled button styles */
-.button--primary button {
-  background-color: var(--color--dark-primary);
+.button--primary button,
+.button--primary--circular button {
+  background-color: var(--color--darkest-primary);
   color: var(--grey--lightest);
-  font-size: var(--font-size--small);
-  font-weight: var(--font-weight--regular);
-  padding: var(--padding--extra-small) var(--padding--large);
 }
 
 .button--primary:hover button,
 .button--primary--circular:hover button {
-  background-color: var(--color--medium-primary);
-  color: var(--grey--lighter);
+  background-color: var(--color--light-primary);
 }
 
 .button--primary:active button,
@@ -39,17 +36,12 @@
 .button--primary--circular button {
   display: grid;
   place-items: center;
-  padding: var(--padding--extra-small);
-  background-color: var(--color--dark-primary);
   border-radius: 50%;
 }
 
 /* Primary not filled button styles */
 .button--primary--not-filled button {
-  color: var(--grey--darker);
-  font-size: var(--font-size--small);
-  font-weight: var(--font-weight--regular);
-  padding: var(--padding--extra-small) var(--padding--large);
+  color: var(--grey--darkest);
 }
 
 .button--primary--not-filled:hover button {
@@ -64,18 +56,13 @@
 
 /* Secondary button styles */
 .button--secondary button {
-  background-color: var(--grey--light);
-  color: var(--grey--darker);
-  padding: var(--padding--extra-small) var(--padding--small);
+  background-color: var(--grey--darkest);
+  color: var(--grey--lightest);
 }
 
-.button--secondary:hover button {
-  background-color: var(--grey--medium);
-  color: var(--grey--darker);
-}
-
-.button--secondary:active button {
-  background-color: var(--grey--dark);
+.button--secondary:hover button,
+.button--secondary:active button{
+  background-color: var(--grey--darker);
 }
 
 /* Disabled button styles */
@@ -96,7 +83,6 @@
 /* Transparent button styles */
 .button--transparent button {
   color: var(--grey--darkest);
-  padding: var(--margin--extra-small);
 }
 
 .button--transparent:hover button {
@@ -107,3 +93,17 @@
   color: var(--grey--dark);
 }
 
+/* Large button styles */
+.button--large button {
+  padding: var(--padding--extra-small) var(--padding--large);
+}
+
+/* Small button styles */
+.button--small button {
+  padding: var(--padding--extra-small) var(--padding--small);
+}
+
+/* Extra small button styles */
+.button--extra-small button {
+  padding: var(--padding--extra-small);
+}

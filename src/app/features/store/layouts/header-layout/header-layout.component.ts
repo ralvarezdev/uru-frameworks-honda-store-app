@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../firebase/services/auth.service';
-import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 import {LinkComponent} from '../../../../shared/components/link/link.component';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header-layout',
@@ -13,7 +14,6 @@ import {ButtonComponent} from '../../../../shared/components/button/button.compo
     LinkComponent,
     NgOptimizedImage,
     SearchBarComponent,
-    NgClass,
     ButtonComponent
   ],
   templateUrl: './header-layout.component.html',
@@ -21,19 +21,18 @@ import {ButtonComponent} from '../../../../shared/components/button/button.compo
 })
 export class HeaderLayoutComponent implements OnInit {
   title: string = 'Repuestos EDGE';
-  showSignInLink: boolean = true;
-  showSignUpLink: boolean = true;
-  showSignOutButton: boolean = false;
+  isAuthenticated: boolean = false;
   signInLink: string = '/sign-in';
   signUpLink: string = '/sign-up';
   signInText: string = 'Sign In';
   signUpText: string = 'Sign Up';
   signOutText: string = 'Sign Out';
+  myProductsText: string = 'My Products';
   logoHeight: number = LOGO_HEIGHT;
   logoWidth: number = LOGO_WIDTH
   searchBarPlaceholder: string = 'Aceite Honda ATF DW-1...';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   // On init handler
   ngOnInit(): void {
@@ -48,20 +47,17 @@ export class HeaderLayoutComponent implements OnInit {
 
   // Update the visibility of the auth links and sign out button
   updateAuthLinks(): void {
-    if (this.authService.isAuthenticated) {
-      this.showSignInLink = false;
-      this.showSignUpLink = false;
-      this.showSignOutButton = true;
-    } else {
-      this.showSignOutButton = false;
-      this.showSignInLink = true;
-      this.showSignUpLink = true;
-    }
+    this.isAuthenticated = this.authService.isAuthenticated;
   }
 
   // Sign out handler
   async signOutHandler(): Promise<void> {
     await this.authService.signOut();
     this.updateAuthLinks();
+  }
+
+  // Products handler
+  async myProductsHandler(): Promise<void> {
+    this.router.navigate(['/my-products'], {skipLocationChange: false, replaceUrl: true});
   }
 }

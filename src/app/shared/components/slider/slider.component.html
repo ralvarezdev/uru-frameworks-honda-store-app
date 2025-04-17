@@ -1,5 +1,5 @@
 <div class="slider-container">
-  <app-label [for]="id" [ngClass]="'slider-container__label'">{{ label }}</app-label>
+  <app-label [for]="id" [class]="'slider-container__label'">{{ label }}</app-label>
   <ng-container *ngIf="isBrowser">
     <input [formControl]="valueControl" [id]="id" [max]="max" [min]="min" [step]="step" class="slider-container__input"
            type="range">

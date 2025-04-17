@@ -14,6 +14,7 @@ import {clearFormErrors, passwordValidator, setFormControlErrors} from '../../..
     ReactiveFormsModule,
   ],
   templateUrl: './sign-up-page.component.html',
+  standalone: true,
   styleUrl: './sign-up-page.component.css'
 })
 export class SignUpPageComponent {
@@ -29,7 +30,7 @@ export class SignUpPageComponent {
     'confirm-password':  new FormControl<string>('', [Validators.required])
   });
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   // Submit Handler Click
   async submitHandler(): Promise<void> {

@@ -14,6 +14,7 @@ import {clearFormErrors, setFormControlErrors} from '../../../../../utils';
     ReactiveFormsModule,
   ],
   templateUrl: './sign-in-page.component.html',
+  standalone: true,
   styleUrl: './sign-in-page.component.css'
 })
 export class SignInPageComponent {
@@ -54,7 +55,7 @@ export class SignInPageComponent {
         }
 
         // Check if the error is about the wrong password
-        if (error?.code === 'auth/wrong-password') {
+        if (error?.code === 'auth/invalid-credential') {
           this.inputs.forEach(input => {
             if (input.id === 'password') {
               input.error = 'Wrong password';

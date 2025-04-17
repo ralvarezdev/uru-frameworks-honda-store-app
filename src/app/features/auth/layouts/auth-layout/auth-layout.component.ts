@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
-import {isPlatformBrowser, NgClass, NgOptimizedImage} from '@angular/common';
+import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -12,12 +12,12 @@ import {LinkComponent} from '../../../../shared/components/link/link.component';
     NgOptimizedImage,
     ButtonComponent,
     FormsModule,
-    NgClass,
     RouterLink,
     ReactiveFormsModule,
     LinkComponent,
   ],
   templateUrl: './auth-layout.component.html',
+  standalone: true,
   styleUrl: './auth-layout.component.css'
 })
 export class AuthLayoutComponent {

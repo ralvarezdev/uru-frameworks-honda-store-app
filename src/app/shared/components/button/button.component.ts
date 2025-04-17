@@ -6,6 +6,7 @@ import {isPlatformBrowser} from '@angular/common';
   imports: [],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',
+  standalone: true,
   encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent {
