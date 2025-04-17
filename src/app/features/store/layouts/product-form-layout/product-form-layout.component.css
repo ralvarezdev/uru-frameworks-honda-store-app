@@ -37,7 +37,7 @@
 #image-container,
 #title-container,
 #description-container,
-#tags-container{
+#tags-container {
   grid-column: 1/-1;
 }
 

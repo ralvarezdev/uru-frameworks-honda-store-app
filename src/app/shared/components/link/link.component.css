@@ -9,7 +9,7 @@
   font-weight: var(--font-weight--medium);
   border-radius: var(--border-radius--small);
   transition: background-color var(--transition--color--duration),
-    color var(--transition--color--duration);
+  color var(--transition--color--duration);
 }
 
 /* Link hover styles */

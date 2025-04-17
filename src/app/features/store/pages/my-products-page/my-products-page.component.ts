@@ -5,7 +5,7 @@ import {ButtonComponent} from '../../../../shared/components/button/button.compo
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';
 import {Router} from '@angular/router';
 import {ProductCardComponent} from '../../../../shared/components/product-card/product-card.component';
-import {KeyValuePipe, NgForOf, NgIf} from '@angular/common';
+import {KeyValuePipe} from '@angular/common';
 
 @Component({
   selector: 'app-my-products-page',
@@ -28,7 +28,8 @@ export class MyProductsPageComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     await this.loadMyProducts()
@@ -62,6 +63,6 @@ export class MyProductsPageComponent implements OnInit {
 
   // On input handler
   async inputHandler(event: Event): Promise<void> {
-    console.log('Input Value:',event);
+    console.log('Input Value:', event);
   }
 }

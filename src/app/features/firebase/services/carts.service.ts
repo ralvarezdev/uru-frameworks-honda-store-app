@@ -7,7 +7,7 @@ import {AppService} from './app.service';
 export class CartsService {
   addProductToCartCloudFn: any;
   removeProductFromCartCloudFn: any;
-  pdateuProductQuantityInCartCloudFn: any;
+  updateProductQuantityInCartCloudFn: any;
   getCartCloudFn: any;
   clearCartCloudFn: any;
   checkoutCartCloudFn: any;
@@ -16,24 +16,24 @@ export class CartsService {
     // Define the callable functions
     this.addProductToCartCloudFn = this.appService.getFunction('add_product_to_cart');
     this.removeProductFromCartCloudFn = this.appService.getFunction('remove_product_from_cart');
-    this.pdateuProductQuantityInCartCloudFn = this.appService.getFunction('update_product_quantity_in_cart');
+    this.updateProductQuantityInCartCloudFn = this.appService.getFunction('update_product_quantity_in_cart');
     this.getCartCloudFn = this.appService.getFunction('get_cart');
     this.clearCartCloudFn = this.appService.getFunction('clear_cart');
     this.checkoutCartCloudFn = this.appService.getFunction('checkout_cart');
   }
 
   // Add a product to the cart
-  async addProductToCart(productId: string, quantity: number): Promise<any>{
-    return await this.addProductToCartCloudFn({productId, quantity});
+  async addProductToCart(product_id: string, quantity: number): Promise<any> {
+    return await this.addProductToCartCloudFn({product_id, quantity});
   }
 
   // Remove a product from the cart
-  async removeProductFromCart(productId: string): Promise<any> {
-    return await this.removeProductFromCartCloudFn({productId});
+  async removeProductFromCart(product_id: string): Promise<any> {
+    return await this.removeProductFromCartCloudFn({product_id});
   }
 
-  async updateProductQuantityInCart(productId: string, quantity: number): Promise<any> {
-    return await this.pdateuProductQuantityInCartCloudFn({productId, quantity});
+  async updateProductQuantityInCart(product_id: string, quantity: number): Promise<any> {
+    return await this.updateProductQuantityInCartCloudFn({product_id, quantity});
   }
 
   async getCart(): Promise<any> {

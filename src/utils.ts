@@ -1,12 +1,12 @@
-import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {AbstractControl, FormGroup, ValidationErrors} from '@angular/forms';
 import {QueryList} from '@angular/core';
 import {InputComponent} from './app/shared/components/input/input.component';
 
 // Control errors key
-const PASSWORD_NAME= 'password';
-const EMAIL_NAME= 'email';
-const REQUIRED_NAME= 'required';
-const FILE_NAME= 'file';
+const PASSWORD_NAME = 'password';
+const EMAIL_NAME = 'email';
+const REQUIRED_NAME = 'required';
+const FILE_NAME = 'file';
 
 // Constants for password validation
 const MINIMUM_PASSWORD_LENGTH = 6;
@@ -26,58 +26,58 @@ const MINIMUM_PASSWORD_SPECIAL_CHARACTERS_ERROR = `Must contain at least ${MINIM
 
 // Password strength validator
 export function passwordValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+  const value = control.value;
 
-    // Check if the value is less than the minimum length
-    if (value.length < MINIMUM_PASSWORD_LENGTH) {
-      return { [PASSWORD_NAME]: MINIMUM_PASSWORD_LENGTH_ERROR};
-    }
+  // Check if the value is less than the minimum length
+  if (value.length < MINIMUM_PASSWORD_LENGTH) {
+    return {[PASSWORD_NAME]: MINIMUM_PASSWORD_LENGTH_ERROR};
+  }
 
-    // Counters
-    let uppercaseCount = 0;
-    let lowercaseCount = 0;
-    let numericCount = 0;
-    let specialCount = 0;
+  // Counters
+  let uppercaseCount = 0;
+  let lowercaseCount = 0;
+  let numericCount = 0;
+  let specialCount = 0;
 
-    // Iterate through the characters in the value
-    for (let i = 0; i < value.length; i++) {
-      const char = value[i];
-      if (/[A-Z]/.test(char))
-        uppercaseCount++;
-      else if (/[a-z]/.test(char))
-        lowercaseCount++;
-      else if (/\d/.test(char))
-        numericCount++;
-      else if (/[^A-Za-z0-9]/.test(char))
-        specialCount++;
-    }
+  // Iterate through the characters in the value
+  for (let i = 0; i < value.length; i++) {
+    const char = value[i];
+    if (/[A-Z]/.test(char))
+      uppercaseCount++;
+    else if (/[a-z]/.test(char))
+      lowercaseCount++;
+    else if (/\d/.test(char))
+      numericCount++;
+    else if (/[^A-Za-z0-9]/.test(char))
+      specialCount++;
+  }
 
-    // Check if the value contains at least the minimum number of uppercase characters
-    if (uppercaseCount < MINIMUM_PASSWORD_UPPERCASE_CHARACTERS) {
-      return { [PASSWORD_NAME]: MINIMUM_PASSWORD_UPPERCASE_CHARACTERS_ERROR };
-    }
+  // Check if the value contains at least the minimum number of uppercase characters
+  if (uppercaseCount < MINIMUM_PASSWORD_UPPERCASE_CHARACTERS) {
+    return {[PASSWORD_NAME]: MINIMUM_PASSWORD_UPPERCASE_CHARACTERS_ERROR};
+  }
 
-    // Check if the value contains at least the minimum number of lowercase characters
-    if (lowercaseCount < MINIMUM_PASSWORD_LOWERCASE_CHARACTERS) {
-      return { [PASSWORD_NAME]: MINIMUM_PASSWORD_LOWERCASE_CHARACTERS_ERROR };
-    }
+  // Check if the value contains at least the minimum number of lowercase characters
+  if (lowercaseCount < MINIMUM_PASSWORD_LOWERCASE_CHARACTERS) {
+    return {[PASSWORD_NAME]: MINIMUM_PASSWORD_LOWERCASE_CHARACTERS_ERROR};
+  }
 
-    // Check if the value contains at least the minimum number of numeric characters
-    if (numericCount < MINIMUM_PASSWORD_NUMERIC_CHARACTERS) {
-      return { [PASSWORD_NAME]: MINIMUM_PASSWORD_NUMERIC_CHARACTERS_ERROR };
-    }
+  // Check if the value contains at least the minimum number of numeric characters
+  if (numericCount < MINIMUM_PASSWORD_NUMERIC_CHARACTERS) {
+    return {[PASSWORD_NAME]: MINIMUM_PASSWORD_NUMERIC_CHARACTERS_ERROR};
+  }
 
-    // Check if the value contains at least the minimum number of special characters
-    if (specialCount < MINIMUM_PASSWORD_SPECIAL_CHARACTERS) {
-      return { [PASSWORD_NAME]: MINIMUM_PASSWORD_SPECIAL_CHARACTERS_ERROR };
-    }
+  // Check if the value contains at least the minimum number of special characters
+  if (specialCount < MINIMUM_PASSWORD_SPECIAL_CHARACTERS) {
+    return {[PASSWORD_NAME]: MINIMUM_PASSWORD_SPECIAL_CHARACTERS_ERROR};
+  }
 
-    return null
+  return null
 }
 
 // File input validator
-export function fileValidator(allowedTypes: string[]=[], maxSizeMB: number, isRequired: boolean = false) {
-  return (formGroup: FormGroup, inputs: QueryList<InputComponent>,id:string) => {
+export function fileValidator(allowedTypes: string[] = [], maxSizeMB: number, isRequired: boolean = false) {
+  return (formGroup: FormGroup, inputs: QueryList<InputComponent>, id: string) => {
     const fileInputControl = formGroup.get(id);
     const fileInputComponent = inputs.find(input => input.id === id);
     const file = fileInputComponent?.files?.[0];
@@ -87,7 +87,7 @@ export function fileValidator(allowedTypes: string[]=[], maxSizeMB: number, isRe
 
     if (!file) {
       if (isRequired) {
-        fileInputControl?.setErrors({ [REQUIRED_NAME]: REQUIRED_ERROR });
+        fileInputControl?.setErrors({[REQUIRED_NAME]: REQUIRED_ERROR});
       }
       formGroup.updateValueAndValidity();
       return
@@ -97,11 +97,11 @@ export function fileValidator(allowedTypes: string[]=[], maxSizeMB: number, isRe
     const isValidSize = file.size <= maxSizeMB * 1024 * 1024;
 
     if (!isValidType) {
-      fileInputControl?.setErrors({ [FILE_NAME]: `Invalid file type. Allowed types: ${allowedTypes.join(', ')}` });
+      fileInputControl?.setErrors({[FILE_NAME]: `Invalid file type. Allowed types: ${allowedTypes.join(', ')}`});
     }
 
     if (!isValidSize) {
-      fileInputControl?.setErrors({ [FILE_NAME]: `File size exceeds ${maxSizeMB} MB` });
+      fileInputControl?.setErrors({[FILE_NAME]: `File size exceeds ${maxSizeMB} MB`});
     }
 
     formGroup.updateValueAndValidity();

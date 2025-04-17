@@ -3,8 +3,8 @@ import {ErrorHandler, Injectable, signal} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorHandlerService implements ErrorHandler{
-  error = signal<Error|null>(null);
+export class ErrorHandlerService implements ErrorHandler {
+  error = signal<Error | null>(null);
 
   handleError(error: Error): void {
     // Handle the error here

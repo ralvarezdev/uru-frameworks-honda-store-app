@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ProductFormLayoutComponent} from '../../layouts/product-form-layout/product-form-layout.component';
 import {Router} from '@angular/router';
 import {ProductsService} from '../../../firebase/services/products.service';

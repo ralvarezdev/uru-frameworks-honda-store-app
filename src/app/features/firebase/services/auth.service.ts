@@ -1,7 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth";
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut
+} from "firebase/auth";
 import {AppService} from './app.service';
-import {httpsCallable} from 'firebase/functions';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
@@ -11,7 +16,7 @@ export class AuthService {
   auth: Auth | null = null
   createUserCloudFn: any;
   getUserByIdCloudFn: any;
-  private _isAuthenticated = new BehaviorSubject<boolean|null>(null);
+  private _isAuthenticated = new BehaviorSubject<boolean | null>(null);
   authStateChange = this._isAuthenticated.asObservable();
 
   constructor(private appService: AppService) {
@@ -40,7 +45,7 @@ export class AuthService {
   }
 
   // Sign in with email/password
-  async signUp(firstName: string, lastName: string, email: string, password: string) {
+  async signUp(first_name: string, last_name: string, email: string, password: string) {
     // Create the user with email and password
     await createUserWithEmailAndPassword(this.auth as Auth, email, password)
 
@@ -48,7 +53,7 @@ export class AuthService {
     await this.signIn(email, password)
 
     // Create the user in the database
-    await this.createUserCloudFn({first_name: firstName, last_name: lastName})
+    await this.createUserCloudFn({first_name, last_name})
 
     // Log the user signed up
     console.log('User signed up: ', email)

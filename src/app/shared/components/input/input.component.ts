@@ -1,5 +1,5 @@
 import {Component, forwardRef, Inject, Input, PLATFORM_ID, signal, ViewEncapsulation} from '@angular/core';
-import {isPlatformBrowser, NgIf, NgStyle} from '@angular/common';
+import {isPlatformBrowser, NgStyle} from '@angular/common';
 import {ButtonComponent} from '../button/button.component';
 import {LabelComponent} from '../label/label.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
@@ -11,7 +11,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@ang
     ButtonComponent,
     LabelComponent,
     ReactiveFormsModule,
-    NgIf,
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
@@ -38,10 +37,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() error: string = '';
   @Input() showError: boolean = false;
-  @Input() files: FileList|null = null;
-
-  private onChange: (value: any) => void = () => {};
-  private onTouched: () => void = () => {};
+  @Input() files: FileList | null = null;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId)
@@ -72,7 +68,7 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   onInput(event: Event): void {
-    if (this.type!== 'file') {
+    if (this.type !== 'file') {
       const input = event.target as HTMLInputElement;
       this.value = input.value;
       this.onChange(this.value);
@@ -102,4 +98,10 @@ export class InputComponent implements ControlValueAccessor {
     const fileInput = document.getElementById(this.id) as HTMLInputElement;
     fileInput.click();
   }
+
+  private onChange: (value: any) => void = () => {
+  };
+
+  private onTouched: () => void = () => {
+  };
 }

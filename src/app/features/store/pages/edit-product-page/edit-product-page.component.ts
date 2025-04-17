@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {HeaderLayoutComponent} from '../../layouts/header-layout/header-layout.component';
 import {ProductFormLayoutComponent} from '../../layouts/product-form-layout/product-form-layout.component';
 

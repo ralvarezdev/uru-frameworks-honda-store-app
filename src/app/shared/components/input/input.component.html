@@ -1,24 +1,33 @@
 <div class="input-main-container">
   <!-- Image preview -->
-  <div class="input-main-container__input-container__input__image-preview" *ngIf="type==='file' && imagePreview">
-    <img [src]="imagePreview" alt="Image Preview">
-  </div>
+  @if (type==='file' && imagePreview) {
+    <div class="input-main-container__input-container__input__image-preview">
+      <img [src]="imagePreview" alt="Image Preview">
+    </div>
+  }
 
   <!-- Label -->
-  <app-label [for]="id" [class]="'input-main-container__label'">{{ label }}</app-label>
+  <app-label [class]="'input-main-container__label'" [for]="id">{{ label }}</app-label>
 
   <!-- Input container -->
   <div class="input-main-container__input-container">
     <!-- Input field -->
-    <input (input)="onInput($event)" [disabled]="disabled" [id]="id" [placeholder]="placeholder" [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value" class="input-main-container__input-container__input" [hidden]="type==='file'">
+    <input (input)="onInput($event)" [disabled]="disabled" [hidden]="type==='file'" [id]="id" [placeholder]="placeholder" [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value" class="input-main-container__input-container__input">
 
-     <!-- Custom button to trigger file input -->
-    <app-button *ngIf="type==='file'" (clickHandler)="triggerFileInput()" [class]="'button--transparent button--large'">Select Image</app-button>
+    <!-- Custom button to trigger file input -->
+    @if (type==='file') {
+      <app-button (clickHandler)="triggerFileInput()" [class]="'button--transparent button--large'">
+        Select Image
+      </app-button>
+    }
 
     <!-- Icons -->
-    <app-button *ngIf="type==='password'" (clickHandler)="togglePasswordVisibility($event)" [class]="'input-main-container__input-container__input__icon'">
-      <span class="material-symbols-outlined">{{ passwordVisibility() ? 'visibility' : 'visibility_off' }}</span>
-    </app-button>
+    @if (type==='password') {
+      <app-button (clickHandler)="togglePasswordVisibility($event)"
+                [class]="'input-main-container__input-container__input__icon'">
+        <span class="material-symbols-outlined">{{ passwordVisibility() ? 'visibility' : 'visibility_off' }}</span>
+      </app-button>
+    }
   </div>
 
   <!-- Error message -->

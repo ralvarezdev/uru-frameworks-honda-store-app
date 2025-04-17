@@ -1,7 +1,17 @@
-<app-auth-layout (resetHandler)="resetHandler()" (submitHandler)="submitHandler()" [formGroup]="authForm" [linkText]="linkText" [link]="link" [title]="title">
-  <app-input [formControl]="authForm.controls['first-name']" [id]="'first-name'" [label]="'First Name'" [placeholder]="'Enter your first name'" [required]="true" [type]="'text'" id="first-name-container"></app-input>
-  <app-input [formControl]="authForm.controls['last-name']" [id]="'last-name'" [label]="'Last Name'" [placeholder]="'Enter your last name'" [required]="true" [type]="'text'" id="last-name-container"></app-input>
-  <app-input [formControl]="authForm.controls.email" [id]="'email'" [label]="'Email'" [placeholder]="'Enter your email'" [required]="true" [type]="'email'" id="email-container"></app-input>
-  <app-input [formControl]="authForm.controls.password" [id]="'password'" [label]="'Password'" [placeholder]="'Enter your password'" [required]="true" [type]="'password'" id="password-container"></app-input>
-  <app-input [formControl]="authForm.controls['confirm-password']" [id]="'confirm-password'" [label]="'Confirm password'" [placeholder]="'Confirm your password'" [required]="true" [type]="'password'" id="confirm-password-container"></app-input>
+<app-auth-layout (resetHandler)="resetHandler()" (submitHandler)="submitHandler()" [formGroup]="authForm"
+                 [linkText]="linkText" [link]="link" [title]="title">
+  <app-input [formControl]="authForm.controls['first-name']" [id]="'first-name'" [label]="'First Name'"
+             [placeholder]="'Enter your first name'" [required]="true" [type]="'text'"
+             id="first-name-container"></app-input>
+  <app-input [formControl]="authForm.controls['last-name']" [id]="'last-name'" [label]="'Last Name'"
+             [placeholder]="'Enter your last name'" [required]="true" [type]="'text'"
+             id="last-name-container"></app-input>
+  <app-input [formControl]="authForm.controls.email" [id]="'email'" [label]="'Email'" [placeholder]="'Enter your email'"
+             [required]="true" [type]="'email'" id="email-container"></app-input>
+  <app-input [formControl]="authForm.controls.password" [id]="'password'" [label]="'Password'"
+             [placeholder]="'Enter your password'" [required]="true" [type]="'password'"
+             id="password-container"></app-input>
+  <app-input [formControl]="authForm.controls['confirm-password']" [id]="'confirm-password'"
+             [label]="'Confirm password'" [placeholder]="'Confirm your password'" [required]="true" [type]="'password'"
+             id="confirm-password-container"></app-input>
 </app-auth-layout>

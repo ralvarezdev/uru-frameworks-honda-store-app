@@ -39,10 +39,10 @@ export class SignInPageComponent {
       // Get the form values
       const {email, password} = this.authForm.value;
 
-      try{
+      try {
         await this.authService.signIn(email as string, password as string)
         this.router.navigateByUrl('/', {skipLocationChange: false, replaceUrl: true})
-      }catch(error: any) {
+      } catch (error: any) {
         // Check if the error is about the user not found
         if (error?.code === 'auth/user-not-found') {
           this.inputs.forEach(input => {

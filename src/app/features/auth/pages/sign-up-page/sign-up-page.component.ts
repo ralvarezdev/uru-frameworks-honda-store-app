@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, QueryList, ViewChildren} from '@angular/core';
 import {AuthLayoutComponent} from '../../layouts/auth-layout/auth-layout.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../../../shared/components/input/input.component';
@@ -26,11 +26,12 @@ export class SignUpPageComponent {
     email: new FormControl<string>('', [Validators.required, Validators.email]),
     'first-name': new FormControl<string>('', [Validators.required]),
     'last-name': new FormControl<string>('', [Validators.required]),
-    password:  new FormControl<string>('', [Validators.required, passwordValidator]),
-    'confirm-password':  new FormControl<string>('', [Validators.required])
+    password: new FormControl<string>('', [Validators.required, passwordValidator]),
+    'confirm-password': new FormControl<string>('', [Validators.required])
   });
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
   // Submit Handler Click
   async submitHandler(): Promise<void> {
@@ -39,11 +40,17 @@ export class SignUpPageComponent {
       clearFormErrors(this.inputs);
 
       // Get the form values
-      const {"first-name": firstName, "last-name": lastName, email, "confirm-password":confirmPassword,password} = this.authForm.value;
+      const {
+        "first-name": firstName,
+        "last-name": lastName,
+        email,
+        "confirm-password": confirmPassword,
+        password
+      } = this.authForm.value;
 
       // Get the password and confirm password values
-      const passwordInput = this.inputs.find(input=>input.id ==='password') as InputComponent;
-      const confirmPasswordInput = this.inputs.find(input=>input.id ==='confirm-password') as InputComponent;
+      const passwordInput = this.inputs.find(input => input.id === 'password') as InputComponent;
+      const confirmPasswordInput = this.inputs.find(input => input.id === 'confirm-password') as InputComponent;
 
       // Check if password and confirm password match
       if (password !== confirmPassword) {
@@ -57,7 +64,7 @@ export class SignUpPageComponent {
       try {
         await this.authService.signUp(firstName as string, lastName as string, email as string, password as string)
         this.router.navigateByUrl('/', {skipLocationChange: false, replaceUrl: true})
-      } catch(error: any) {
+      } catch (error: any) {
         // Check if the error is about the email already in use
         if (error?.code === 'auth/email-already-in-use') {
           this.inputs.forEach(input => {

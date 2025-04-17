@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
-import {Auth, getAuth, GoogleAuthProvider, connectAuthEmulator} from 'firebase/auth';
-import {initializeApp} from 'firebase/app';
+import {Auth, connectAuthEmulator, getAuth, GoogleAuthProvider} from 'firebase/auth';
+import {getApp, initializeApp} from 'firebase/app';
 import firebaseConfig from '../../../../../firebase.json';
 import cloudFunctionsConfig from '../../../../../cloudFunctions.json';
-import {getFunctions, connectFunctionsEmulator, httpsCallable} from 'firebase/functions';
+import {connectFunctionsEmulator, getFunctions, httpsCallable} from 'firebase/functions';
 import {
   EMULATOR_ACTIVE,
-  EMULATOR_AUTHENTICATION_URL, EMULATOR_FUNCTIONS_HOST, EMULATOR_FUNCTIONS_PORT,
+  EMULATOR_AUTHENTICATION_URL,
+  EMULATOR_FUNCTIONS_HOST,
+  EMULATOR_FUNCTIONS_PORT,
   GCLOUD_REGION
 } from '../../../../constants';
-import {getApp} from 'firebase/app';
-import { sprintf } from "sprintf-js";
-import {FirebaseStorage, getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {sprintf} from "sprintf-js";
+import {FirebaseStorage, getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage';
 import {v4 as uuid} from 'uuid';
 
 @Injectable({
@@ -50,7 +51,7 @@ export class AppService {
     this.functions = getFunctions(this.app, GCLOUD_REGION)
 
     // Check if the emulator is activated
-    if (EMULATOR_ACTIVE){
+    if (EMULATOR_ACTIVE) {
       connectAuthEmulator(this.auth, EMULATOR_AUTHENTICATION_URL)
       connectFunctionsEmulator(this.functions, EMULATOR_FUNCTIONS_HOST, EMULATOR_FUNCTIONS_PORT)
     }
@@ -58,16 +59,16 @@ export class AppService {
 
   // Get function
   getFunction(name: string) {
-    if(EMULATOR_ACTIVE)
+    if (EMULATOR_ACTIVE)
       return httpsCallable(this.functions, name)
 
     // Format function name
     const formattedName = name.replace(/_/g, '-')
 
     // Get the formatted URL
-    const formattedUrl=sprintf(cloudFunctionsConfig.url, formattedName)
+    const formattedUrl = sprintf(cloudFunctionsConfig.url, formattedName)
 
-    return async (body:any) => {
+    return async (body: any) => {
       // Get the ID token
       const idToken = await this.auth?.currentUser?.getIdToken(true)
 

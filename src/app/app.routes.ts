@@ -7,10 +7,10 @@ import {LandingPageComponent} from './features/store/pages/landing-page/landing-
 import {MyProductsPageComponent} from './features/store/pages/my-products-page/my-products-page.component';
 import {CatalogPageComponent} from './features/store/pages/catalog-page/catalog-page.component';
 import {AuthGuard} from './features/auth/guards/auth.guard';
-import { CartPageComponent } from './features/store/pages/cart-page/cart-page.component';
+import {CartPageComponent} from './features/store/pages/cart-page/cart-page.component';
 import {NewProductPageComponent} from './features/store/pages/new-product-page/new-product-page.component';
 import {EditProductPageComponent} from './features/store/pages/edit-product-page/edit-product-page.component';
-import { ProductPageComponent } from './features/store/pages/product-page/product-page.component';
+import {ProductPageComponent} from './features/store/pages/product-page/product-page.component';
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},

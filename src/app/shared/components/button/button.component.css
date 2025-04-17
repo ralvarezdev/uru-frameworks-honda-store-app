@@ -62,7 +62,7 @@
 }
 
 .button--secondary:hover button,
-.button--secondary:active button{
+.button--secondary:active button {
   background-color: var(--grey--darker);
 }
 

@@ -1,13 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {ButtonComponent} from '../button/button.component';
-import {NgIf} from '@angular/common';
 import {ProductsService} from '../../../features/firebase/services/products.service';
 
 @Component({
   selector: 'app-product-card',
   imports: [
     ButtonComponent,
-    NgIf
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
@@ -15,11 +13,11 @@ import {ProductsService} from '../../../features/firebase/services/products.serv
 export class ProductCardComponent {
   @Input() title: string = '';
   @Input() description: string = '';
-  @Input() price: number|null = null;
-  @Input() stock: number|null = null;
+  @Input() price: number | null = null;
+  @Input() stock: number | null = null;
   @Input() brand: string = '';
   @Input() tags: string[] = [];
-  @Input() image_url: string = '';
+  @Input() imageUrl: string = '';
   @Input() sku: string = '';
   @Input() productId: string = '';
   @Input() active: boolean = true;
@@ -45,6 +43,6 @@ export class ProductCardComponent {
   // Toggle active
   async toggleActiveHandler() {
     this.active = !this.active;
-    await this.productsService.updateProduct({productId: this.productId, active: this.active})
+    await this.productsService.updateProduct({product_id: this.productId, active: this.active})
   }
 }

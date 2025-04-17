@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../firebase/services/auth.service';
-import {NgIf, NgOptimizedImage} from '@angular/common';
+import { NgOptimizedImage} from '@angular/common';
 import {LinkComponent} from '../../../../shared/components/link/link.component';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';
@@ -10,7 +10,6 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-header-layout',
   imports: [
-    NgIf,
     LinkComponent,
     NgOptimizedImage,
     SearchBarComponent,
@@ -35,7 +34,8 @@ export class HeaderLayoutComponent implements OnInit {
   logoLink: string = '/';
   searchBarPlaceholder: string = 'Aceite Honda ATF DW-1...';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
   // On init handler
   async ngOnInit(): Promise<void> {
