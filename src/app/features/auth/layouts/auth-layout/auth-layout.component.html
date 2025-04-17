@@ -1,14 +1,12 @@
 <div class="main-container">
   <app-link [link]="logoLink">
-    <img [height]="logoHeight" [width]="logoWidth" priority alt="logo"
-         class="main-container__logo" ngSrc="/assets/images/repuestos-edge--logo.svg"/>
+    <img [height]="logoHeight" [width]="logoWidth" priority alt="logo" class="main-container__logo" ngSrc="/assets/images/repuestos-edge--logo.svg"/>
   </app-link>
   <div class="main-container__form-container">
     <div class="main-container__form-container__header-container">
       <h1 class="main-container__form-container__header-container__title">{{ title }}</h1>
     </div>
-    <form (ngSubmit)="onSubmit($event)" (reset)="onReset($event)"
-          [formGroup]="formGroup" class="main-container__form-container__form">
+    <form (ngSubmit)="onSubmit($event)" (reset)="onReset($event)" [formGroup]="formGroup" class="main-container__form-container__form">
       <div class="main-container__form-container__form__content-container">
         <ng-content></ng-content>
       </div>
@@ -17,8 +15,7 @@
           <app-button [class]="'button--primary--not-filled button--large'" [type]="'reset'">Cancel</app-button>
           <app-button [class]="'button--primary button--large'" [type]="'submit'">Submit</app-button>
         </div>
-        <a [routerLink]="link"
-           class="main-container__form-container__form__footer-container__link">{{ linkText }}</a>
+        <a [routerLink]="link" class="main-container__form-container__form__footer-container__link">{{ linkText }}</a>
       </div>
     </form>
   </div>

@@ -9,6 +9,8 @@ import {CatalogPageComponent} from './features/store/pages/catalog-page/catalog-
 import {AuthGuard} from './features/auth/guards/auth.guard';
 import { CartPageComponent } from './features/store/pages/cart-page/cart-page.component';
 import {NewProductPageComponent} from './features/store/pages/new-product-page/new-product-page.component';
+import {EditProductPageComponent} from './features/store/pages/edit-product-page/edit-product-page.component';
+import { ProductPageComponent } from './features/store/pages/product-page/product-page.component';
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent, pathMatch: 'full'},
@@ -18,5 +20,7 @@ export const routes: Routes = [
   {path: 'my-cart', component: CartPageComponent, canActivate: [AuthGuard]},
   {path: 'catalog', component: CatalogPageComponent},
   {path: 'new-product', component: NewProductPageComponent, canActivate: [AuthGuard]},
+  {path: 'edit-product/:id', component: EditProductPageComponent, canActivate: [AuthGuard]},
+  {path: 'product/:id', component: ProductPageComponent},
   {path: '**', component: NotFoundPageComponent},
 ];

@@ -11,7 +11,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@ang
     ButtonComponent,
     LabelComponent,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
@@ -27,6 +27,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@ang
 })
 export class InputComponent implements ControlValueAccessor {
   isBrowser: boolean = false;
+  imagePreview: string = '';
   passwordVisibility = signal<boolean>(false)
   @Input() id: string = '';
   @Input() label: string = '';
@@ -37,6 +38,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() error: string = '';
   @Input() showError: boolean = false;
+  @Input() files: FileList|null = null;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId)
@@ -67,15 +69,38 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.value = input.value;
-    this.onChange(this.value);
-    this.onTouched();
+    if (this.type!== 'file') {
+      const input = event.target as HTMLInputElement;
+      this.value = input.value;
+    }
   }
 
-  private onChange: any = () => {
+  onChange(event: Event):void {
+    if (this.type === 'file') {
+      // Handle file input
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          this.imagePreview = reader.result as string;
+        };
+
+        reader.readAsDataURL(file);
+
+        // Set the file to the component
+        this.files = input.files;
+      }
+    }
   };
 
-  private onTouched: any = () => {
+  onTouched(event: Event):void {
   };
+
+  // Handle file input click
+  triggerFileInput(): void {
+    const fileInput = document.getElementById(this.id) as HTMLInputElement;
+    fileInput.click();
+  }
 }

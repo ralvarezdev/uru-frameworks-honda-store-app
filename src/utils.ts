@@ -6,6 +6,7 @@ import {InputComponent} from './app/shared/components/input/input.component';
 const PASSWORD_NAME= 'password';
 const EMAIL_NAME= 'email';
 const REQUIRED_NAME= 'required';
+const FILE_NAME= 'file';
 
 // Constants for password validation
 const MINIMUM_PASSWORD_LENGTH = 6;
@@ -74,6 +75,39 @@ export function passwordValidator(control: AbstractControl): ValidationErrors | 
     return null
 }
 
+// File input validator
+export function fileValidator(allowedTypes: string[]=[], maxSizeMB: number, isRequired: boolean = false) {
+  return (formGroup: FormGroup, inputs: QueryList<InputComponent>,id:string) => {
+    const fileInputControl = formGroup.get(id);
+    const fileInputComponent = inputs.find(input => input.id === id);
+    const file = fileInputComponent?.files?.[0];
+
+    // Clear the errors
+    fileInputControl?.setErrors(null);
+
+    if (!file) {
+      if (isRequired) {
+        fileInputControl?.setErrors({ [REQUIRED_NAME]: REQUIRED_ERROR });
+      }
+      formGroup.updateValueAndValidity();
+      return
+    }
+
+    const isValidType = allowedTypes.includes(file.type);
+    const isValidSize = file.size <= maxSizeMB * 1024 * 1024;
+
+    if (!isValidType) {
+      fileInputControl?.setErrors({ [FILE_NAME]: `Invalid file type. Allowed types: ${allowedTypes.join(', ')}` });
+    }
+
+    if (!isValidSize) {
+      fileInputControl?.setErrors({ [FILE_NAME]: `File size exceeds ${maxSizeMB} MB` });
+    }
+
+    formGroup.updateValueAndValidity();
+  };
+}
+
 // Parse form control errors
 export function parseFromControlErrors(errors: { [key: string]: any }): string[] {
   const parsedErrors = []
@@ -90,6 +124,11 @@ export function parseFromControlErrors(errors: { [key: string]: any }): string[]
 
     // Check if the field is about the password
     if (errorKey === PASSWORD_NAME) {
+      parsedErrors.push(errors[errorKey])
+    }
+
+    // Check if the field is about the file
+    if (errorKey === FILE_NAME) {
       parsedErrors.push(errors[errorKey])
     }
   }
@@ -112,7 +151,8 @@ export function setFormControlErrors(inputs: QueryList<InputComponent>, form: Fo
     const control = form.controls[controlKey]
     const inputComponent = inputs.find(input => input.id === controlKey)
     if (!inputComponent) {
-      return
+      console.warn(`Input component with ID ${controlKey} not found`)
+      continue
     }
 
     // Set the error message or clear it

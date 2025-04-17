@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import {HeaderLayoutComponent} from "../../layouts/header-layout/header-layout.component";
+import {ProductFormLayoutComponent} from '../../layouts/product-form-layout/product-form-layout.component';
 
 @Component({
   selector: 'app-new-product-page',
-    imports: [
-        HeaderLayoutComponent
-    ],
+  imports: [
+    ProductFormLayoutComponent
+  ],
   templateUrl: './new-product-page.component.html',
   styleUrl: './new-product-page.component.css'
 })
 export class NewProductPageComponent {
-
+  title: string = 'New Product';
 }

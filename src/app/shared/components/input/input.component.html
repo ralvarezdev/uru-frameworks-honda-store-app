@@ -1,14 +1,26 @@
 <div class="input-main-container">
+  <!-- Image preview -->
+  <div class="input-main-container__input-container__input__image-preview" *ngIf="type==='file' && imagePreview">
+    <img [src]="imagePreview" alt="Image Preview">
+  </div>
+
+  <!-- Label -->
   <app-label [for]="id" [class]="'input-main-container__label'">{{ label }}</app-label>
+
+  <!-- Input container -->
   <div class="input-main-container__input-container">
-    <input (input)="onInput($event)" [disabled]="disabled" [id]="id"
-           [placeholder]="placeholder" [required]="required"
-           [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value"
-           class="input-main-container__input-container__input">
-    <app-button (clickHandler)="togglePasswordVisibility($event)"
-                *ngIf="type==='password'" [class]="'input-main-container__input-container__input__icon'">
+    <!-- Input field -->
+    <input (change)="onChange($event)" (input)="onInput($event)" [disabled]="disabled" [id]="id" [placeholder]="placeholder" [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value" class="input-main-container__input-container__input" [hidden]="type==='file'">
+
+     <!-- Custom button to trigger file input -->
+    <app-button *ngIf="type==='file'" (clickHandler)="triggerFileInput()" [class]="'button--transparent button--large'">Select Image</app-button>
+
+    <!-- Icons -->
+    <app-button *ngIf="type==='password'" (clickHandler)="togglePasswordVisibility($event)" [class]="'input-main-container__input-container__input__icon'">
       <span class="material-symbols-outlined">{{ passwordVisibility() ? 'visibility' : 'visibility_off' }}</span>
     </app-button>
   </div>
+
+  <!-- Error message -->
   <p [ngStyle]="{opacity: showError ? 1 : 0}" class="input-main-container__error">{{ error }}</p>
 </div>

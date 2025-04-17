@@ -1,0 +1,61 @@
+/* Main container styles */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--large);
+  width: 100%;
+  max-width: 50rem;
+}
+
+/* Header container styles */
+.main-container__header-container {
+  padding-left: var(--border-radius--large);
+  width: 100%;
+}
+
+/* Form container styles */
+.main-container__form-container {
+  display: grid;
+  place-items: center;
+  background-color: var(--grey--lightest);
+  border-radius: var(--border-radius--large);
+  padding: var(--padding--medium);
+  width: 100%;
+}
+
+/* Form styles */
+.main-container__form-container__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap--large);
+  width: 100%;
+}
+
+/* Input containers styles */
+#image-container,
+#title-container,
+#description-container,
+#tags-container{
+  grid-column: 1/-1;
+}
+
+/* Footer container styles */
+.main-container__form-container__form__footer-container {
+  grid-column: 1/-1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--medium);
+  flex-direction: column;
+}
+
+/* Button container styles */
+.main-container__form-container__form__footer-container__buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--gap--small);
+}
