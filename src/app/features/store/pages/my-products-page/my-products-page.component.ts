@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {HeaderLayoutComponent} from '../../layouts/header-layout/header-layout.component';
-import {ProductsService} from '../../../firebase/services/products.service';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';
 import {Router} from '@angular/router';
 import {ProductCardComponent} from '../../../../shared/components/product-card/product-card.component';
 import {KeyValuePipe} from '@angular/common';
+import {ProductsService} from '../../services/products.service';
 
 @Component({
   selector: 'app-my-products-page',
@@ -20,35 +20,24 @@ import {KeyValuePipe} from '@angular/common';
   styleUrl: './my-products-page.component.css'
 })
 export class MyProductsPageComponent implements OnInit {
-  limit: number = 10;
-  offset: number = 0;
   myProducts: any[] = [];
   myProductsTotalCount: number = 0;
 
   constructor(
     private productsService: ProductsService,
     private router: Router,
-  ) {
-  }
+  ) {}
 
+  // On init handler
   async ngOnInit() {
-    await this.loadMyProducts()
-  }
+    // Subscribe to the products changed
+    this.productsService.myProductsChanged.subscribe(({products, total_count}) => {
+      this.myProducts = products;
+      this.myProductsTotalCount = total_count;
+    });
 
-  // Load my products
-  async loadMyProducts() {
-    try {
-      // Get my products from the service
-      const response = await this.productsService.getMyProducts(this.limit, this.offset);
-      const body = await response.json()
-
-      this.myProducts = body?.products;
-      this.myProductsTotalCount = body?.totalCount;
-      console.log('My Products:', this.myProducts);
-      console.log('My Products Total Count:', this.myProductsTotalCount);
-    } catch (error) {
-      console.error('Error fetching my products:', error);
-    }
+    // Load my products
+    await this.productsService.loadMyProducts();
   }
 
   // On add product handler
@@ -61,8 +50,17 @@ export class MyProductsPageComponent implements OnInit {
     console.log('Edit Product', productId);
   }
 
-  // On input handler
-  async inputHandler(event: Event): Promise<void> {
-    console.log('Input Value:', event);
+  // On search click handler
+  async searchClickHandler(title:string): Promise<void> {
+    // Set limit and offset
+    this.productsService.setLimit(10);
+    this.productsService.setOffset(0);
+
+    // Filter the product
+    if (!title) {
+      await this.productsService.loadMyProducts();
+      return;
+    }
+    await this.productsService.searchMyProducts(title);
   }
 }

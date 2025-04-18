@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="main-container__header-container">
       <h1 class="main-container__header-container__title">My Products</h1>
-      <app-search-bar (input)="inputHandler($event)" [class]="'main-container__header-container__search-products-bar'"
+      <app-search-bar (clickHandler)="searchClickHandler($event)" [class]="'main-container__header-container__search-products-bar'"
                       [disabled]="false" [placeholder]="'Search Products'"></app-search-bar>
       <div [class]="'main-container__header-container__add-product-container'">
         <app-button

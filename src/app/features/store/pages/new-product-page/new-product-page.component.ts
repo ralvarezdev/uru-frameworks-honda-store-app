@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ProductFormLayoutComponent} from '../../layouts/product-form-layout/product-form-layout.component';
 import {Router} from '@angular/router';
-import {ProductsService} from '../../../firebase/services/products.service';
+import {ProductsService} from '../../services/products.service';
 
 @Component({
   selector: 'app-new-product-page',
@@ -24,7 +24,7 @@ export class NewProductPageComponent {
     const {title, description, price, stock, brand, tags, image_url, sku} = JSON.parse(formValues);
 
     // Create the product
-    await this.productsService.createProduct(
+    await this.productsService.addProduct(
       title,
       description,
       parseFloat(price),

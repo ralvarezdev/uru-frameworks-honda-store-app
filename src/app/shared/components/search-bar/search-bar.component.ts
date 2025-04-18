@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation} from '@angular/core';
 import {ButtonComponent} from '../button/button.component';
 import {InputComponent} from '../input/input.component';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -26,11 +26,8 @@ export class SearchBarComponent {
   @Input() required: boolean = false;
   @Input() id: string = '';
   @Input() value: string = '';
-
-  // Click event handler
-  onClick(event: Event) {
-    console.log('Search button clicked', event);
-  }
+  @Output() clickHandler: EventEmitter<string> = new EventEmitter<string>();
+  @Output() inputHandler: EventEmitter<Event> = new EventEmitter<Event>();
 
   // ControlValueAccessor methods
   writeValue(value: any): void {
@@ -49,11 +46,28 @@ export class SearchBarComponent {
     this.disabled = isDisabled;
   }
 
+  // Handle input event
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.value = input.value;
     this.onChange(this.value);
     this.onTouched();
+
+    // Call the input handler if provided
+    if (this.inputHandler)
+      this.inputHandler.emit(event);
+  }
+
+  // Handle click event
+  onClick(event: Event): void {
+    this.clickHandler.emit(this.value)
+  }
+
+  // Handle keydown event
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.onClick(event);
+    }
   }
 
   private onChange: any = () => {
