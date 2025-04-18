@@ -1,1 +1,3 @@
-<app-product-form-layout [title]="title"></app-product-form-layout>
+@if (!loading && product) {
+  <app-product-form-layout (submitHandler)="submitHandler($event)" [title]="title" [initialStock]="product.stock" [initialBrand]="product.brand" [initialDescription]="product.description" [initialImage]="product.image_url" [initialPrice]="product.price" [initialSKU]="product.sku" [initialTitle]="product.title"></app-product-form-layout>
+}

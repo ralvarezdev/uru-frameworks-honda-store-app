@@ -1,9 +1,29 @@
-import {Component, forwardRef, Inject, Input, PLATFORM_ID, signal, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  forwardRef,
+  Inject,
+  Input,
+  PLATFORM_ID,
+  signal,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {isPlatformBrowser, NgStyle} from '@angular/common';
 import {ButtonComponent} from '../button/button.component';
 import {LabelComponent} from '../label/label.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {ErrorableDirective} from '../../directives/errorable/errorable.directive';
+
+// Check if the string is a valid URL
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 @Component({
   selector: 'app-input',
@@ -30,6 +50,7 @@ import {ErrorableDirective} from '../../directives/errorable/errorable.directive
   ]
 })
 export class InputComponent extends ErrorableDirective implements ControlValueAccessor {
+  @ViewChild('inputElement') inputElement!: ElementRef;
   isBrowser: boolean = false;
   imagePreview: string = '';
   passwordVisibility = signal<boolean>(false)
@@ -58,7 +79,18 @@ export class InputComponent extends ErrorableDirective implements ControlValueAc
 
   // Write value to the component
   writeValue(value: any): void {
-    this.value = value;
+    // Check if the input is a file input
+    if (this.type !== 'file') {
+      this.value = value;
+      return;
+    }
+
+    // Check if it's a single URL
+    if (value && value?.startsWith('http')) {
+      this.value = value;
+      this.imagePreview = this.value;
+      this.files = null;
+    }
   }
 
   // Register on change method
@@ -107,6 +139,32 @@ export class InputComponent extends ErrorableDirective implements ControlValueAc
   triggerFileInput(): void {
     const fileInput = document.getElementById(this.id) as HTMLInputElement;
     fileInput.click();
+  }
+
+  // Get local files selected
+  getFiles(): FileList | null {
+    if (this.type !== 'file') {
+      return null;
+    }
+
+    // Check if the input contains URLs
+    if (this.value && this.value?.startsWith('http')) {
+      return null;
+    }
+    return this?.files;
+  }
+
+  // Get URL from the input
+  getUrl(): string|null {
+    if (this.type !== 'file') {
+      return null
+    }
+
+    // Check if the input contains URLs
+    if (this.value && this.value?.startsWith('http')) {
+      return this.value;
+    }
+    return null
   }
 
   private onChange: (value: any) => void = () => {

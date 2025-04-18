@@ -6,7 +6,7 @@
     <div class="main-container__form-container">
       <form (ngSubmit)="onSubmit($event)" (reset)="resetHandler($event)" [formGroup]="productForm"
             class="main-container__form-container__form">
-        <app-input [id]="'image'" [label]="'Image'" [placeholder]="'Select product image'" [required]="true"
+        <app-input [formControl]="productForm.controls['image']" [id]="'image'" [label]="'Image'" [placeholder]="'Select product image'" [required]="true"
                    [type]="'file'" id="image-container"></app-input>
         <app-input [formControl]="productForm.controls['title']" [id]="'title'" [label]="'Title'"
                    [placeholder]="'Enter product title'" [required]="true" [type]="'text'"
@@ -24,7 +24,8 @@
                    [required]="true" [step]="PRICE_STEP" [type]="'number'" id="price-container"></app-input>
         <app-input [formControl]="productForm.controls['stock']" [id]="'stock'" [label]="'Stock'"
                    [max]="STOCK_MAX_VALUE" [min]="STOCK_MIN_VALUE" [placeholder]="'Enter product stock'"
-                   [required]="true" [step]="STOCK_STEP" [type]="'number'" id="stock-container"></app-input>
+                   [required]="true" [step]="STOCK_STEP" [type]="'number'"
+                   id="stock-container"></app-input>
         <!--
         <app-input [formControl]="productForm.controls['tags']" [id]="'tags'" [label]="'Tags'" [placeholder]="'Enter product tags'" [required]="true" [type]="'text'" id="tags-container"></app-input>
         -->

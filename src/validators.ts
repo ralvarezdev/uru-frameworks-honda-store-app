@@ -71,6 +71,15 @@ export function fileValidator(allowedTypes: string[] = [], maxSizeMB: number, is
   return (formGroup: FormGroup, inputs: QueryList<InputComponent>, id: string) => {
     const fileInputControl = formGroup.get(id);
     const fileInputComponent = inputs.find(input => input.id === id);
+
+    // Check if the value is a URL
+    if (fileInputControl?.value && fileInputControl.value.startsWith('http')) {
+      fileInputControl.setErrors(null);
+      formGroup.updateValueAndValidity();
+      return;
+    }
+
+    // Check if the file input component is found
     const file = fileInputComponent?.files?.[0];
 
     // Clear the errors

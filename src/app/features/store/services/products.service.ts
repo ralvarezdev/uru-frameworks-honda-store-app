@@ -56,6 +56,12 @@ export class ProductsService {
     });
   }
 
+  async getProductById(productId:string) {
+    // Get my products from the service
+    const response = await this.productsService.getProductById(productId)
+    return await response.json()
+  }
+
   // Add product
   async addProduct(product: Product) {
     // Create the product
@@ -102,8 +108,7 @@ export class ProductsService {
       const updateKeys = Object.keys(product).filter(key => key !== 'product_id');
       const update: Record<string, any> = {};
       updateKeys.forEach(key => {
-        // @ts-ignore
-        update[key] = product?.[key];
+        update[key] = product[key as keyof typeof product];
       })
 
       this.myProducts[product.product_id] = {...this.myProducts[product.product_id], ...update};
