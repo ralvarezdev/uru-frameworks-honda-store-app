@@ -1,31 +1,70 @@
 <div [id]="productId" class="product-card-container">
   <div class="product-card-container__product-card">
-    <p class="product-card-container__product-card__sku">{{ sku }}</p>
-    <p class="product-card-container__product-card__title">{{ title }}</p>
+    <div class="product-card-container__product-card__header">
+      <!-- Product ID -->
+      <p class="product-card-container__product-card__header__sku">{{ sku }}</p>
+
+      <!-- Product Actions -->
+      <div class="product-card-container__product-card__header__actions">
+        <app-button (clickHandler)="editProductHandler()"
+                    class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+          <span class="material-symbols-outlined">
+            edit
+          </span>
+        </app-button>
+        <app-button (clickHandler)="deleteProductHandler()"
+                    class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+          <span class="material-symbols-outlined">
+            delete
+          </span>
+        </app-button>
+        <app-button (clickHandler)="toggleActiveHandler()"
+                    class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+          <span class="material-symbols-outlined">
+            {{ active ? 'play_arrow' : 'pause' }}
+          </span>
+        </app-button>
+      </div>
+
+      <!-- Product Title -->
+      <h2 class="product-card-container__product-card__header__title">{{ title }}</h2>
+    </div>
 
     <img [src]="imageUrl" alt="Product Image" class="product-card-container__product-card__image"/>
     <div class="product-card-container__product-card__details">
-      <p class="product-card-container__product-card__details__description">{{ description }}</p>
-      <p class="product-card-container__product-card__details__price">Price: ${{ price }}</p>
-      <p class="product-card-container__product-card__details__stock">Stock: {{ stock }}</p>
-      <p class="product-card-container__product-card__details__brand">Brand: {{ brand }}</p>
+      <!-- Product Description -->
+      <div class="product-card-container__product-card__details__description">
+        <app-label>Description</app-label>
+        <p>{{ description }}</p>
+      </div>
+
+      <!-- Product Price-->
+      <div class="product-card-container__product-card__details__price">
+        <app-label>Price</app-label>
+        <p>${{ price }}</p>
+      </div>
+
+      <!-- Product Stock -->
+      <div class="product-card-container__product-card__details__stock">
+        <app-label>Stock</app-label>
+        <p>{{ stock }}</p>
+      </div>
+
+      <!-- Product Brand -->
+      <div class="product-card-container__product-card__details__brand">
+        <app-label>Brand</app-label>
+        <p class="product-card-container__product-card__details__brand">Brand: {{ brand }}</p>
+      </div>
+
       @if (tags.length > 0) {
-        <p class="product-card-container__product-card__details__tags">
-          Tags: {{ tags.join(', ') }}
-        </p>
+        <ng-container>
+          <!-- Product Tags -->
+          <app-label>Tags</app-label>
+          <p class="product-card-container__product-card__details__tags">
+            Tags: {{ tags.join(', ') }}
+          </p>
+        </ng-container>
       }
-    </div>
-    <div class="product-card-container__product-card__actions">
-      <app-button (clickHandler)="editProductHandler()"
-                  class="button--secondary button--small product-card-container__product-card__actions__button">Edit
-      </app-button>
-      <app-button (clickHandler)="deleteProductHandler()"
-                  class="button--secondary button--small product-card-container__product-card__actions__button">Delete
-      </app-button>
-      <app-button (clickHandler)="toggleActiveHandler()"
-                  class="button--secondary button--small product-card-container__product-card__actions__button">
-        {{ active ? 'Deactivate' : 'Activate' }}
-      </app-button>
     </div>
   </div>
 </div>

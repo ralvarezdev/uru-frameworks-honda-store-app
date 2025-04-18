@@ -23,21 +23,12 @@
   color: var(--grey--lightest);
 }
 
-.button--primary:hover button,
-.button--primary--circular:hover button {
+.button--primary:hover button {
   background-color: var(--color--light-primary);
 }
 
-.button--primary:active button,
-.button--primary--circular:active button {
+.button--primary:active button {
   background-color: var(--color--light-primary);
-}
-
-/* Primary circular button styles */
-.button--primary--circular button {
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
 }
 
 /* Primary not filled button styles */
@@ -99,9 +90,17 @@
   padding: var(--padding--extra-small) var(--padding--large);
 }
 
+.button--circular.button--large button {
+  padding: var(--padding--large);
+}
+
 /* Medium button styles */
 .button--medium button {
   padding: var(--padding--extra-small) var(--padding--medium);
+}
+
+.button--circular.button--medium button {
+  padding: var(--padding--medium);
 }
 
 /* Small button styles */
@@ -109,7 +108,22 @@
   padding: var(--padding--extra-small) var(--padding--small);
 }
 
+.button--circular.button--small button {
+  padding: var(--padding--small);
+}
+
 /* Extra small button styles */
 .button--extra-small button {
   padding: var(--padding--extra-small);
+}
+
+.button--circular.button--extra-small button {
+  padding: var(--padding--extra-small);
+}
+
+/* Circular button styles */
+.button--circular button {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
 }

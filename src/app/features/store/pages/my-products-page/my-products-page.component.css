@@ -65,3 +65,7 @@
   gap: var(--gap--large);
   width: 100%;
 }
+
+.main-container__products-container * {
+  width: 100%;
+}

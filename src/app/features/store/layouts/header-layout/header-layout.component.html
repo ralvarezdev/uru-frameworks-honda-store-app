@@ -4,9 +4,11 @@
       <img [height]="logoHeight" [width]="logoWidth" alt="logo" class="main-container__header-container__logo"
            ngSrc="/assets/images/repuestos-edge--logo.svg"/>
     </app-link>
+
     <div class="main-container__header-container__search-bar-container">
       <app-search-bar [placeholder]="searchBarPlaceholder"></app-search-bar>
     </div>
+
     @if (!isAuthenticated) {
       <div class="main-container__header-container__link-container">
         <app-link [class]="'link-container__link--large'" [link]="signInLink">
@@ -30,6 +32,7 @@
       </div>
     }
   </div>
+
   <div class="main-container__body-container">
     <ng-content></ng-content>
   </div>

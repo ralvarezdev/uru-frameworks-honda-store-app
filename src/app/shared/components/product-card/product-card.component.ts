@@ -1,11 +1,13 @@
 import {Component, Input} from '@angular/core';
 import {ButtonComponent} from '../button/button.component';
 import {ProductsService} from '../../../features/firebase/services/products.service';
+import {LabelComponent} from '../label/label.component';
 
 @Component({
   selector: 'app-product-card',
   imports: [
     ButtonComponent,
+    LabelComponent,
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
