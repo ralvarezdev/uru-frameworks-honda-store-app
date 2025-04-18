@@ -1,6 +1,6 @@
 <div class="input-main-container">
   <!-- Image preview -->
-  @if (type==='file' && imagePreview) {
+  @if (type === 'file' && imagePreview) {
     <div class="input-main-container__input-container__input__image-preview">
       <img [src]="imagePreview" alt="Image Preview">
     </div>
@@ -12,19 +12,24 @@
   <!-- Input container -->
   <div class="input-main-container__input-container">
     <!-- Input field -->
-    <input (input)="onInput($event)" [disabled]="disabled" [hidden]="type==='file'" [id]="id" [placeholder]="placeholder" [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value" [min]="type==='number'&&min" [step]="type==='number'&&step" [max]="type==='number'&&max" class="input-main-container__input-container__input">
+    <input (input)="onInput($event)" [disabled]="disabled" [hidden]="type==='file'" [id]="id"
+           [max]="type==='number'&&max" [min]="type==='number'&&min"
+           [placeholder]="placeholder" [required]="required"
+           [step]="type==='number'&&step" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')"
+           [value]="value"
+           class="input-main-container__input-container__input">
 
     <!-- Custom button to trigger file input -->
-    @if (type==='file') {
+    @if (type === 'file') {
       <app-button (clickHandler)="triggerFileInput()" [class]="'button--transparent button--large'">
         Select Image
       </app-button>
     }
 
     <!-- Icons -->
-    @if (type==='password') {
+    @if (type === 'password') {
       <app-button (clickHandler)="togglePasswordVisibility($event)"
-                [class]="'input-main-container__input-container__input__icon'">
+                  [class]="'input-main-container__input-container__input__icon'">
         <span class="material-symbols-outlined">{{ passwordVisibility() ? 'visibility' : 'visibility_off' }}</span>
       </app-button>
     }

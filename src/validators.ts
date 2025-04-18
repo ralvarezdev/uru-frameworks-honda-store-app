@@ -102,7 +102,7 @@ export function fileValidator(allowedTypes: string[] = [], maxSizeMB: number, is
 // Numeric validator
 export function numericValidator(min: number, max: number, step: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
+    const value = parseFloat(control.value);
 
     // Check if the value is a number
     if (isNaN(value)) {
@@ -120,7 +120,7 @@ export function numericValidator(min: number, max: number, step: number): Valida
     }
 
     // Check if the value is a multiple of the step
-    if ((value - min) % step !== 0) {
+    if (value / step !== Math.floor(value / step)) {
       return {[NUMERIC_NAME]: `Must be a multiple of ${step}`};
     }
 

@@ -5,7 +5,8 @@ import {InputComponent} from '../../../../shared/components/input/input.componen
 import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
 import {passwordValidator} from '../../../../../validators';
-import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
+import {clearFormErrors, setFormErrors} from '../../../../../control-forms';
+import {ErrorableDirective} from '../../../../shared/directives/errorable/errorable.directive';
 
 // Password validator constants
 const PASSWORD_MIN_LENGTH = 6;
@@ -27,7 +28,7 @@ const passwordValidatorFn = passwordValidator(PASSWORD_MIN_LENGTH, PASSWORD_MIN_
   styleUrl: './sign-up-page.component.css'
 })
 export class SignUpPageComponent {
-  @ViewChildren(InputComponent) inputs!: QueryList<InputComponent>;
+  @ViewChildren(ErrorableDirective) errorableComponents!: QueryList<ErrorableDirective>;
   title: string = 'Sign Up';
   link: string = '/sign-in';
   linkText: string = 'Already have an account? Sign in';
@@ -46,7 +47,7 @@ export class SignUpPageComponent {
   async submitHandler(): Promise<void> {
     if (this.authForm?.valid) {
       // Clear previous errors
-      clearFormErrors(this.inputs);
+      clearFormErrors(this.errorableComponents);
 
       // Get the form values
       const {
@@ -58,13 +59,13 @@ export class SignUpPageComponent {
       } = this.authForm.value;
 
       // Get the password and confirm password values
-      const passwordInput = this.inputs.find(input => input.id === 'password') as InputComponent;
-      const confirmPasswordInput = this.inputs.find(input => input.id === 'confirm-password') as InputComponent;
+      const passwordInput = this.errorableComponents.find(errorableComponent => errorableComponent.id === 'password') as InputComponent;
+      const confirmPasswordInput = this.errorableComponents.find(errorableComponent => errorableComponent.id === 'confirm-password') as InputComponent;
 
       // Check if password and confirm password match
       if (password !== confirmPassword) {
-        for (let input of [passwordInput, confirmPasswordInput])
-          input.error = 'Passwords do not match';
+        for (let errorableComponent of [passwordInput, confirmPasswordInput])
+          errorableComponent.error = 'Passwords do not match';
         return
       }
 
@@ -74,9 +75,9 @@ export class SignUpPageComponent {
       } catch (error: any) {
         // Check if the error is about the email already in use
         if (error?.code === 'auth/email-already-in-use') {
-          this.inputs.forEach(input => {
-            if (input.id === 'email')
-              input.error = 'Email already in use';
+          this.errorableComponents.forEach(errorableComponent => {
+            if (errorableComponent.id === 'email')
+              errorableComponent.error = 'Email already in use';
           })
           return
         }
@@ -84,12 +85,12 @@ export class SignUpPageComponent {
       }
     } else {
       console.log('Invalid form', this.authForm)
-      setFormControlErrors(this.inputs, this.authForm)
+      setFormErrors(this.errorableComponents, this.authForm)
     }
   }
 
   // Handle Reset Click
   resetHandler(): void {
-    clearFormErrors(this.inputs);
+    clearFormErrors(this.errorableComponents);
   }
 }

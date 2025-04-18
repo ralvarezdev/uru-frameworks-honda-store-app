@@ -5,8 +5,9 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {AppService} from '../../../firebase/services/app.service';
 import {fileValidator, numericValidator} from '../../../../../validators';
-import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
+import {clearFormErrors, setFormErrors} from '../../../../../control-forms';
 import {TextAreaComponent} from '../../../../shared/components/text-area/text-area.component';
+import {ErrorableDirective} from '../../../../shared/directives/errorable/errorable.directive';
 
 // File validator constants
 const IMAGE_ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg'];
@@ -40,6 +41,7 @@ const priceValidatorFn = numericValidator(PRICE_MIN_VALUE, PRICE_MAX_VALUE, PRIC
   styleUrl: './product-form-layout.component.css'
 })
 export class ProductFormLayoutComponent {
+  @ViewChildren(ErrorableDirective) errorableComponents!: QueryList<ErrorableDirective>;
   @ViewChildren(InputComponent) inputs!: QueryList<InputComponent>;
   @Input() title: string = '';
   @Input() initialTitle: string = '';
@@ -61,6 +63,12 @@ export class ProductFormLayoutComponent {
     sku: new FormControl<string>(this.initialSKU, [Validators.required]),
   });
   @Output() submitHandler: EventEmitter<string> = new EventEmitter<string>();
+  protected readonly PRICE_MIN_VALUE = PRICE_MIN_VALUE;
+  protected readonly PRICE_STEP = PRICE_STEP;
+  protected readonly PRICE_MAX_VALUE = PRICE_MAX_VALUE;
+  protected readonly STOCK_MIN_VALUE = STOCK_MIN_VALUE;
+  protected readonly STOCK_STEP = STOCK_STEP;
+  protected readonly STOCK_MAX_VALUE = STOCK_MAX_VALUE;
 
   constructor(private appService: AppService) {
   }
@@ -74,10 +82,10 @@ export class ProductFormLayoutComponent {
 
     if (this.productForm?.valid) {
       // Clear previous errors
-      clearFormErrors(this.inputs);
+      clearFormErrors(this.errorableComponents);
 
       // Upload the image
-      const imageInput = this.inputs.find(input => input.id === 'image') as InputComponent;
+      const imageInput = this.errorableComponents.find(errorableComponent => errorableComponent.id === 'image') as InputComponent;
       const imageFiles = imageInput.files as FileList;
       const imageFile = imageFiles[0];
       const imageUrl = await this.appService.uploadImage(imageFile)
@@ -90,20 +98,13 @@ export class ProductFormLayoutComponent {
       }));
     } else {
       console.log('Invalid form', this.productForm)
-      setFormControlErrors(this.inputs, this.productForm)
+      setFormErrors(this.errorableComponents, this.productForm)
     }
   }
 
   // Handle Reset Click
   resetHandler(event: Event): void {
     event.preventDefault()
-    clearFormErrors(this.inputs);
+    clearFormErrors(this.errorableComponents);
   }
-
-  protected readonly PRICE_MIN_VALUE = PRICE_MIN_VALUE;
-  protected readonly PRICE_STEP = PRICE_STEP;
-  protected readonly PRICE_MAX_VALUE = PRICE_MAX_VALUE;
-  protected readonly STOCK_MIN_VALUE = STOCK_MIN_VALUE;
-  protected readonly STOCK_STEP = STOCK_STEP;
-  protected readonly STOCK_MAX_VALUE = STOCK_MAX_VALUE;
 }

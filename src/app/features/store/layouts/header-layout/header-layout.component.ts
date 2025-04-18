@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../firebase/services/auth.service';
-import { NgOptimizedImage} from '@angular/common';
+import {NgOptimizedImage} from '@angular/common';
 import {LinkComponent} from '../../../../shared/components/link/link.component';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';

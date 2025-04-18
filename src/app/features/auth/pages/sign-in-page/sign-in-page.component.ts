@@ -4,7 +4,8 @@ import {InputComponent} from '../../../../shared/components/input/input.componen
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
-import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
+import {clearFormErrors, setFormErrors} from '../../../../../control-forms';
+import {ErrorableDirective} from '../../../../shared/directives/errorable/errorable.directive';
 
 @Component({
   selector: 'app-auth-sign-in-page',
@@ -18,7 +19,7 @@ import {clearFormErrors, setFormControlErrors} from '../../../../../control-form
   styleUrl: './sign-in-page.component.css'
 })
 export class SignInPageComponent {
-  @ViewChildren(InputComponent) inputs!: QueryList<InputComponent>;
+  @ViewChildren(ErrorableDirective) errorableComponents!: QueryList<ErrorableDirective>;
   title: string = 'Sign In';
   link: string = '/sign-up';
   linkText: string = 'Don\'t have an account? Sign up';
@@ -34,7 +35,7 @@ export class SignInPageComponent {
   async submitHandler(): Promise<void> {
     if (this.authForm?.valid) {
       // Clear previous errors
-      clearFormErrors(this.inputs);
+      clearFormErrors(this.errorableComponents);
 
       // Get the form values
       const {email, password} = this.authForm.value;
@@ -45,18 +46,18 @@ export class SignInPageComponent {
       } catch (error: any) {
         // Check if the error is about the user not found
         if (error?.code === 'auth/user-not-found') {
-          this.inputs.forEach(input => {
-            if (input.id === 'email')
-              input.error = 'User not found';
+          this.errorableComponents.forEach(errorableComponent => {
+            if (errorableComponent.id === 'email')
+              errorableComponent.error = 'User not found';
           })
           return
         }
 
         // Check if the error is about the wrong password
         if (error?.code === 'auth/invalid-credential') {
-          this.inputs.forEach(input => {
-            if (input.id === 'password')
-              input.error = 'Wrong password';
+          this.errorableComponents.forEach(errorableComponent => {
+            if (errorableComponent.id === 'password')
+              errorableComponent.error = 'Wrong password';
           })
           return
         }
@@ -65,12 +66,12 @@ export class SignInPageComponent {
       }
     } else {
       console.log('Invalid form', this.authForm)
-      setFormControlErrors(this.inputs, this.authForm)
+      setFormErrors(this.errorableComponents, this.authForm)
     }
   }
 
   // Handle Reset Click
   resetHandler(): void {
-    clearFormErrors(this.inputs);
+    clearFormErrors(this.errorableComponents);
   }
 }

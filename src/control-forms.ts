@@ -7,9 +7,9 @@ import {
   REQUIRED_ERROR,
   REQUIRED_NAME
 } from "./validators"
-import {InputComponent} from './app/shared/components/input/input.component';
 import {AbstractControl, FormGroup} from '@angular/forms';
 import {QueryList} from '@angular/core';
+import {ErrorableDirective} from './app/shared/directives/errorable/errorable.directive';
 
 // Parse form control errors
 export function parseFromControlErrors(errors: { [key: string]: any }): string[] {
@@ -43,35 +43,35 @@ export function parseFromControlErrors(errors: { [key: string]: any }): string[]
   return parsedErrors
 }
 
-// Set form input errors
-export function setFormInputErrors(inputComponent: InputComponent, control: AbstractControl) {
+// Set form control errors
+export function setFormControlErrors(errorableComponent: ErrorableDirective, control: AbstractControl) {
   if (control && control?.errors) {
     const parsedErrors = parseFromControlErrors(control.errors)
-    inputComponent.error = (parsedErrors.length ? parsedErrors[0] : '')
+    errorableComponent.error = (parsedErrors.length ? parsedErrors[0] : '')
   }
 }
 
-// Set form control errors
-export function setFormControlErrors(inputs: QueryList<InputComponent>, form: FormGroup) {
+// Set form errors
+export function setFormErrors(errorableComponents: QueryList<ErrorableDirective>, form: FormGroup) {
   for (const controlKey of Object.keys(form?.controls)) {
-    // Get the control and input component
+    // Get the control and the errorable component
     const control = form.controls[controlKey]
-    const inputComponent = inputs.find(input => input.id === controlKey)
-    if (!inputComponent) {
-      console.warn(`Input component with ID ${controlKey} not found`)
+    const errorableComponent = errorableComponents.find(errorableComponent => errorableComponent.id === controlKey)
+    if (!errorableComponent) {
+      console.warn(`Errorable component not found for control: ${controlKey}`)
       continue
     }
 
     // Set the error message or clear it
     if (control && control?.errors) {
-      setFormInputErrors(inputComponent, control)
+      setFormControlErrors(errorableComponent, control)
     } else {
-      inputComponent.error = ''
+      errorableComponent.error = ''
     }
   }
 }
 
 // Clear form errors
-export function clearFormErrors(inputs: QueryList<InputComponent>) {
-  inputs.forEach(input => input.error = '')
+export function clearFormErrors(errorableComponents: QueryList<ErrorableDirective>,) {
+  errorableComponents.forEach(errorableComponent => errorableComponent.error = '')
 }

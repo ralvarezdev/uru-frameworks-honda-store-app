@@ -3,6 +3,7 @@ import {isPlatformBrowser, NgStyle} from '@angular/common';
 import {ButtonComponent} from '../button/button.component';
 import {LabelComponent} from '../label/label.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
+import {ErrorableDirective} from '../../directives/errorable/errorable.directive';
 
 @Component({
   selector: 'app-input',
@@ -21,27 +22,30 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@ang
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputComponent),
       multi: true
+    },
+    {
+      provide: ErrorableDirective,
+      useExisting: forwardRef(() => InputComponent)
     }
   ]
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent extends ErrorableDirective implements ControlValueAccessor {
   isBrowser: boolean = false;
   imagePreview: string = '';
   passwordVisibility = signal<boolean>(false)
-  @Input() id: string = '';
   @Input() label: string = '';
   @Input() type: string = 'text';
   @Input() placeholder: string = 'Please enter a value';
   @Input() required: boolean = false;
   @Input() value: string = '';
   @Input() disabled: boolean = false;
-  @Input() error: string = '';
   @Input() files: FileList | null = null;
   @Input() step: number = 1;
   @Input() min: number = 0;
   @Input() max: number = 100;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    super();
     this.isBrowser = isPlatformBrowser(this.platformId)
   }
 
@@ -52,19 +56,22 @@ export class InputComponent implements ControlValueAccessor {
     }
   }
 
-  // ControlValueAccessor methods
+  // Write value to the component
   writeValue(value: any): void {
     this.value = value;
   }
 
+  // Register on change method
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+  // Register on touched method
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
+  // Set disabled state
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
