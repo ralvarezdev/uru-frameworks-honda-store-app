@@ -48,7 +48,6 @@ export function setFormInputErrors(inputComponent: InputComponent, control: Abst
   if (control && control?.errors) {
     const parsedErrors = parseFromControlErrors(control.errors)
     inputComponent.error = (parsedErrors.length ? parsedErrors[0] : '')
-    inputComponent.showError = true
   }
 }
 
@@ -68,15 +67,11 @@ export function setFormControlErrors(inputs: QueryList<InputComponent>, form: Fo
       setFormInputErrors(inputComponent, control)
     } else {
       inputComponent.error = ''
-      inputComponent.showError = false
     }
   }
 }
 
 // Clear form errors
 export function clearFormErrors(inputs: QueryList<InputComponent>) {
-  inputs.forEach(input => {
-    input.error = ''
-    input.showError = false
-  })
+  inputs.forEach(input => input.error = '')
 }

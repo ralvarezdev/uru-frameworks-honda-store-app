@@ -46,10 +46,8 @@ export class SignInPageComponent {
         // Check if the error is about the user not found
         if (error?.code === 'auth/user-not-found') {
           this.inputs.forEach(input => {
-            if (input.id === 'email') {
+            if (input.id === 'email')
               input.error = 'User not found';
-              input.showError = true;
-            }
           })
           return
         }
@@ -57,10 +55,8 @@ export class SignInPageComponent {
         // Check if the error is about the wrong password
         if (error?.code === 'auth/invalid-credential') {
           this.inputs.forEach(input => {
-            if (input.id === 'password') {
+            if (input.id === 'password')
               input.error = 'Wrong password';
-              input.showError = true;
-            }
           })
           return
         }

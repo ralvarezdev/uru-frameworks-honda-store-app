@@ -6,6 +6,7 @@ import {ButtonComponent} from '../../../../shared/components/button/button.compo
 import {AppService} from '../../../firebase/services/app.service';
 import {fileValidator, numericValidator} from '../../../../../validators';
 import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
+import {TextAreaComponent} from '../../../../shared/components/text-area/text-area.component';
 
 // File validator constants
 const IMAGE_ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg'];
@@ -31,7 +32,8 @@ const priceValidatorFn = numericValidator(PRICE_MIN_VALUE, PRICE_MAX_VALUE, PRIC
     InputComponent,
     HeaderLayoutComponent,
     ReactiveFormsModule,
-    ButtonComponent
+    ButtonComponent,
+    TextAreaComponent
   ],
   templateUrl: './product-form-layout.component.html',
   standalone: true,

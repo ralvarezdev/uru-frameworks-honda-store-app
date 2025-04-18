@@ -1,1 +1,14 @@
-<p>text-area works!</p>
+<div class="text-area-main-container">
+  <!-- Label -->
+  <app-label [class]="'text-area-main-container__label'" [for]="id">{{ label }}</app-label>
+
+  <!-- Input container -->
+  <div class="text-area-main-container__text-area-container">
+    <!-- Input field -->
+    <textarea (input)="onInput($event)" [disabled]="disabled" [id]="id" [placeholder]="placeholder" [required]="required" [value]="value" class="text-area-main-container__text-area-container__text-area">
+    </textarea>
+  </div>
+
+  <!-- Error message -->
+  <p [ngStyle]="{opacity: error ? 1 : 0}" class="text-area-main-container__error">{{ error }}</p>
+</div>

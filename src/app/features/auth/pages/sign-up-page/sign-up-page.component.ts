@@ -63,10 +63,8 @@ export class SignUpPageComponent {
 
       // Check if password and confirm password match
       if (password !== confirmPassword) {
-        for (let input of [passwordInput, confirmPasswordInput]) {
+        for (let input of [passwordInput, confirmPasswordInput])
           input.error = 'Passwords do not match';
-          input.showError = true;
-        }
         return
       }
 
@@ -77,10 +75,8 @@ export class SignUpPageComponent {
         // Check if the error is about the email already in use
         if (error?.code === 'auth/email-already-in-use') {
           this.inputs.forEach(input => {
-            if (input.id === 'email') {
+            if (input.id === 'email')
               input.error = 'Email already in use';
-              input.showError = true;
-            }
           })
           return
         }

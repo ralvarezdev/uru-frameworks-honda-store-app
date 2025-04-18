@@ -36,7 +36,6 @@ export class InputComponent implements ControlValueAccessor {
   @Input() value: string = '';
   @Input() disabled: boolean = false;
   @Input() error: string = '';
-  @Input() showError: boolean = false;
   @Input() files: FileList | null = null;
   @Input() step: number = 1;
   @Input() min: number = 0;
@@ -70,6 +69,7 @@ export class InputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
+  // Handle input event
   onInput(event: Event): void {
     if (this.type !== 'file') {
       const input = event.target as HTMLInputElement;

@@ -103,7 +103,6 @@ export function fileValidator(allowedTypes: string[] = [], maxSizeMB: number, is
 export function numericValidator(min: number, max: number, step: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
-    console.log('Value:', value);
 
     // Check if the value is a number
     if (isNaN(value)) {
