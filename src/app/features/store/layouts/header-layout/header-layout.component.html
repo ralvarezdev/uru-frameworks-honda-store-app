@@ -7,7 +7,7 @@
     <div class="main-container__header-container__search-bar-container">
       <app-search-bar [placeholder]="searchBarPlaceholder"></app-search-bar>
     </div>
-    @if (isAuthenticated) {
+    @if (!isAuthenticated) {
       <div class="main-container__header-container__link-container">
         <app-link [class]="'link-container__link--large'" [link]="signInLink">
           {{ signInText }}

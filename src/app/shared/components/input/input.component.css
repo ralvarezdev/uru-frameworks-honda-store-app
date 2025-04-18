@@ -45,6 +45,20 @@
   outline: none;
 }
 
+/* Remove default styles for number inputs */
+.input-main-container__input-container__input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Remove spinners for number input in WebKit browsers */
+.input-main-container__input-container__input[type="number"]::-webkit-inner-spin-button,
+.input-main-container__input-container__input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* Icon styles */
 .input-main-container__input-container__input__icon {
   display: grid;

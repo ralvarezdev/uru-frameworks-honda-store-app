@@ -6,25 +6,13 @@
     <div class="main-container__form-container">
       <form (ngSubmit)="onSubmit($event)" (reset)="resetHandler($event)" [formGroup]="productForm"
             class="main-container__form-container__form">
-        <app-input [id]="'image'" [label]="'Image'" [placeholder]="'Select product image'" [required]="true"
-                   [type]="'file'" id="image-container"></app-input>
-        <app-input [formControl]="productForm.controls['title']" [id]="'title'" [label]="'Title'"
-                   [placeholder]="'Enter product title'" [required]="true" [type]="'text'"
-                   id="title-container"></app-input>
-        <app-input [formControl]="productForm.controls['description']" [id]="'description'" [label]="'Description'"
-                   [placeholder]="'Enter product description'" [required]="true" [type]="'text'"
-                   id="description-container"></app-input>
-        <app-input [formControl]="productForm.controls['brand']" [id]="'brand'" [label]="'Brand'"
-                   [placeholder]="'Enter product brand'" [required]="true" [type]="'text'"
-                   id="brand-container"></app-input>
-        <app-input [formControl]="productForm.controls['sku']" [id]="'sku'" [label]="'SKU'"
-                   [placeholder]="'Enter product SKU'" [required]="true" [type]="'text'" id="sku-container"></app-input>
-        <app-input [formControl]="productForm.controls['price']" [id]="'price'" [label]="'Price'"
-                   [placeholder]="'Enter product price'" [required]="true" [type]="'number'"
-                   id="price-container"></app-input>
-        <app-input [formControl]="productForm.controls['stock']" [id]="'stock'" [label]="'Stock'"
-                   [placeholder]="'Enter product stock'" [required]="true" [type]="'number'"
-                   id="stock-container"></app-input>
+        <app-input [id]="'image'" [label]="'Image'" [placeholder]="'Select product image'" [required]="true" [type]="'file'" id="image-container"></app-input>
+        <app-input [formControl]="productForm.controls['title']" [id]="'title'" [label]="'Title'" [placeholder]="'Enter product title'" [required]="true" [type]="'text'" id="title-container"></app-input>
+        <app-input [formControl]="productForm.controls['description']" [id]="'description'" [label]="'Description'" [placeholder]="'Enter product description'" [required]="true" [type]="'text'" id="description-container"></app-input>
+        <app-input [formControl]="productForm.controls['brand']" [id]="'brand'" [label]="'Brand'" [placeholder]="'Enter product brand'" [required]="true" [type]="'text'" id="brand-container"></app-input>
+        <app-input [formControl]="productForm.controls['sku']" [id]="'sku'" [label]="'SKU'" [placeholder]="'Enter product SKU'" [required]="true" [type]="'text'" id="sku-container"></app-input>
+        <app-input [formControl]="productForm.controls['price']" [id]="'price'" [label]="'Price'" [placeholder]="'Enter product price'" [required]="true" [type]="'number'" [min]="PRICE_MIN_VALUE"  [step]="PRICE_STEP" [max]="PRICE_MAX_VALUE" id="price-container"></app-input>
+        <app-input [formControl]="productForm.controls['stock']" [id]="'stock'" [label]="'Stock'" [placeholder]="'Enter product stock'" [required]="true" [type]="'number'" [min]="STOCK_MIN_VALUE" [step]="STOCK_STEP" [max]="STOCK_MAX_VALUE" id="stock-container"></app-input>
         <!--
         <app-input [formControl]="productForm.controls['tags']" [id]="'tags'" [label]="'Tags'" [placeholder]="'Enter product tags'" [required]="true" [type]="'text'" id="tags-container"></app-input>
         -->

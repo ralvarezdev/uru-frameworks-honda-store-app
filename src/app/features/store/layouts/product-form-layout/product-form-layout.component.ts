@@ -3,8 +3,27 @@ import {InputComponent} from "../../../../shared/components/input/input.componen
 import {HeaderLayoutComponent} from '../header-layout/header-layout.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
-import {clearFormErrors, fileValidator, setFormControlErrors} from '../../../../../utils';
 import {AppService} from '../../../firebase/services/app.service';
+import {fileValidator, numericValidator} from '../../../../../validators';
+import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
+
+// File validator constants
+const IMAGE_ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg'];
+const IMAGE_MAX_FILE_SIZE = 10;
+const IMAGE_FILE_REQUIRED = true;
+const imageValidatorFn = fileValidator(IMAGE_ALLOWED_FILE_TYPES, IMAGE_MAX_FILE_SIZE, IMAGE_FILE_REQUIRED)
+
+// Stock validator constants
+const STOCK_MIN_VALUE = 0;
+const STOCK_MAX_VALUE = 10000;
+const STOCK_STEP = 1;
+const stockValidatorFn = numericValidator(STOCK_MIN_VALUE, STOCK_MAX_VALUE, STOCK_STEP)
+
+// Price validator constants
+const PRICE_MIN_VALUE = 0;
+const PRICE_MAX_VALUE = 10000;
+const PRICE_STEP = 0.01;
+const priceValidatorFn = numericValidator(PRICE_MIN_VALUE, PRICE_MAX_VALUE, PRICE_STEP)
 
 @Component({
   selector: 'app-product-form-layout',
@@ -32,8 +51,8 @@ export class ProductFormLayoutComponent {
   @Input() productForm = new FormGroup({
     title: new FormControl<string>(this.initialTitle, [Validators.required]),
     description: new FormControl<string>(this.initialDescription, [Validators.required]),
-    price: new FormControl<number | null>(this.initialPrice, [Validators.required]),
-    stock: new FormControl<number | null>(this.initialStock, [Validators.required]),
+    price: new FormControl<number | null>(this.initialPrice, [Validators.required, priceValidatorFn]),
+    stock: new FormControl<number | null>(this.initialStock, [Validators.required, stockValidatorFn]),
     brand: new FormControl<string>(this.initialBrand, [Validators.required]),
     // tags: new FormControl<string[]>(this.initialTags, [Validators.required]),
     image: new FormControl<string>(this.initialImage),
@@ -49,7 +68,7 @@ export class ProductFormLayoutComponent {
     event.preventDefault()
 
     // Validate the image
-    fileValidator(['image/png', 'image/jpeg'], 10, true)(this.productForm, this.inputs, 'image');
+    imageValidatorFn(this.productForm, this.inputs, 'image');
 
     if (this.productForm?.valid) {
       // Clear previous errors
@@ -78,4 +97,11 @@ export class ProductFormLayoutComponent {
     event.preventDefault()
     clearFormErrors(this.inputs);
   }
+
+  protected readonly PRICE_MIN_VALUE = PRICE_MIN_VALUE;
+  protected readonly PRICE_STEP = PRICE_STEP;
+  protected readonly PRICE_MAX_VALUE = PRICE_MAX_VALUE;
+  protected readonly STOCK_MIN_VALUE = STOCK_MIN_VALUE;
+  protected readonly STOCK_STEP = STOCK_STEP;
+  protected readonly STOCK_MAX_VALUE = STOCK_MAX_VALUE;
 }

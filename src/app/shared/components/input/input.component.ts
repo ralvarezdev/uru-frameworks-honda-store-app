@@ -38,6 +38,9 @@ export class InputComponent implements ControlValueAccessor {
   @Input() error: string = '';
   @Input() showError: boolean = false;
   @Input() files: FileList | null = null;
+  @Input() step: number = 1;
+  @Input() min: number = 0;
+  @Input() max: number = 100;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId)

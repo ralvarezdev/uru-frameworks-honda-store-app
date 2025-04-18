@@ -4,7 +4,7 @@ import {InputComponent} from '../../../../shared/components/input/input.componen
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
-import {clearFormErrors, setFormControlErrors} from '../../../../../utils';
+import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
 
 @Component({
   selector: 'app-auth-sign-in-page',

@@ -41,13 +41,8 @@ export class HeaderLayoutComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     // Subscribe to the auth state changes
     this.authService.authStateChange.subscribe(async (value) => {
-      await this.updateAuthLinks(value as boolean);
+      this.isAuthenticated = value as boolean;
     });
-  }
-
-  // Update the visibility of the auth links and sign out button
-  async updateAuthLinks(isAuthenticated: boolean): Promise<void> {
-    this.isAuthenticated = isAuthenticated;
   }
 
   // Sign out handler

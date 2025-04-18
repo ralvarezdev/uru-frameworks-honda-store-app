@@ -4,7 +4,16 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {InputComponent} from '../../../../shared/components/input/input.component';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {Router} from '@angular/router';
-import {clearFormErrors, passwordValidator, setFormControlErrors} from '../../../../../utils';
+import {passwordValidator} from '../../../../../validators';
+import {clearFormErrors, setFormControlErrors} from '../../../../../control-forms';
+
+// Password validator constants
+const PASSWORD_MIN_LENGTH = 6;
+const PASSWORD_MIN_UPPERCASE = 1;
+const PASSWORD_MIN_NUMERIC = 1;
+const PASSWORD_MIN_LOWERCASE = 1;
+const PASSWORD_MIN_SPECIAL = 1;
+const passwordValidatorFn = passwordValidator(PASSWORD_MIN_LENGTH, PASSWORD_MIN_UPPERCASE, PASSWORD_MIN_LOWERCASE, PASSWORD_MIN_NUMERIC, PASSWORD_MIN_SPECIAL);
 
 @Component({
   selector: 'app-auth-sign-up-page',
@@ -26,7 +35,7 @@ export class SignUpPageComponent {
     email: new FormControl<string>('', [Validators.required, Validators.email]),
     'first-name': new FormControl<string>('', [Validators.required]),
     'last-name': new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [Validators.required, passwordValidator]),
+    password: new FormControl<string>('', [Validators.required, passwordValidatorFn]),
     'confirm-password': new FormControl<string>('', [Validators.required])
   });
 

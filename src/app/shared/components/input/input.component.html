@@ -12,7 +12,7 @@
   <!-- Input container -->
   <div class="input-main-container__input-container">
     <!-- Input field -->
-    <input (input)="onInput($event)" [disabled]="disabled" [hidden]="type==='file'" [id]="id" [placeholder]="placeholder" [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value" class="input-main-container__input-container__input">
+    <input (input)="onInput($event)" [disabled]="disabled" [hidden]="type==='file'" [id]="id" [placeholder]="placeholder" [required]="required" [type]="type!=='password'?type:(passwordVisibility()?'text':'password')" [value]="value" [min]="type==='number'&&min" [step]="type==='number'&&step" [max]="type==='number'&&max" class="input-main-container__input-container__input">
 
     <!-- Custom button to trigger file input -->
     @if (type==='file') {
