@@ -25,15 +25,17 @@ export class NewProductPageComponent {
 
     // Create the product
     await this.productsService.addProduct(
-      title,
-      description,
-      parseFloat(price),
-      parseInt(stock),
-      true,
-      brand,
-      tags ?? [],
+      {
+        title,
+        description,
+        price:parseFloat(price),
+        stock:parseInt(stock),
+        active:true,
+        brand,
+        tags:tags ?? [],
       image_url,
       sku
+  }
     );
 
     // Redirect to the products page

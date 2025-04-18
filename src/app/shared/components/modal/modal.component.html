@@ -1,0 +1,16 @@
+@if (isOpen) {
+  <div class="modal-container">
+    <div class="modal-container__modal">
+      <div class="modal-container__modal__header">
+        <h2 class="modal-container__modal__header__title">{{ title }}</h2>
+        <app-button (clickHandler)="onClose($event)" [class]="'modal-container__modal__header__close-button'">
+          <span class="material-symbols-outlined">close</span>
+        </app-button>
+      </div>
+      <div class="modal-container__modal__content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+}
+

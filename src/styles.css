@@ -90,31 +90,32 @@
   /* Transition durations */
   --transition--color--duration: 0.3s;
   --transition--opacity--duration: 0.3s;
+
+  /* Keyframes */
+  --fade-in--duration: 0.3s;
+  --fade-in--delay: 0.3s;
 }
 
 /* Header styles */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family--primary), sans-serif;
+  font-weight: var(--font-weight--bold);
 }
 
 h1 {
   font-size: var(--font-size--extra-large);
-  font-weight: var(--font-weight--bold);
 }
 
 h2, h3 {
   font-size: var(--font-size--large);
-  font-weight: var(--font-weight--medium);
 }
 
 h4, h5 {
   font-size: var(--font-size--medium);
-  font-weight: var(--font-weight--regular);
 }
 
 h6 {
   font-size: var(--font-size--small);
-  font-weight: var(--font-weight--light);
 }
 
 /* Div styles */
@@ -137,4 +138,14 @@ a {
 .material-symbols-outlined {
   text-align: center;
   vertical-align: middle;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -1,4 +1,4 @@
-<div [id]="productId" class="product-card-container">
+<div [id]="productId" [ngClass]="{'product-card-container':true, 'product-card-container--selected':selected}">
   <div class="product-card-container__product-card">
     <div class="product-card-container__product-card__header">
       <!-- Product ID -->
@@ -6,24 +6,26 @@
 
       <!-- Product Actions -->
       <div class="product-card-container__product-card__header__actions">
-        <app-button (clickHandler)="editProductHandler()"
+        @if (showActions) {
+          <app-button (clickHandler)="onActive()"
                     class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
-          <span class="material-symbols-outlined">
-            edit
-          </span>
-        </app-button>
-        <app-button (clickHandler)="deleteProductHandler()"
-                    class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </app-button>
-        <app-button (clickHandler)="toggleActiveHandler()"
-                    class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
-          <span class="material-symbols-outlined">
-            {{ active ? 'play_arrow' : 'pause' }}
-          </span>
-        </app-button>
+            <span class="material-symbols-outlined">
+              {{ active ? 'pause' : 'play_arrow'}}
+            </span>
+          </app-button>
+          <app-button (clickHandler)="onEdit()"
+                      class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+            <span class="material-symbols-outlined">
+              edit
+            </span>
+          </app-button>
+          <app-button (clickHandler)="onDelete()"
+                      class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+            <span class="material-symbols-outlined">
+              delete
+            </span>
+          </app-button>
+        }
       </div>
 
       <!-- Product Title -->
@@ -53,7 +55,7 @@
       <!-- Product Brand -->
       <div class="product-card-container__product-card__details__brand">
         <app-label>Brand</app-label>
-        <p class="product-card-container__product-card__details__brand">Brand: {{ brand }}</p>
+        <p>{{ brand }}</p>
       </div>
 
       @if (tags.length > 0) {

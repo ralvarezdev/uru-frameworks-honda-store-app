@@ -69,3 +69,30 @@
 .main-container__products-container * {
   width: 100%;
 }
+
+/* Loading and no products styles */
+.main-container__products-container__no-products,
+.main-container__products-container__loading {
+  text-align: center;
+}
+
+/* Delete product modal container and update active product modal container styles */
+.delete-product-modal-container,
+.update-active-product-modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--large);
+  flex-direction: column;
+}
+
+/* Delete product modal buttons and update active product modal buttons styles */
+.delete-product-modal-container__buttons,
+.update-active-product-modal-container__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--medium);
+  flex-direction: row;
+}
+

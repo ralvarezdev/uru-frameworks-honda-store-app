@@ -5,7 +5,6 @@ import {ProductFormLayoutComponent} from '../../layouts/product-form-layout/prod
 @Component({
   selector: 'app-edit-product-page',
   imports: [
-    HeaderLayoutComponent,
     ProductFormLayoutComponent
   ],
   templateUrl: './edit-product-page.component.html',

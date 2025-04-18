@@ -5,7 +5,8 @@ import {SearchBarComponent} from '../../../../shared/components/search-bar/searc
 import {Router} from '@angular/router';
 import {ProductCardComponent} from '../../../../shared/components/product-card/product-card.component';
 import {KeyValuePipe} from '@angular/common';
-import {ProductsService} from '../../services/products.service';
+import {Product, ProductsService} from '../../services/products.service';
+import {ModalComponent} from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-my-products-page',
@@ -14,14 +15,20 @@ import {ProductsService} from '../../services/products.service';
     ButtonComponent,
     SearchBarComponent,
     ProductCardComponent,
-    KeyValuePipe
+    KeyValuePipe,
+    ModalComponent
   ],
   templateUrl: './my-products-page.component.html',
   styleUrl: './my-products-page.component.css'
 })
 export class MyProductsPageComponent implements OnInit {
-  myProducts: any[] = [];
+  myProducts: Record<string, Product> = {};
   myProductsTotalCount: number = 0;
+  loading: boolean = false;
+  isDeleteProductModalOpen: boolean = false;
+  isUpdateActiveProductModalOpen: boolean = false;
+  selectedProductId: string = '';
+  updateActive: boolean = false;
 
   constructor(
     private productsService: ProductsService,
@@ -37,17 +44,58 @@ export class MyProductsPageComponent implements OnInit {
     });
 
     // Load my products
+    this.loading = true;
     await this.productsService.loadMyProducts();
+    this.loading = false;
   }
 
-  // On add product handler
+  // Add product handler
   async addProductHandler(): Promise<void> {
     this.router.navigate(['/new-product'], {skipLocationChange: false, replaceUrl: true});
   }
 
-  // On edit product handler
-  async editProductHandler(productId: string): Promise<void> {
-    console.log('Edit Product', productId);
+  // Open delete product modal handler
+  async openDeleteModalHandler(productId: string): Promise<void> {
+    this.selectedProductId = productId;
+    this.isDeleteProductModalOpen = true;
+  }
+
+  // Close delete product modal handler
+  async closeDeleteModalHandler(): Promise<void> {
+    this.isDeleteProductModalOpen = false;
+    this.selectedProductId = '';
+  }
+
+  // Delete product confirmation handler
+  async deleteProductHandler(): Promise<void> {
+    await this.productsService.deleteProduct(this.selectedProductId);
+    this.isDeleteProductModalOpen = false;
+    this.selectedProductId = '';
+  }
+
+  // Edit product handler
+  async editHandler(productId: string): Promise<void> {
+    this.router.navigate(['/edit-product', productId], {skipLocationChange: false, replaceUrl: true});
+  }
+
+  // Open update active product modal handler
+  async openUpdateActiveModalHandler([productId, active]: [string, boolean]): Promise<void> {
+    this.isUpdateActiveProductModalOpen = true;
+    this.selectedProductId = productId;
+    this.updateActive = active;
+  }
+
+  // Close update active product modal handler
+  async closeUpdateActiveModalHandler(): Promise<void> {
+    this.isUpdateActiveProductModalOpen = false;
+    this.selectedProductId = '';
+  }
+
+  // Update active product confirmation handler
+  async updateActiveProductHandler(): Promise<void> {
+    await this.productsService.updateProduct({product_id: this.selectedProductId, active:this.updateActive}, false);
+    this.isUpdateActiveProductModalOpen = false;
+    this.selectedProductId = '';
   }
 
   // On search click handler
@@ -56,11 +104,19 @@ export class MyProductsPageComponent implements OnInit {
     this.productsService.setLimit(10);
     this.productsService.setOffset(0);
 
+    // Clear products
+    this.myProducts = {};
+    this.myProductsTotalCount = 0;
+    this.loading = true;
+
     // Filter the product
     if (!title) {
       await this.productsService.loadMyProducts();
-      return;
+    } else {
+      await this.productsService.searchMyProducts(title);
     }
-    await this.productsService.searchMyProducts(title);
+    this.loading = false;
   }
+
+  protected readonly close = close;
 }
