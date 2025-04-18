@@ -79,7 +79,7 @@
 }
 
 /* Details styles */
-.product-card-container__product-card__details{
+.product-card-container__product-card__details {
   grid-column: 2/-1;
   grid-row: 3/-1;
   display: grid;

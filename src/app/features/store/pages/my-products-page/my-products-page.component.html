@@ -1,17 +1,24 @@
 <app-header-layout>
   <!-- Delete Product Modal -->
-  <app-modal (closeHandler)="closeDeleteModalHandler()" [title]="'Delete Product'" [isOpen]="isDeleteProductModalOpen">
+  <app-modal (closeHandler)="closeDeleteModalHandler()" [isOpen]="isDeleteProductModalOpen" [title]="'Delete Product'">
     <div class="delete-product-modal-container">
       <p class="delete-product-modal-container__text">Are you sure you want to delete this product?</p>
       <div class="delete-product-modal-container__buttons">
-        <app-button (clickHandler)="closeDeleteModalHandler()" [class]="'delete-product-modal-container__buttons__cancel-button button--secondary button--medium'" [type]="'button'">Cancel</app-button>
-        <app-button (clickHandler)="deleteProductHandler()" [class]="'delete-product-modal-container__buttons__delete-button button--primary button--medium'" [type]="'button'">Delete</app-button>
+        <app-button (clickHandler)="closeDeleteModalHandler()"
+                    [class]="'delete-product-modal-container__buttons__cancel-button button--secondary button--medium'"
+                    [type]="'button'">Cancel
+        </app-button>
+        <app-button (clickHandler)="deleteProductHandler()"
+                    [class]="'delete-product-modal-container__buttons__delete-button button--primary button--medium'"
+                    [type]="'button'">Delete
+        </app-button>
       </div>
     </div>
   </app-modal>
 
   <!-- Active Product Modal -->
-  <app-modal (closeHandler)="closeUpdateActiveModalHandler()" [title]="updateActive?'Activate Product' : 'Pause Product'" [isOpen]="isUpdateActiveProductModalOpen">
+  <app-modal (closeHandler)="closeUpdateActiveModalHandler()" [isOpen]="isUpdateActiveProductModalOpen"
+             [title]="updateActive?'Activate Product' : 'Pause Product'">
     <div class="update-active-product-modal-container">
       <p class="update-active-product-modal-container__text">
         @if (updateActive) {
@@ -21,9 +28,14 @@
         }
       </p>
       <div class="update-active-product-modal-container__buttons">
-        <app-button (clickHandler)="updateActiveProductHandler()" [class]="'update-active-product-modal-container__buttons__delete-button button--primary button--medium'"
-                    [type]="'button'">Update</app-button>
-        <app-button (clickHandler)="closeUpdateActiveModalHandler()" [class]="'update-active-product-modal-container__buttons__cancel-button button--secondary button--medium'" [type]="'button'">Cancel</app-button>
+        <app-button (clickHandler)="updateActiveProductHandler()"
+                    [class]="'update-active-product-modal-container__buttons__delete-button button--primary button--medium'"
+                    [type]="'button'">Update
+        </app-button>
+        <app-button (clickHandler)="closeUpdateActiveModalHandler()"
+                    [class]="'update-active-product-modal-container__buttons__cancel-button button--secondary button--medium'"
+                    [type]="'button'">Cancel
+        </app-button>
       </div>
     </div>
   </app-modal>
@@ -31,18 +43,17 @@
   <div class="main-container">
     <div class="main-container__header-container">
       <h1 class="main-container__header-container__title">My Products</h1>
-      <app-search-bar (clickHandler)="searchClickHandler($event)" [class]="'main-container__header-container__search-products-bar'"
-                      [disabled]="false" [placeholder]="'Search Products'"></app-search-bar>
+      <app-search-bar (clickHandler)="searchClickHandler($event)"
+                      [class]="'main-container__header-container__search-products-bar'" [disabled]="false"
+                      [placeholder]="'Search Products'"></app-search-bar>
       <div [class]="'main-container__header-container__add-product-container'">
-        <app-button
-          (click)="addProductHandler()"
-          [class]="'main-container__header-container__add-product-container__add-button button--primary button--medium'"
-          [type]="'button'">
+        <app-button (click)="addProductHandler()"
+                    [class]="'main-container__header-container__add-product-container__add-button button--primary button--medium'"
+                    [type]="'button'">
           New Product
         </app-button>
         <p class="main-container__header-container__add-product-container__total-count">
-          Total Products: {{ myProductsTotalCount }}
-        </p>
+          Total Products: {{ myProductsTotalCount }} </p>
       </div>
     </div>
     <div class="main-container__products-container">
@@ -54,7 +65,10 @@
       }
 
       @for (entry of myProducts | keyvalue; track entry.key) {
-        <app-product-card (activeHandler)="openUpdateActiveModalHandler($event)" (editHandler)="editHandler($event)" (deleteHandler)="openDeleteModalHandler($event)" [productId]="entry.key" [title]="entry.value.title" [description]="entry.value.description" [price]="entry.value.price" [stock]="entry.value.stock" [brand]="entry.value.brand" [tags]="entry.value.tags" [sku]="entry.value.sku" [active]="entry.value.active" [imageUrl]="entry.value.image_url" [selected]="selectedProductId === entry.key" [class]="'main-container__products-container__product-card'"></app-product-card>
+        <app-product-card (activeHandler)="openUpdateActiveModalHandler($event)" (editHandler)="editHandler($event)"
+                          (deleteHandler)="openDeleteModalHandler($event)" [productId]="entry.key"
+                          [product]="entry.value" [selected]="selectedProductId === entry.key"
+                          [class]="'main-container__products-container__product-card'"></app-product-card>
       }
     </div>
   </div>

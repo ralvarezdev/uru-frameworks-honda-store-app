@@ -29,11 +29,13 @@ export class MyProductsPageComponent implements OnInit {
   isUpdateActiveProductModalOpen: boolean = false;
   selectedProductId: string = '';
   updateActive: boolean = false;
+  protected readonly close = close;
 
   constructor(
     private productsService: ProductsService,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   // On init handler
   async ngOnInit() {
@@ -93,13 +95,13 @@ export class MyProductsPageComponent implements OnInit {
 
   // Update active product confirmation handler
   async updateActiveProductHandler(): Promise<void> {
-    await this.productsService.updateProduct({product_id: this.selectedProductId, active:this.updateActive}, false);
+    await this.productsService.updateProduct({product_id: this.selectedProductId, active: this.updateActive}, false);
     this.isUpdateActiveProductModalOpen = false;
     this.selectedProductId = '';
   }
 
   // On search click handler
-  async searchClickHandler(title:string): Promise<void> {
+  async searchClickHandler(title: string): Promise<void> {
     // Set limit and offset
     this.productsService.setLimit(10);
     this.productsService.setOffset(0);
@@ -117,6 +119,4 @@ export class MyProductsPageComponent implements OnInit {
     }
     this.loading = false;
   }
-
-  protected readonly close = close;
 }

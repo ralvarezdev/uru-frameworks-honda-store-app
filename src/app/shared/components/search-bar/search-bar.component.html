@@ -1,5 +1,6 @@
 <div class="search-bar-container">
-  <input (input)="onInput($event)" (keydown)="onKeyDown($event)" [disabled]="disabled" [id]="id" [placeholder]="placeholder" [value]="value" class="search-bar-container__input" type="text">
+  <input (input)="onInput($event)" (keydown)="onKeyDown($event)" [disabled]="disabled" [id]="id"
+         [placeholder]="placeholder" [value]="value" class="search-bar-container__input" type="text">
   <app-button (clickHandler)="onClick($event)" [class]="'search-bar-container__button'">
     <span class="material-symbols-outlined">search</span>
   </app-button>

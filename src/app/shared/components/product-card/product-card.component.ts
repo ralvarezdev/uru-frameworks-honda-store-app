@@ -3,6 +3,7 @@ import {ButtonComponent} from '../button/button.component';
 import {ProductsService} from '../../../features/firebase/services/products.service';
 import {LabelComponent} from '../label/label.component';
 import {NgClass} from '@angular/common';
+import {Product} from '../../../features/store/services/products.service';
 
 @Component({
   selector: 'app-product-card',
@@ -15,16 +16,8 @@ import {NgClass} from '@angular/common';
   styleUrl: './product-card.component.css'
 })
 export class ProductCardComponent {
-  @Input() title: string = '';
-  @Input() description: string = '';
-  @Input() price: number | null = null;
-  @Input() stock: number | null = null;
-  @Input() brand: string = '';
-  @Input() tags: string[] = [];
-  @Input() imageUrl: string = '';
-  @Input() sku: string = '';
   @Input() productId: string = '';
-  @Input() active: boolean = true;
+  @Input() product: Product | null = null;
   @Input() showActions: boolean = true;
   @Input() selected: boolean = false;
   @Output() editHandler = new EventEmitter<string>();
@@ -46,6 +39,6 @@ export class ProductCardComponent {
 
   // Active product handler
   onActive() {
-    this.activeHandler.emit([this.productId, !this.active]);
+    this.activeHandler.emit([this.productId, !this.product?.active]);
   }
 }

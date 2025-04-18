@@ -13,11 +13,10 @@ export class ModalComponent {
   @Input() title: string = '';
   @Input() isOpen: boolean = false;
   @Output() closeHandler: EventEmitter<Event> = new EventEmitter<Event>();
+  protected readonly event = event;
 
   // On close modal handler
   onClose(event: Event) {
     this.closeHandler.emit(event);
   }
-
-  protected readonly event = event;
 }

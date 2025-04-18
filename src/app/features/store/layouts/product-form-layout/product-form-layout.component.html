@@ -21,12 +21,10 @@
                    [placeholder]="'Enter product SKU'" [required]="true" [type]="'text'" id="sku-container"></app-input>
         <app-input [formControl]="productForm.controls['price']" [id]="'price'" [label]="'Price'"
                    [max]="PRICE_MAX_VALUE" [min]="PRICE_MIN_VALUE" [placeholder]="'Enter product price'"
-                   [required]="true"
-                   [step]="PRICE_STEP" [type]="'number'" id="price-container"></app-input>
+                   [required]="true" [step]="PRICE_STEP" [type]="'number'" id="price-container"></app-input>
         <app-input [formControl]="productForm.controls['stock']" [id]="'stock'" [label]="'Stock'"
                    [max]="STOCK_MAX_VALUE" [min]="STOCK_MIN_VALUE" [placeholder]="'Enter product stock'"
-                   [required]="true"
-                   [step]="STOCK_STEP" [type]="'number'" id="stock-container"></app-input>
+                   [required]="true" [step]="STOCK_STEP" [type]="'number'" id="stock-container"></app-input>
         <!--
         <app-input [formControl]="productForm.controls['tags']" [id]="'tags'" [label]="'Tags'" [placeholder]="'Enter product tags'" [required]="true" [type]="'text'" id="tags-container"></app-input>
         -->

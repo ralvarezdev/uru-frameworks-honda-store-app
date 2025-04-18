@@ -28,14 +28,14 @@ export class NewProductPageComponent {
       {
         title,
         description,
-        price:parseFloat(price),
-        stock:parseInt(stock),
-        active:true,
+        price: parseFloat(price),
+        stock: parseInt(stock),
+        active: true,
         brand,
-        tags:tags ?? [],
-      image_url,
-      sku
-  }
+        tags: tags ?? [],
+        image_url,
+        sku
+      }
     );
 
     // Redirect to the products page

@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import { ProductsService as FirebaseProductService} from '../../firebase/services/products.service';
+import {ProductsService as FirebaseProductService} from '../../firebase/services/products.service';
 
 // Product type
 export type Product = {
@@ -22,9 +22,13 @@ export class ProductsService {
   offset: number = 0;
   myProducts: Record<string, Product> = {};
   myProductsTotalCount: number = 0;
-  @Output() myProductsChanged: EventEmitter<{products: Record<string, Product>, total_count: number}> = new EventEmitter();
+  @Output() myProductsChanged: EventEmitter<{
+    products: Record<string, Product>,
+    total_count: number
+  }> = new EventEmitter();
 
-  constructor(private productsService: FirebaseProductService) {}
+  constructor(private productsService: FirebaseProductService) {
+  }
 
   // Set limit
   setLimit(limit: number) {
@@ -72,7 +76,18 @@ export class ProductsService {
   }
 
   // Update product
-  async updateProduct(product: {product_id: string, title?: string, description?: string, price?: number, stock?: number, active?: boolean, brand?: string, tags?: string[], image_url?: string, sku?: string}, refresh: boolean = true) {
+  async updateProduct(product: {
+    product_id: string,
+    title?: string,
+    description?: string,
+    price?: number,
+    stock?: number,
+    active?: boolean,
+    brand?: string,
+    tags?: string[],
+    image_url?: string,
+    sku?: string
+  }, refresh: boolean = true) {
     // Update the product
     await this.productsService.updateProduct(product);
 

@@ -1,72 +1,73 @@
-<div [id]="productId" [ngClass]="{'product-card-container':true, 'product-card-container--selected':selected}">
-  <div class="product-card-container__product-card">
-    <div class="product-card-container__product-card__header">
-      <!-- Product ID -->
-      <p class="product-card-container__product-card__header__sku">{{ sku }}</p>
+@if (product && productId) {
+  <div [id]="productId" [ngClass]="{'product-card-container':true, 'product-card-container--selected':selected}">
+    <div class="product-card-container__product-card">
+      <div class="product-card-container__product-card__header">
+        <!-- Product ID -->
+        <p class="product-card-container__product-card__header__sku">{{ product.sku }}</p>
 
-      <!-- Product Actions -->
-      <div class="product-card-container__product-card__header__actions">
-        @if (showActions) {
-          <app-button (clickHandler)="onActive()"
-                    class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
-            <span class="material-symbols-outlined">
-              {{ active ? 'pause' : 'play_arrow'}}
-            </span>
-          </app-button>
-          <app-button (clickHandler)="onEdit()"
-                      class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
-            <span class="material-symbols-outlined">
-              edit
-            </span>
-          </app-button>
-          <app-button (clickHandler)="onDelete()"
-                      class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
-            <span class="material-symbols-outlined">
-              delete
-            </span>
-          </app-button>
+        <!-- Product Actions -->
+        <div class="product-card-container__product-card__header__actions">
+          @if (showActions) {
+            <app-button (clickHandler)="onActive()"
+                        class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+              <span class="material-symbols-outlined">
+                {{ product.active ? 'pause' : 'play_arrow' }}
+              </span>
+            </app-button>
+            <app-button (clickHandler)="onEdit()"
+                        class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+              <span class="material-symbols-outlined">
+                edit
+              </span>
+            </app-button>
+            <app-button (clickHandler)="onDelete()"
+                        class="button--secondary button--circular button--extra-small product-card-container__product-card__actions__button">
+              <span class="material-symbols-outlined">
+                delete
+              </span>
+            </app-button>
+          }
+        </div>
+
+        <!-- Product Title -->
+        <h2 class="product-card-container__product-card__header__title">{{ product.title }}</h2>
+      </div>
+
+      <img [src]="product.image_url" alt="Product Image" class="product-card-container__product-card__image"/>
+      <div class="product-card-container__product-card__details">
+        <!-- Product Description -->
+        <div class="product-card-container__product-card__details__description">
+          <app-label>Description</app-label>
+          <p>{{ product.description }}</p>
+        </div>
+
+        <!-- Product Price-->
+        <div class="product-card-container__product-card__details__price">
+          <app-label>Price</app-label>
+          <p>${{ product.price }}</p>
+        </div>
+
+        <!-- Product Stock -->
+        <div class="product-card-container__product-card__details__stock">
+          <app-label>Stock</app-label>
+          <p>{{ product.stock }}</p>
+        </div>
+
+        <!-- Product Brand -->
+        <div class="product-card-container__product-card__details__brand">
+          <app-label>Brand</app-label>
+          <p>{{ product.brand }}</p>
+        </div>
+
+        @if (product.tags.length > 0) {
+          <ng-container>
+            <!-- Product Tags -->
+            <app-label>Tags</app-label>
+            <p class="product-card-container__product-card__details__tags">
+              Tags: {{ product.tags.join(', ') }} </p>
+          </ng-container>
         }
       </div>
-
-      <!-- Product Title -->
-      <h2 class="product-card-container__product-card__header__title">{{ title }}</h2>
-    </div>
-
-    <img [src]="imageUrl" alt="Product Image" class="product-card-container__product-card__image"/>
-    <div class="product-card-container__product-card__details">
-      <!-- Product Description -->
-      <div class="product-card-container__product-card__details__description">
-        <app-label>Description</app-label>
-        <p>{{ description }}</p>
-      </div>
-
-      <!-- Product Price-->
-      <div class="product-card-container__product-card__details__price">
-        <app-label>Price</app-label>
-        <p>${{ price }}</p>
-      </div>
-
-      <!-- Product Stock -->
-      <div class="product-card-container__product-card__details__stock">
-        <app-label>Stock</app-label>
-        <p>{{ stock }}</p>
-      </div>
-
-      <!-- Product Brand -->
-      <div class="product-card-container__product-card__details__brand">
-        <app-label>Brand</app-label>
-        <p>{{ brand }}</p>
-      </div>
-
-      @if (tags.length > 0) {
-        <ng-container>
-          <!-- Product Tags -->
-          <app-label>Tags</app-label>
-          <p class="product-card-container__product-card__details__tags">
-            Tags: {{ tags.join(', ') }}
-          </p>
-        </ng-container>
-      }
     </div>
   </div>
-</div>
+}
