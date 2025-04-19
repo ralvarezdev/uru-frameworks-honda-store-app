@@ -118,4 +118,9 @@ export class MyProductsPageComponent implements OnInit {
     }
     this.loading = false;
   }
+
+  // Product click handler
+  async productClickHandler(productId: string): Promise<void> {
+    await this.router.navigate(['/product', productId], {skipLocationChange: false, replaceUrl: true});
+  }
 }

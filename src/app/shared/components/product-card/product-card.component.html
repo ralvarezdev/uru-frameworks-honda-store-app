@@ -1,6 +1,6 @@
 @if (product && productId) {
   @if (type === "edit") {
-    <div (click)="onClick()" [id]="productId"
+    <div [id]="productId"
          [ngClass]="{'product-card-container':true, 'product-card-container--edit':true, 'product-card-container--selected':selected}">
       <div class="product-card-container__product-card">
         <div class="product-card-container__product-card__header">
@@ -35,7 +35,7 @@
           <h2 class="product-card-container__product-card__header__title">{{ product.title }}</h2>
         </div>
 
-        <img [src]="product.image_url" alt="Product Image" class="product-card-container__product-card__image"/>
+        <img (click)="onClick()" [src]="product.image_url" alt="Product Image" class="product-card-container__product-card__image"/>
         <div class="product-card-container__product-card__details">
           <!-- Product Description -->
           <div class="product-card-container__product-card__details__description">
@@ -73,10 +73,10 @@
       </div>
     </div>
   } @else {
-    <div (click)="onClick()" [id]="productId"
+    <div [id]="productId"
          class="product-card-container product-card-container--preview">
       <div class="product-card-container__product-card">
-        <img [src]="product.image_url" alt="Product Image" class="product-card-container__product-card__image"/>
+        <img (click)="onClick()" [src]="product.image_url" alt="Product Image" class="product-card-container__product-card__image"/>
 
         <!-- Product Title -->
         <h2 class="product-card-container__product-card__title">{{ product.title }}</h2>

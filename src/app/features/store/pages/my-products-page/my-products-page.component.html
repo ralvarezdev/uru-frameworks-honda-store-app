@@ -65,7 +65,7 @@
       }
 
       @for (entry of myProducts | keyvalue; track entry.key) {
-        <app-product-card (activeHandler)="openUpdateActiveModalHandler($event)" (editHandler)="editHandler($event)" (deleteHandler)="openDeleteModalHandler($event)" [productId]="entry.key" [product]="entry.value" [selected]="selectedProductId === entry.key" [type]="'edit'" [class]="'main-container__products-container__product-card'"></app-product-card>
+        <app-product-card (clickHandler)="productClickHandler($event)" (activeHandler)="openUpdateActiveModalHandler($event)" (editHandler)="editHandler($event)" (deleteHandler)="openDeleteModalHandler($event)" [productId]="entry.key" [product]="entry.value" [selected]="selectedProductId === entry.key" [type]="'edit'" [class]="'main-container__products-container__product-card'"></app-product-card>
       }
     </div>
   </div>

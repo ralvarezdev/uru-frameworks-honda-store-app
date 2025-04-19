@@ -22,6 +22,7 @@ export class EditProductPageComponent implements OnInit {
 
   // On init handler
   async ngOnInit() {
+    // Get the product ID from the route
     this.route.paramMap.subscribe(params => {
       this.productId = params.get('id') || '';
     });
@@ -34,7 +35,7 @@ export class EditProductPageComponent implements OnInit {
 
     // Load the product
     this.loading = true;
-    this.product = (await this.productsService.getProductById(this.productId)).product;
+    this.product = await this.productsService.getProductById(this.productId);
     this.loading = false;
   }
 

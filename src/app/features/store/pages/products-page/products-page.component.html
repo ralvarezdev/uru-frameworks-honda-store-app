@@ -11,10 +11,7 @@
         } @else {
           @if (searchProductsTotalCount > 0) {
             <p class="main-container__products-container__total-count">{{ searchProductsTotalCount }} {{ searchProductsTotalCount > 1 ? 'Result' : 'Results' }}</p>
-          } @else {
-            <p class="main-container__products-container__no-products">No products found</p>
           }
-
           @for (entry of searchProducts | keyvalue; track entry.key) {
             <app-product-card (clickHandler)="productClickHandler($event)" [type]="'preview'" [productId]="entry.key" [product]="entry.value" [class]="'main-container__products-container__product-card'"></app-product-card>
           }

@@ -1,3 +1,50 @@
 <app-header-layout>
-  <p>product works!</p>
+  <div class="main-container">
+    @if (!product) {
+      <p class="main-container__loading">Loading...</p>
+    } @else {
+      <div class="main-container__header-container">
+        <!-- Product SKU -->
+        <div class="main-container__header-container__sku">
+          <p>{{ product.sku }}</p>
+        </div>
+
+        <!-- Product Title -->
+        <h1 class="main-container__header-container__title">{{ product.title }}</h1>
+      </div>
+
+      <!-- Details -->
+      <div class="main-container__details-container">
+        <!-- Stock -->
+        <div class="main-container__details-container__stock">
+          <app-label>Stock</app-label>
+          <p>{{ product.stock }}</p>
+        </div>
+
+        <!-- Price -->
+        <div class="main-container__details-container__price">
+          <app-label>Price</app-label>
+          <p>${{ product.price }}</p>
+        </div>
+
+        <!-- Product Description -->
+        <div class="main-container__details-container__description">
+          <app-label>Description</app-label>
+          <p>{{ product.description }}</p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="main-container__actions-container">
+        @if (isOwner) {
+          <app-button (clickHandler)="editProductHandler($event)" [class]="'button--primary button--large'">Edit</app-button>
+        } @else {
+          <app-button (clickHandler)="addToCartHandler($event)" [class]="'button--primary button--large'">Add to Cart</app-button>
+        }
+      </div>
+
+      <!-- Product Image -->
+      <img class="main-container__image" [src]="product.image_url" alt="{{product.title}}"/>
+    }
+  </div>
 </app-header-layout>

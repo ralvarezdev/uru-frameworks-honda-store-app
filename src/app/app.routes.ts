@@ -21,6 +21,6 @@ export const routes: Routes = [
   {path: 'products', component: ProductsPageComponent},
   {path: 'new-product', component: NewProductPageComponent, canActivate: [AuthGuard]},
   {path: 'edit-product/:id', component: EditProductPageComponent, canActivate: [AuthGuard]},
-  {path: 'product/:id', component: ProductPageComponent},
+  {path: 'product/:id', component: ProductPageComponent, canActivate:[AuthGuard]},
   {path: '**', component: NotFoundPageComponent},
 ];

@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {ProductsService as FirebaseProductService} from '../../firebase/services/products.service';
+import {ProductsService as FirebaseProductsService} from '../../firebase/services/products.service';
 
 // User type
 export type User = {
@@ -36,7 +36,7 @@ export class ProductsService {
     total_count: number
   }> = new EventEmitter();
 
-  constructor(private productsService: FirebaseProductService) {
+  constructor(private productsService: FirebaseProductsService) {
   }
 
   // Set limit
@@ -68,7 +68,7 @@ export class ProductsService {
   async getProductById(productId:string) {
     // Get my products from the service
     const response = await this.productsService.getProductById(productId)
-    return await response.json()
+    return (await response.json()).product
   }
 
   // Add product

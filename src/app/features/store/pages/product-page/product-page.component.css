@@ -1,0 +1,106 @@
+/* Main container styles */
+.main-container {
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  padding: var(--gap--medium) var(--gap--large);
+  width: 100%;
+  gap: var(--gap--medium) var(--gap--large);
+}
+
+/* Loading styles */
+.main-container__loading{
+  grid-column: 1/-1;
+  width: 100%;
+  text-align: center;
+}
+
+/* Header container styles */
+.main-container__header-container {
+  grid-column: 2/-1;
+  grid-row: 1/2;
+  justify-self: center;
+  display: grid;
+  grid-template-columns: subgrid;
+  place-items: center;
+  flex-direction: column;
+  gap: var(--gap--small) 0;
+}
+
+/* Title styles */
+.main-container__header-container__title {
+  justify-self: start;
+}
+
+/* SKU styles */
+.main-container__header-container__sku {
+  width: 100%;
+}
+
+.main-container__header-container__sku p {
+  font-size: var(--font-size--small);
+  font-weight: var(--font-weight--bold);
+  color: var(--grey--medium);
+  text-align: end;
+  text-transform: uppercase;
+  justify-self: end;
+  width: 100%;
+}
+
+/* Details container styles */
+.main-container__details-container{
+  grid-column: 2/-1;
+  grid-row: 2/3;
+  display: grid;
+  grid-template-columns: subgrid;
+  justify-content: start;
+  align-items: center;
+  gap: var(--gap--small);
+  width: 100%;
+}
+
+/* Stock styles */
+.main-container__details-container__stock {
+  width: 100%;
+}
+
+/* Price styles */
+.main-container__details-container__price {
+  width: 100%;
+}
+
+/* Description styles */
+.main-container__details-container__description {
+  width: 100%;
+}
+
+/* Actions container styles */
+.main-container__actions-container {
+  grid-column: 2/-1;
+  grid-row: 3/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--small);
+  width: 100%;
+}
+
+/* Image styles */
+.main-container__image {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  max-width: 30rem;
+  max-height: 30rem;
+  border-radius: var(--border-radius--large);
+  justify-self: start;
+}
+
+/* Paragraph styles */
+p {
+  display: block;
+}

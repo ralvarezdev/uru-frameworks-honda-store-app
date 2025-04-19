@@ -38,8 +38,18 @@ export class AuthService {
       this.authStateChange.subscribe((isAuthenticated) => {
         if (isAuthenticated === null)
           return
-
         resolve(isAuthenticated);
+      });
+    });
+  }
+
+  // Wait for authentication
+  async waitAuthentication(): Promise<void> {
+    return new Promise((resolve) => {
+      this.authStateChange.subscribe((isAuthenticated) => {
+        if (isAuthenticated === null)
+          return
+        resolve();
       });
     });
   }
@@ -74,5 +84,18 @@ export class AuthService {
 
     // Log the user signed out
     console.log('User signed out')
+  }
+
+  // Get user ID
+  async getUserId(): Promise<string | null> {
+    return new Promise((resolve) => {
+      onAuthStateChanged(this.auth as Auth, (user: any) => {
+        if (user) {
+          resolve(user.uid);
+        } else {
+          resolve(null);
+        }
+      });
+    });
   }
 }
