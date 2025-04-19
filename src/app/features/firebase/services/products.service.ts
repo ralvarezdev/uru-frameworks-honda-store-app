@@ -12,6 +12,7 @@ export class ProductsService {
   getMyProductsCloudFn: any;
   searchProductsCloudFn: any;
   searchMyProductsCloudFn: any;
+  getLatestProductsCloudFn: any;
 
   constructor(private appService: AppService) {
     // Define the callable functions
@@ -22,6 +23,7 @@ export class ProductsService {
     this.getMyProductsCloudFn = this.appService.getFunction('get_my_products');
     this.searchProductsCloudFn = this.appService.getFunction('search_products');
     this.searchMyProductsCloudFn = this.appService.getFunction('search_my_products');
+    this.getLatestProductsCloudFn = this.appService.getFunction('get_latest_products');
   }
 
   // Create a new product
@@ -76,5 +78,10 @@ export class ProductsService {
   // Search my products
   async searchMyProducts(title: string, limit: number, offset: number): Promise<any> {
     return await this.searchMyProductsCloudFn({title, limit, offset});
+  }
+
+  // Get latest products
+  async getLatestProducts(limit: number, offset: number): Promise<any> {
+    return await this.getLatestProductsCloudFn({limit, offset});
   }
 }

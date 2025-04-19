@@ -5,7 +5,7 @@ import {NotFoundPageComponent} from './shared/pages/not-found-page/not-found-pag
 import {NotAuthGuard} from './features/auth/guards/not-auth.guard';
 import {LandingPageComponent} from './features/store/pages/landing-page/landing-page.component';
 import {MyProductsPageComponent} from './features/store/pages/my-products-page/my-products-page.component';
-import {CatalogPageComponent} from './features/store/pages/catalog-page/catalog-page.component';
+import {ProductsPageComponent} from './features/store/pages/products-page/products-page.component';
 import {AuthGuard} from './features/auth/guards/auth.guard';
 import {CartPageComponent} from './features/store/pages/cart-page/cart-page.component';
 import {NewProductPageComponent} from './features/store/pages/new-product-page/new-product-page.component';
@@ -18,7 +18,7 @@ export const routes: Routes = [
   {path: 'sign-up', component: SignUpPageComponent, canActivate: [NotAuthGuard]},
   {path: 'my-products', component: MyProductsPageComponent, canActivate: [AuthGuard]},
   {path: 'my-cart', component: CartPageComponent, canActivate: [AuthGuard]},
-  {path: 'catalog', component: CatalogPageComponent},
+  {path: 'products', component: ProductsPageComponent},
   {path: 'new-product', component: NewProductPageComponent, canActivate: [AuthGuard]},
   {path: 'edit-product/:id', component: EditProductPageComponent, canActivate: [AuthGuard]},
   {path: 'product/:id', component: ProductPageComponent},

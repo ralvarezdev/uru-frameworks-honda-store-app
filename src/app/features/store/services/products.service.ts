@@ -1,6 +1,13 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {ProductsService as FirebaseProductService} from '../../firebase/services/products.service';
 
+// User type
+export type User = {
+  uid: string;
+  first_name: string;
+  last_name: string;
+}
+
 // Product type
 export type Product = {
   title: string;
@@ -12,6 +19,7 @@ export type Product = {
   tags: string[];
   image_url: string;
   sku: string;
+  owner?: string | User;
 }
 
 @Injectable({
@@ -20,6 +28,7 @@ export type Product = {
 export class ProductsService {
   limit: number = 10;
   offset: number = 0;
+  searchTerm: string = '';
   myProducts: Record<string, Product> = {};
   myProductsTotalCount: number = 0;
   @Output() myProductsChanged: EventEmitter<{
@@ -142,5 +151,17 @@ export class ProductsService {
       products: this.myProducts,
       total_count: this.myProductsTotalCount
     });
+  }
+
+  // Get latest products
+  async getLatestProducts() {
+    // Get my products from the service
+    const response = await this.productsService.getLatestProducts(this.limit, this.offset);
+    return await response.json()
+  }
+
+  // Set search term
+  setSearchTerm(searchTerm: string) {
+    this.searchTerm = searchTerm;
   }
 }

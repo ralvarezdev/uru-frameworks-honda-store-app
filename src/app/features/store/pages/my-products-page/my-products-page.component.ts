@@ -29,7 +29,6 @@ export class MyProductsPageComponent implements OnInit {
   isUpdateActiveProductModalOpen: boolean = false;
   selectedProductId: string = '';
   updateActive: boolean = false;
-  protected readonly close = close;
 
   constructor(
     private productsService: ProductsService,
@@ -53,7 +52,7 @@ export class MyProductsPageComponent implements OnInit {
 
   // Add product handler
   async addProductHandler(): Promise<void> {
-    this.router.navigate(['/new-product'], {skipLocationChange: false, replaceUrl: true});
+    await this.router.navigate(['/new-product'], {skipLocationChange: false, replaceUrl: true});
   }
 
   // Open delete product modal handler
@@ -77,7 +76,7 @@ export class MyProductsPageComponent implements OnInit {
 
   // Edit product handler
   async editHandler(productId: string): Promise<void> {
-    this.router.navigate(['/edit-product', productId], {skipLocationChange: false, replaceUrl: true});
+    await this.router.navigate(['/edit-product', productId], {skipLocationChange: false, replaceUrl: true});
   }
 
   // Open update active product modal handler

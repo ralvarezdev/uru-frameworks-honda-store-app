@@ -3,7 +3,7 @@ import {ButtonComponent} from '../button/button.component';
 import {ProductsService} from '../../../features/firebase/services/products.service';
 import {LabelComponent} from '../label/label.component';
 import {NgClass} from '@angular/common';
-import {Product} from '../../../features/store/services/products.service';
+import {Product, User} from '../../../features/store/services/products.service';
 
 @Component({
   selector: 'app-product-card',
@@ -18,11 +18,13 @@ import {Product} from '../../../features/store/services/products.service';
 export class ProductCardComponent {
   @Input() productId: string = '';
   @Input() product: Product | null = null;
-  @Input() showActions: boolean = true;
+  @Input() showEditActions: boolean = true;
   @Input() selected: boolean = false;
+  @Input() type: 'edit' | 'preview' = 'preview';
   @Output() editHandler = new EventEmitter<string>();
   @Output() deleteHandler = new EventEmitter<string>();
   @Output() activeHandler = new EventEmitter<[string, boolean]>();
+  @Output() clickHandler = new EventEmitter<string>();
 
   constructor(private productsService: ProductsService) {
   }
@@ -40,5 +42,21 @@ export class ProductCardComponent {
   // Active product handler
   onActive() {
     this.activeHandler.emit([this.productId, !this.product?.active]);
+  }
+
+  // Click product handler
+  onClick() {
+    this.clickHandler.emit(this.productId);
+  }
+
+  // Get owner name
+  get ownerName() {
+    const product = this.product as Product
+    const owner = product?.owner as User
+
+    if(!owner?.first_name && !owner?.last_name) {
+      return '';
+    }
+    return owner?.first_name + ' ' + owner.last_name;
   }
 }

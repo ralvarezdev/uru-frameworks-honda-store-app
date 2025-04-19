@@ -1,0 +1,27 @@
+/* Main container styles */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap--large);
+  width: 100%;
+  max-width: 70rem;
+}
+
+/* No products and loading styles */
+.main-container__products-container__no-products,
+.main-container__products-container__loading {
+  grid-column: 1/-1;
+  width: 100%;
+  text-align: center;
+}
+
+/* Products container styles */
+.main-container__products-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  width: 100%;
+  gap: var(--gap--large);
+}

@@ -1,5 +1,21 @@
 <app-header-layout>
+  <div class="main-container">
   <div class="main-container__header-container">
-    <h1 class="main-container__header-container__title">Trending</h1>
+    <h1 class="main-container__header-container__title">New Products!</h1>
+  </div>
+  <div class="main-container__products-container">
+      @if (latestProductsTotalCount === 0 && !loading) {
+        <p class="main-container__products-container__no-products">No products found</p>
+      }
+      @if (loading) {
+        <p class="main-container__products-container__loading">Loading...</p>
+      }
+
+      @for (entry of latestProducts | keyvalue; track entry.key) {
+        <app-product-card (clickHandler)="productClickHandler($event)" [type]="'preview'" [productId]="entry.key"
+                          [product]="entry.value"
+                          [class]="'main-container__products-container__product-card'"></app-product-card>
+      }
+    </div>
   </div>
 </app-header-layout>

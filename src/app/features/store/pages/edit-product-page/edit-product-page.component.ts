@@ -74,6 +74,6 @@ export class EditProductPageComponent implements OnInit {
     }
 
     // Redirect to the products page
-    this.router.navigateByUrl('/my-products', {skipLocationChange: false, replaceUrl: true});
+    await this.router.navigateByUrl('/my-products', {skipLocationChange: false, replaceUrl: true});
   }
 }

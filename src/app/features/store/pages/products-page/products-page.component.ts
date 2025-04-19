@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {HeaderLayoutComponent} from '../../layouts/header-layout/header-layout.component';
 
 @Component({
-  selector: 'app-catalog-page',
+  selector: 'app-products-page',
   imports: [
     HeaderLayoutComponent
   ],
-  templateUrl: './catalog-page.component.html',
-  styleUrl: './catalog-page.component.css'
+  templateUrl: './products-page.component.html',
+  styleUrl: './products-page.component.css'
 })
-export class CatalogPageComponent {
+export class ProductsPageComponent {
 
 }
