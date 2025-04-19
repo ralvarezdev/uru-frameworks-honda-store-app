@@ -160,6 +160,20 @@ export class ProductsService {
     return await response.json()
   }
 
+  // Search products
+  async searchProducts(search: {
+    title: string,
+    min_price?: number,
+    max_price?: number,
+    min_stock?: number,
+    max_stock?: number,
+    min_created_at?: string,
+    max_created_at?: string
+  }): Promise<any> {
+    const response = await this.productsService.searchProducts(search, this.limit, this.offset);
+    return await response.json()
+  }
+
   // Set search term
   setSearchTerm(searchTerm: string) {
     this.searchTerm = searchTerm;

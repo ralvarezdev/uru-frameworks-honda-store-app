@@ -6,7 +6,7 @@
     </app-link>
 
     <div class="main-container__header-container__search-bar-container">
-      <app-search-bar (clickHandler)="searchClickHandler($event)" [placeholder]="searchBarPlaceholder" [value]="searchBarValue"></app-search-bar>
+      <app-search-bar (clickHandler)="onSearchClickBar($event)" [placeholder]="searchBarPlaceholder" [value]="searchBarValue"></app-search-bar>
     </div>
 
     @if (!isAuthenticated) {

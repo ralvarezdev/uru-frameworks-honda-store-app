@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../../firebase/services/auth.service';
 import {NgOptimizedImage} from '@angular/common';
 import {LinkComponent} from '../../../../shared/components/link/link.component';
 import {LOGO_HEIGHT, LOGO_WIDTH} from '../../../../../constants';
 import {SearchBarComponent} from '../../../../shared/components/search-bar/search-bar.component';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -35,8 +35,9 @@ export class HeaderLayoutComponent implements OnInit {
   logoLink: string = '/';
   searchBarPlaceholder: string = 'Aceite Honda ATF DW-1...';
   @Input() searchBarValue: string = '';
+  @Output() searchBarClickHandler: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private authService: AuthService, private router: Router, private productsService: ProductsService) {
+  constructor(private authService: AuthService, private router: Router, private productsService: ProductsService, private activatedRoute: ActivatedRoute) {
   }
 
   // On init handler
@@ -55,7 +56,7 @@ export class HeaderLayoutComponent implements OnInit {
 
   // Products handler
   async productsHandler(): Promise<void> {
-    this.router.navigate(['/my-products'], {skipLocationChange: false, replaceUrl: true});
+    await this.router.navigate(['/my-products'], {skipLocationChange: false, replaceUrl: true});
   }
 
   // Cart handler
@@ -64,12 +65,19 @@ export class HeaderLayoutComponent implements OnInit {
   }
 
   // On search click handler
-  async searchClickHandler(title: string): Promise<void> {
+  async onSearchClickBar(title: string): Promise<void> {
     // Set limit and offset
     this.productsService.setLimit(10);
     this.productsService.setOffset(0);
 
+    if (this.activatedRoute.snapshot.routeConfig?.path === 'products') {
+      console.log('Search bar clicked: ', title);
+      this.searchBarClickHandler.emit(title);
+      return
+    }
+
     // Set the search term
+    console.log('Search bar clicked and navigating to products: ', title);
     this.productsService.setSearchTerm(title);
 
     await this.router.navigate(['/products'], {skipLocationChange: false, replaceUrl: true});
