@@ -1,59 +1,38 @@
-# UruFrameworksHondaPartsApp
+# uru-frameworks-honda-store-app
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+An Angular 19 storefront for Honda parts with Firebase authentication, a product catalog and a cart. Built for the Frameworks course at Universidad Rafael Urdaneta.
 
-## Development server
+**Note:** This repository is archived and read-only.
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- **Products** — Public product list (`/products`), product detail, and per-user pages to create, edit and list your own products (`/new-product`, `/edit-product/:id`, `/my-products`).
+- **Cart** — Authenticated cart page (`/my-cart`).
+- **Authentication** — Sign in and sign up through Firebase Auth, with auth and not-auth route guards.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Configuration
 
-## Code scaffolding
+Copy the two example files and fill in your own values; the real files are gitignored.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **`firebase.example.json` -> `firebase.json`** — Firebase web app settings: `apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`, `measurementId`.
+- **`cloudFunctions.example.json` -> `cloudFunctions.json`** — `url`, a URL template for the deployed cloud functions. Function names are passed with underscores replaced by hyphens.
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Development
 
 ```bash
-ng generate --help
+npm install
+ng serve        # http://localhost:4200/
+ng build        # output in dist/
+ng test         # Karma unit tests
 ```
 
-## Building
+`EMULATOR_ACTIVE` in `src/constants.ts` switches the cloud function calls to the Firebase emulator.
 
-To build the project run:
+## Project structure
 
-```bash
-ng build
-```
+- **`src/app/features/auth`** — Guards, layout, sign-in and sign-up pages.
+- **`src/app/features/firebase`** — Firebase app and auth services.
+- **`src/app/features/store`** — Store pages, layouts and services.
+- **`src/app/shared`** — Shared components, directives and services.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Generated with Angular CLI 19.2.1; see the [Angular CLI reference](https://angular.dev/tools/cli).
